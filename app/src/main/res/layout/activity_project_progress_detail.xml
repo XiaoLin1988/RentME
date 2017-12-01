@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorEmpty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/lyt_tool"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:elevation="5dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/btn_project_progress_detail_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="3dp"
+            android:src="@drawable/tool_back"
+            android:scaleType="centerInside"/>
+
+        <com.android.emerald.rentme.Views.AutoFitTextView
+            android:id="@+id/txt_project_progress_detail_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:text="Project for langlangFan"
+            android:textColor="@color/colorWhite"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:ellipsize="end"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_progress_detail_preview"
+        android:layout_below="@+id/lyt_tool"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:src="@drawable/placeholder"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:id="@+id/lyt_pppp"
+        android:layout_below="@+id/img_progress_detail_preview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@color/colorWeekUnselect"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:elevation="3dp">
+
+        <TextView
+            android:id="@+id/txt_project_progress_detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Project for langlangFan"
+            android:textSize="@dimen/txt_label_size"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"/>
+
+        <LinearLayout
+            android:id="@+id/lyt_timeframe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical|right"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_project_progress_detail_timeframe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="hours"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrl_pppp"
+        android:layout_below="@+id/lyt_pppp"
+        android:layout_above="@+id/group_pppp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="Details"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/txt_project_progress_detail_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="asdf"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/group_pppp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_project_progress_detail_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_blue_round"
+            android:text="Chat"
+            android:textColor="@color/colorText" />
+
+        <Button
+            android:id="@+id/btn_project_progress_detail_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_green_round"
+            android:text="Payment"
+            android:textColor="@color/colorText" />
+
+    </LinearLayout>
+
+</RelativeLayout>

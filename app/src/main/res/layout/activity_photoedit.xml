@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/lyt_tool"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:elevation="5dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_photoedit_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="3dp"
+            android:src="@drawable/tool_back"
+            android:scaleType="centerInside"/>
+
+        <TextView
+            android:id="@+id/txt_register_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:textAllCaps="true"
+            android:text="Edit Photo"
+            android:textColor="@color/colorWhite"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:ellipsize="end"/>
+
+    </RelativeLayout>
+
+    <com.android.emerald.rentme.Views.PhotoWorkView
+        android:id="@+id/img_photoedit_panel"
+        android:src="@drawable/placeholder"
+        android:layout_below="@+id/lyt_tool"
+        android:layout_above="@+id/maineffect"
+        android:background="@color/colorMenuBack"
+        android:scaleType="fitCenter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/container_photoedit"
+        android:layout_above="@+id/maineffect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorEmpty"
+        android:orientation="vertical"/>
+
+    <LinearLayout
+        android:id="@+id/maineffect"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:elevation="3dp"
+        android:background="@color/colorEmpty"
+        android:layout_alignParentBottom="true" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/btn_cancel"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/edit_cross"/>
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/img_photoedit_scale"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/edit_crop_enable"/>
+            <ImageView
+                android:id="@+id/img_photoedit_scale_selector"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/selector"
+                android:visibility="invisible"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/img_photoedit_filter"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/edit_filter"/>
+            <ImageView
+                android:id="@+id/img_photoedit_filter_selector"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/selector"
+                android:visibility="invisible"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/img_photoedit_overlay"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/edit_overlay_enabled"/>
+            <ImageView
+                android:id="@+id/img_photoedit_overlay_selector"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/selector"
+                android:visibility="invisible" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/btn_save"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/edit_check"/>
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

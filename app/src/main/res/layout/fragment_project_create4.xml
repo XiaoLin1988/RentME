@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/container_talent"
+        android:layout_above="@+id/lyt_tab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorEmpty" >
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/lyt_tab"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        android:weightSum="1.0">
+
+        <TextView
+            android:id="@+id/txt_project_create2_service"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.50"
+            android:text="Services"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/txt_project_create2_profile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.50"
+            android:text="Profile"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="18dp"
+            android:layout_centerInParent="true"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

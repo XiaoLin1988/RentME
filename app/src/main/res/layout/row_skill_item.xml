@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.emerald.rentme.Views.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:background="@color/colorWhite"
+    android:elevation="2dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_row_skill_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:elevation="2dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/sample_preview"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/txt_row_skill_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.8"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/colorBlack"
+            android:text="Information gathering"/>
+
+    </LinearLayout>
+</com.android.emerald.rentme.Views.SquareLayout>

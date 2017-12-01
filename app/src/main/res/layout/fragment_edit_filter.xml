@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorEmpty"
+    android:layout_width="match_parent"
+    android:layout_height="180dp">
+    <TextView
+        android:id="@+id/txt_seek1"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="13sp"
+        android:text="@string/saturation" />
+    <SeekBar
+        android:id="@+id/seek1"
+        android:layout_below="@+id/txt_seek1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:minHeight="40dp"
+        android:maxHeight="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/txt_seek2"
+        android:layout_below="@+id/seek1"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="13sp"
+        android:text="@string/brightness" />
+    <SeekBar
+        android:id="@+id/seek2"
+        android:layout_below="@+id/txt_seek2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:minHeight="40dp"
+        android:maxHeight="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/txt_seek3"
+        android:layout_below="@+id/seek2"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="13sp"
+        android:text="@string/contrast" />
+    <SeekBar
+        android:id="@+id/seek3"
+        android:layout_below="@+id/txt_seek3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:minHeight="40dp"
+        android:maxHeight="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+</RelativeLayout>

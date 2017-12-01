@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:gravity="center_vertical"
+    android:elevation="5dp"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/btn_project_complete_detail_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="3dp"
+        android:src="@drawable/tool_back"
+        android:scaleType="centerInside"/>
+
+    <com.android.emerald.rentme.Views.AutoFitTextView
+        android:id="@+id/txt_project_complete_detail_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="55dp"
+        android:text="Project for langlangFan"
+        android:textColor="@color/colorWhite"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:singleLine="true" />
+
+</RelativeLayout>

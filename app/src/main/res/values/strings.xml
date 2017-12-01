@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">\@ME</string>
+    <string name="google_map_key">AIzaSyAc8abvFwi-NkUFORjOPg-Dv-sgW1gLK90</string>
+    <string name="choose_picture">Choose Picture</string>
+    <string name="choose_camera">From Camera</string>
+    <string name="choose_gallery">From Gallery</string>
+    <string name="choose_cancel">Cancel</string>
+    <string name="choose_nofound">Image not found.</string>
+    <string name="internal_storage">Internal storage</string>
+    <string name="role_consumer">Consumer</string>
+    <string name="role_talent">Talent</string>
+    <string name="crop_rest">Reset</string>
+    <string name="crop_settings">Settings</string>
+    <string name="crop_retake">Retake Picture</string>
+    <string name="crop_update">Update Picture</string>
+    <string name="frames">Frames</string>
+    <string name="doodles">Doodles</string>
+    <string name="effects">Effects</string>
+    <string name="saturation">Saturation</string>
+    <string name="brightness">Brightness</string>
+    <string name="contrast">Contrast</string>
+    <string name="save">Save</string>
+    <string name="undo">Undo</string>
+    <string name="crop_help">Move / resize to crop the picture</string>
+    <string name="side_menu_open">Drawer Open</string>
+    <string name="side_menu_close">Drawer Close</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="project_description">Software solution for a PC surveillance. Allows to transmit PC desktop and webcam view as a video feeds from an virtual ONVIF IP security camera.
+The PC with installed software acts as any other physical IP cameras and streams the desktop and webcam as live video feeds.
+ITV is a virtual ONVIF IP camera which allows one to easily include PC workstations in the surveillance system of an organization. The software captures computer screens and webcams, then streams them as real-time live video feeds from a virtual IP camera.
+ITV is a software-only, easily integrated solution for any organization that needs to monitor PC operator activities with their existing surveillance environment.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

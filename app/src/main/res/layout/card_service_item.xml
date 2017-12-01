@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/img_card_service_preview"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:src="@drawable/sample_preview"
+        android:scaleType="centerCrop"/>
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_card_service_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="$40"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/txt_card_service_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:ellipsize="end"
+            android:text="@string/project_description" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            android:id="@+id/rating_card_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srb_starCornerRadius="0"
+            app:srb_isIndicator="true"
+            app:srb_starSize="12dp"
+            app:srb_numberOfStars="5"
+            app:srb_rating="3"
+            app:srb_stepSize="1"
+            app:srb_fillColor="@color/colorYellow" />
+
+        <TextView
+            android:id="@+id/txt_card_service_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="12Reviews" />
+    </LinearLayout>
+
+</LinearLayout>

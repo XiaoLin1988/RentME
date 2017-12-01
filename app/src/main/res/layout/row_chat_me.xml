@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorEmpty"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_row_chatting_avatar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profile_empty"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:civ_border_width="0dp"
+        app:civ_border_color="#FF000000" />
+
+    <RelativeLayout
+        android:id="@+id/lyt_message"
+        android:layout_toLeftOf="@+id/img_row_chatting_avatar"
+        android:gravity="right"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="50dp"
+        android:elevation="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txt_row_chatting_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/img_row_chatting_bubble_arrow"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/back_message"
+            android:padding="16dp"
+            android:text="@string/project_description"
+            android:textColor="#000" />
+
+        <ImageView
+            android:id="@+id/img_row_chatting_bubble_arrow"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bubble_arrow2" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

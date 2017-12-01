@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="true"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/picker_hour_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/picker_hour_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/picker_plus" />
+
+        <EditText
+            android:id="@+id/picker_hour_display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/picker_back"
+            android:focusable="false"
+            android:gravity="center"
+            android:singleLine="true" >
+        </EditText>
+
+        <Button
+            android:id="@+id/picker_hour_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/picker_minus" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/picker_minute_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/picker_minute_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/picker_plus" />
+
+        <EditText
+            android:id="@+id/picker_minute_display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/picker_back"
+            android:gravity="center"
+            android:inputType="number"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/picker_minute_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/picker_minus" />
+    </LinearLayout>
+
+</LinearLayout>

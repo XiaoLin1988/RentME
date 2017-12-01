@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorEmpty"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/lyt_tool"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:elevation="5dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/btn_register_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="3dp"
+            android:src="@drawable/tool_back"
+            android:scaleType="centerInside"/>
+
+        <TextView
+            android:id="@+id/txt_register_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:textAllCaps="true"
+            android:text="Edit Profile"
+            android:textColor="@color/colorWhite"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:singleLine="true"
+            android:ellipsize="end"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/colorPrimary">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_register_avatar"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/profile_empty"
+                android:scaleType="centerCrop"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                app:civ_border_width="0dp"
+                app:civ_border_color="#FF000000"/>
+
+            <ImageView
+                android:id="@+id/img_register_camera"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="25dp"
+                android:layout_alignRight="@+id/img_register_avatar"
+                android:src="@drawable/camera_white" />
+        </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:elevation="2dp"
+                android:background="@drawable/all_shadow">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:text="Name"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@drawable/view_round">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_user"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:hint="Enter your name"
+                        android:background="@drawable/multiline_edittext"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Email"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@drawable/view_round">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_mail"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:hint="Enter your email"
+                        android:background="@drawable/multiline_edittext"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Mobile Number"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/view_round"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_phone"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:hint="Enter your phone number"
+                        android:background="@drawable/multiline_edittext"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:maxLength="15"
+                        android:inputType="number"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Password"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/view_round"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_lock"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:maxLength="20"
+                        android:hint="Enter your password"
+                        android:background="@drawable/multiline_edittext"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:inputType="textPassword"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Confirm Password"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/view_round"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_lock"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_confirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:maxLength="20"
+                        android:hint="Confirm your password"
+                        android:background="@drawable/multiline_edittext"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:inputType="textPassword"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Address"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/view_round"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_address"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:singleLine="true"
+                        android:hint="Enter your address"
+                        android:background="@drawable/multiline_edittext"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Zipcode"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/view_round"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_address"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_zipcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:maxLength="10"
+                        android:hint="Enter your zipcode"
+                        android:background="@drawable/multiline_edittext"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:inputType="number"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Description"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="top"
+                    android:background="@drawable/view_round"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_address"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:hint="Enter your description"
+                        android:gravity="top"
+                        android:background="@drawable/multiline_edittext"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"
+                        android:lines="6" />
+                </LinearLayout>
+
+                <!--
+                <TextView
+                    android:id="@+id/txt_register_weekday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Available days of week"/>
+
+                <LinearLayout
+                    android:id="@+id/form_workday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <ViewStub
+                            android:id="@+id/stub_register_weekday"
+                            android:layout_width="match_parent"
+                            android:layout_height="?actionBarSize" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_register_worktime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Work Time"/>
+
+                <LinearLayout
+                    android:id="@+id/form_worktime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/view_round"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_time"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_worktime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:maxLength="2"
+                        android:hint="Enter your work time"
+                        android:background="@drawable/multiline_edittext"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:inputType="number"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_register_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Hourly Rate"/>
+
+                <LinearLayout
+                    android:id="@+id/form_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/view_round"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/input_rate"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorWeekUnselect" />
+                    <EditText
+                        android:id="@+id/edit_register_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:hint="Enter your hourly rate"
+                        android:background="@drawable/multiline_edittext"
+                        android:maxLength="4"
+                        android:textColorHint="@color/colorWeekUnselect"
+                        android:inputType="numberDecimal"
+                        android:textSize="@dimen/txt_label_size"
+                        android:textColor="@color/colorBlack"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_register_skill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginTop="10dp"
+                    android:text="Skills"/>
+
+                <LinearLayout
+                    android:id="@+id/form_skills"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+                    <com.android.emerald.rentme.Views.FlowLayout
+                        android:id="@+id/flow_register_skills"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </com.android.emerald.rentme.Views.FlowLayout>
+                </LinearLayout>
+                -->
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_register_submit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/button_green_round"
+                android:textColor="@color/colorWhite"
+                android:layout_marginBottom="30dp"
+                android:text="Submit" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

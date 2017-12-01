@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/lyt_tool"
+        layout="@layout/layout_toolbar" />
+
+    <ListView
+        android:id="@+id/list_chatting_messages"
+        android:layout_above="@+id/lyt_chatting_send"
+        android:layout_below="@+id/lyt_tool"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="5dp"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:background="@color/colorEmpty">
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/lyt_chatting_send"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorEmpty"
+        android:orientation="horizontal"
+        android:weightSum="7"
+        android:padding="7dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/view_round">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/edit_chatting_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Type a message"
+                    android:inputType="textNoSuggestions"
+                    android:background="@drawable/multiline_edittext"
+                    android:singleLine="false"
+                    android:gravity="top"
+                    android:textSize="17sp"
+                    android:textColorHint="@color/colorWeekUnselect" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/btn_chatting_send"
+                android:background="@drawable/send_message"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

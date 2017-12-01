@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/nav_header_height"
+    android:background="@drawable/banner"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_nav_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/profile_empty"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            app:civ_border_width="0dp"
+            app:civ_border_color="#FF000000"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_nav_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/txt_label_size"
+        android:textColor="@color/colorText"
+        android:text=""/>
+
+</LinearLayout>

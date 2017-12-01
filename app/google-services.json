@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "920371387518",
+    "firebase_url": "https://rentme-169707.firebaseio.com",
+    "project_id": "rentme-169707",
+    "storage_bucket": "rentme-169707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920371387518:android:3c5b878d83c8df04",
+        "android_client_info": {
+          "package_name": "com.android.emerald.rentme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920371387518-c0if0v5161cb6t1329q0s7j2brooca9c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.emerald.rentme",
+            "certificate_hash": "5cc812468898290305881a0fd000326e9f172a0e"
+          }
+        },
+        {
+          "client_id": "920371387518-6t0avp2adriff6jjjvepbbfuppnr5nrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi15ByjbDTYPChSC5NKEm6ueDklMYutXc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920371387518-6t0avp2adriff6jjjvepbbfuppnr5nrb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
