@@ -21,7 +21,7 @@ import com.android.volley.Response;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +45,7 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
     private TextView txtTitle;
     private TextView txtDescription;
     private TextView txtTimeframe;
-    private SimpleRatingBar rating;
+    private ScaleRatingBar rating;
     private EditText editReview;
     private TextView txtWriter;
 
@@ -77,6 +77,7 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.placeholder)
                 .into(imgPreview);
 
         txtTitle = (TextView)findViewById(R.id.txt_project_complete_detail_title);
@@ -88,7 +89,7 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
         txtTimeframe = (TextView)findViewById(R.id.txt_project_complete_detail_timeframe);
         txtTimeframe.setText(Integer.toString(project.getTimeframe()));
 
-        rating = (SimpleRatingBar)findViewById(R.id.rating_project_complete_detail);
+        rating = (ScaleRatingBar)findViewById(R.id.rating_project_complete_detail);
 
         editReview = (EditText)findViewById(R.id.edit_project_complete_detail_review);
 
@@ -98,28 +99,16 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
         btnLeave.setOnClickListener(this);
 
         if (project.getTalent_score() != 0 && project.getConsumer_score() != 0) {
-            if (curUser.getType() == 1) {
-                rating.setRating(project.getConsumer_score());
-                editReview.setText(project.getConsumer_review());
-                txtWriter.setText(Integer.toString(project.getTalent_id()));
-            } else if (curUser.getType() == 2) {
-                rating.setRating(project.getTalent_score());
-                editReview.setText(project.getTalent_review());
-                txtWriter.setText(Integer.toString(project.getConsumer_id()));
-            }
-            rating.setIndicator(true);
+            rating.setRating(project.getTalent_score());
+            editReview.setText(project.getTalent_review());
+            txtWriter.setText(Integer.toString(project.getConsumer_id()));
+
             editReview.setEnabled(false);
             txtWriter.setVisibility(View.GONE);
 
             btnLeave.setVisibility(View.GONE);
         } else {
-            if (curUser.getType() == 1 && project.getTalent_score() != 0) {
-                rating.setVisibility(View.GONE);
-                editReview.setVisibility(View.GONE);
-                txtWriter.setVisibility(View.GONE);
-
-                btnLeave.setVisibility(View.GONE);
-            } else if (curUser.getType() == 2 && project.getConsumer_score() != 0) {
+            if (project.getConsumer_score() != 0) {
                 rating.setVisibility(View.GONE);
                 editReview.setVisibility(View.GONE);
                 txtWriter.setVisibility(View.GONE);
@@ -133,6 +122,7 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_project_complete_detail_leave:
+                /*
                 if (rating.getRating() == 0 || editReview.getText().toString().equals("")) {
                     Toast.makeText(ProjectCompleteDetailActivity.this, "You should input ratings and reviews.", Toast.LENGTH_LONG).show();
                     return;
@@ -159,6 +149,9 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
                     APIRequester requester = new APIRequester(Request.Method.POST, url, params, this, null);
                     AppController.getInstance().addToRequestQueue(requester, Constants.JSON_REQUEST);
                 }
+                */
+
+
                 break;
             case R.id.btn_project_complete_detail_back:
                 finish();

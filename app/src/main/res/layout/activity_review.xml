@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/view_round">
+
+                <EditText
+                    android:id="@+id/edit_review_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/multiline_edittext"
+                    android:hint="Please leave your review"
+                    android:textColorHint="@color/colorWeekUnselect"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/font_normal" />
+
+            </LinearLayout>
+
+            <!--
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_review_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            -->
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

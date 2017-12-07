@@ -12,10 +12,15 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
         <item name="android:typeface">serif</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="TransparentActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
@@ -27,6 +32,13 @@
     <style name="FullWidthEditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/multiline_edittext</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="RippleStyleGray">
+        <item name="mrl_rippleOverlay">true</item>
+        <item name="mrl_rippleColor">@color/colorGray</item>
+        <item name="mrl_rippleHover">true</item>
+        <item name="mrl_rippleAlpha">0.2</item>
     </style>
 
 </resources>

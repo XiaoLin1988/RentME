@@ -12,7 +12,7 @@ import com.android.emerald.rentme.Models.MessageModel;
 import com.android.emerald.rentme.Models.UserModel;
 import com.android.emerald.rentme.R;
 import com.android.emerald.rentme.Utils.Utils;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -57,14 +57,14 @@ public class ChattingListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.row_chat_me, parent, false);
             ImageView me = (ImageView)convertView.findViewById(R.id.img_row_chatting_avatar);
             if (curUser.getAvatar() != null)
-                Picasso.with(context).load(curUser.getAvatar()).resize(150,150).centerCrop().into(me);
+                Glide.with(context).load(curUser.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(me);
         } else {
             convertView = LayoutInflater.from(context).inflate(R.layout.row_chat_you, parent, false);
             ImageView you = (ImageView)convertView.findViewById(R.id.img_row_chatting_avatar);
             if (curUser.getId() == talentId && consumerAvatar != null)
-                Picasso.with(context).load(consumerAvatar).resize(150,150).centerCrop().into(you);
+                Glide.with(context).load(consumerAvatar).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(you);
             else if (curUser.getId() == consumerId && talentAvatar != null)
-                Picasso.with(context).load(talentAvatar).resize(150,150).centerCrop().into(you);
+                Glide.with(context).load(talentAvatar).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(you);
         }
 
         TextView txtMessage = (TextView)convertView.findViewById(R.id.txt_row_chatting_message);

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.emerald.rentme"
-    android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+    package="com.android.emerald.rentme" >
 
     <permission
         android:name="com.android.emerald.rentme.permission.MAPS_RECEIVE"
@@ -72,23 +71,34 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ServiceDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".ServiceDetailActivity2"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".ProfileActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".ReviewActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".WebLinkActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".VideoLinkActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".PhotoActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-        <receiver android:name=".Receiver.DeviceBootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        -->
+
         <service
             android:name=".Service.FirebaseTracker"
             android:process=":remote" >

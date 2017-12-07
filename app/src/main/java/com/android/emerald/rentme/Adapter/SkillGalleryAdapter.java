@@ -57,6 +57,7 @@ public class SkillGalleryAdapter extends RecyclerView.Adapter<SkillGalleryAdapte
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.placeholder)
                 .into(holder.thumbnail);
         holder.title.setText(skill.getTitle());
     }

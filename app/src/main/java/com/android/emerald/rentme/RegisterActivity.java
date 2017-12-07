@@ -34,24 +34,18 @@ import com.android.emerald.rentme.Views.FlowLayout;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.bumptech.glide.util.Util;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.touchboarder.weekdaysbuttons.WeekdaysDataItem;
 import com.touchboarder.weekdaysbuttons.WeekdaysDataSource;
-import com.touchboarder.weekdaysbuttons.WeekdaysDrawableProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by emerald on 5/29/2017.
@@ -60,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
 
     private WeekdaysDataSource weekDayPicker;
 
-    private CircleImageView imgAvatar;
+    private CircularImageView imgAvatar;
 
     private ImageView btnBack;
     private TextView txtPage;
@@ -121,8 +115,7 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
 
         initViewVariables();
 
-        if (usertype == 2 || (curUser != null && curUser.getType() == 2))
-            getSkills();
+        getSkills();
     }
 
     private void initViewVariables() {
@@ -152,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
         //workDays.add(Calendar.SUNDAY);
         //workDays.add(Calendar.SATURDAY);
         */
-        imgAvatar = (CircleImageView)findViewById(R.id.img_register_avatar);
+        imgAvatar = (CircularImageView)findViewById(R.id.img_register_avatar);
 
         imgCamera = (ImageView)findViewById(R.id.img_register_camera);
         imgCamera.setOnClickListener(this);
@@ -184,13 +177,10 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
         txtRate = (TextView)findViewById(R.id.txt_register_rate);
         txtSkill = (TextView)findViewById(R.id.txt_register_skill);
         */
-        if ((curUser != null && curUser.getType() == 1) || usertype == 1) {
-            hideConsumer();
-        }
+        hideConsumer();
         if (curUser != null) {
             prepareUserData(curUser.getName(), curUser.getEmail(), curUser.getPhone(), curUser.getAddress(),
-                    Integer.toString(curUser.getZipcode()), curUser.getWorkday(), Integer.toString(curUser.getWorktime()),
-                    Double.toString(curUser.getRate()), curUser.getSkills(), curUser.getAvatar(), curUser.getDescription());
+                    Integer.toString(curUser.getZipcode()), curUser.getAvatar(), curUser.getDescription());
         }
     }
 
@@ -312,10 +302,6 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
                     Map<String, String> params = new HashMap<>();
                     params.put("name", name);
                     params.put("email", email);
-                    if (usertype != 0)
-                        params.put("type", Integer.toString(usertype));
-                    else if (curUser != null)
-                        params.put("type", Integer.toString(curUser.getType()));
                     params.put("password", password);
                     params.put("phone", phone);
                     params.put("address", address);
@@ -353,18 +339,10 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
     }
 
     private boolean checkValidation(String name, String email, String phone, String password, String confirm, String address, String zipcode, String worktime, String hourlyrate) {
-        if (usertype == 1 || (curUser != null && curUser.getType() == 1)) {
-            if (name.equals("") || email.equals("") || phone.equals("") || password.equals("") || confirm.equals("") || address.equals("") || zipcode.equals(""))
-                return false;
-            else
-                return true;
-        } else if (usertype == 2 || (curUser!= null && curUser.getType() == 2)) {
-            if (name.equals("") || password.equals("") || confirm.equals("") || address.equals("") || zipcode.equals("") || worktime.equals("") || hourlyrate.equals(""))
-                return false;
-            else
-                return true;
-        } else
+        if (name.equals("") || password.equals("") || confirm.equals("") || address.equals("") || zipcode.equals("") || worktime.equals("") || hourlyrate.equals(""))
             return false;
+        else
+            return true;
     }
 
     private void emptyFields() {
@@ -397,10 +375,6 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
         params.put("email", email);
-        if (usertype != 0)
-            params.put("type", Integer.toString(usertype));
-        else if (curUser != null)
-            params.put("type", Integer.toString(curUser.getType()));
         params.put("password", password);
         params.put("phone", phone);
         params.put("address", address);
@@ -540,7 +514,7 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
                         skillChecks.add(skill);
                     }
 
-                    if (curUser != null && curUser.getType() == 2) {
+                    if (curUser != null) {
                         String skillD = curUser.getSkills().substring(1, curUser.getSkills().length() - 1);
                         String[] skillStrArray = skillD.split(",");
 
@@ -548,7 +522,6 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
                             for (int j = 0; j < skillStrArray.length; j++) {
                                 if (skillChecks.get(i).getText().equals(skillStrArray[j].trim())) {
                                     skillChecks.get(i).setChecked(true);
-                                    //skills.add(skillStrArray[j].trim());
                                     break;
                                 }
                             }
@@ -564,18 +537,14 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
                     }
                 } else {
                     Toast.makeText(RegisterActivity.this, "Account already exists.", Toast.LENGTH_LONG).show();
-                    //emptyFields();
                 }
             } else if (API_TAG == 3) {
                 if (response.getBoolean("status")) {
                     JSONArray jsonArray = response.getJSONArray("data");
                     JSONObject jsonUser = jsonArray.getJSONObject(0);
-                    curUser.setType(jsonUser.getInt("type"));
-                    if (curUser.getType() == 0)
-                        hideConsumer();
+                    hideConsumer();
                     prepareUserData(jsonUser.getString("name"), jsonUser.getString("email"), jsonUser.getString("phone"), jsonUser.getString("address"),
-                            jsonUser.getString("zipcode"), jsonUser.getString("workday"), jsonUser.getString("worktime"),
-                            jsonUser.getString("rate"), jsonUser.getString("skills"), jsonUser.getString("avatar"), jsonUser.getString("description"));
+                            jsonUser.getString("zipcode"), jsonUser.getString("avatar"), jsonUser.getString("description"));
                 } else {
                     Toast.makeText(RegisterActivity.this, response.getString("data"), Toast.LENGTH_LONG).show();
                 }
@@ -585,10 +554,10 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
         }
     }
 
-    private void prepareUserData(String name, String email, String phone, String address, String zipcode, String workday, String worktime, String rate, String skill, String avatar, String description) {
+    private void prepareUserData(String name, String email, String phone, String address, String zipcode, String avatar, String description) {
         if (avatar != null && !avatar.equals("") && !avatar.equals("null")) {
             //showCroppedImage(avatar);
-            Picasso.with(RegisterActivity.this).load(avatar).into(imgAvatar);
+            Glide.with(RegisterActivity.this).load(avatar).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
         }
 
         editUsername.setText(name);

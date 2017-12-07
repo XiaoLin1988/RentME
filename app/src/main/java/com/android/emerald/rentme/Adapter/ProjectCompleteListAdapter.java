@@ -22,11 +22,9 @@ import com.android.emerald.rentme.R;
 import com.android.emerald.rentme.Utils.Constants;
 import com.android.emerald.rentme.Utils.Utils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-//import com.github.siyamed.shapeimageview.RoundedImageView;
+import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.google.gson.Gson;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
-import com.squareup.picasso.Picasso;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.ArrayList;
 
@@ -76,34 +74,21 @@ public class ProjectCompleteListAdapter extends BaseAdapter {
             }
         });
 
-        //RoundedImageView preview = (RoundedImageView)convertView.findViewById(R.id.img_project_complete_preview);
-        ImageView preview = (ImageView)convertView.findViewById(R.id.img_project_complete_preview);
+        RoundedImageView preview = (RoundedImageView)convertView.findViewById(R.id.img_project_complete_preview);
+        Glide.with(context).load(project.getPreview()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(preview);
 
-        Picasso.with(context).load(project.getPreview()).resize(300,200).centerCrop().into(preview);
-
-        /*
-        Glide.with(context).load(project.getPreview())
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(preview);
-        */
         //both talent and consumer left reviews
         if (project.getConsumer_score() != 0 && project.getTalent_score() != 0) {
             TextView txtTitle = (TextView)convertView.findViewById(R.id.txt_project_complete_title);
             txtTitle.setText(project.getName());
 
-            SimpleRatingBar ratingBar = (SimpleRatingBar)convertView.findViewById(R.id.rating_project_complete);
+
+            ScaleRatingBar ratingBar = (ScaleRatingBar)convertView.findViewById(R.id.rating_project_complete);
             final TextView txtReview = (TextView)convertView.findViewById(R.id.txt_project_complete_review);
 
-            if (curUser.getType() == 1) {
-                ratingBar.setRating(project.getConsumer_score());
-            }
-            else if (curUser.getType() == 2) {
-                ratingBar.setRating(project.getTalent_score());
-            } else {
-                ratingBar.setRating(0);
-            }
+            ratingBar.setRating(project.getTalent_score());
+            ratingBar.setRating(0);
+
             txtReview.setText(project.getDescription());
             ViewTreeObserver vto = txtReview.getViewTreeObserver();
             vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -133,7 +118,7 @@ public class ProjectCompleteListAdapter extends BaseAdapter {
             TextView txtTitle = (TextView)convertView.findViewById(R.id.txt_project_complete_title);
             txtTitle.setText(project.getName());
 
-            SimpleRatingBar ratingBar = (SimpleRatingBar)convertView.findViewById(R.id.rating_project_complete);
+            ScaleRatingBar ratingBar = (ScaleRatingBar)convertView.findViewById(R.id.rating_project_complete);
             ratingBar.setRating(0);
 
             final TextView txtReview = (TextView)convertView.findViewById(R.id.txt_project_complete_review);

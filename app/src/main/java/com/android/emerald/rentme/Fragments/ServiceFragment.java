@@ -17,6 +17,7 @@ import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.Models.SkillServiceModel;
 import com.android.emerald.rentme.R;
 import com.android.emerald.rentme.ServiceDetailActivity;
+import com.android.emerald.rentme.ServiceDetailActivity2;
 import com.android.emerald.rentme.Task.APIRequester;
 import com.android.emerald.rentme.Utils.Constants;
 import com.android.emerald.rentme.Utils.Utils;
@@ -99,15 +100,17 @@ public class ServiceFragment extends Fragment implements Response.ErrorListener,
                 service.setId(obj.getInt("id"));
                 service.setTitle(obj.getString("title"));
                 service.setTalent_id(obj.getInt("talent_id"));
-                service.setSkill(obj.getString("skill"));
+                service.setSkill_id(obj.getInt("skill_id"));
+                service.setSkill_title(obj.getString("skill_title"));
+                service.setSkill_preview(obj.getString("skill_preview"));
                 service.setPreview(obj.getString("preview"));
                 service.setBalance(obj.getInt("balance"));
                 service.setDetail(obj.getString("detail"));
                 if (!obj.getString("review_score").equals("null"))
-                    service.setScore(obj.getDouble("review_score"));
+                    service.setReview_score(obj.getDouble("review_score"));
                 else
-                    service.setScore(0);
-                service.setReviews(obj.getInt("review_cnt"));
+                    service.setReview_score(0);
+                service.setReview_cnt(obj.getInt("review_cnt"));
 
                 adapter.addService(service);
             }
@@ -120,8 +123,8 @@ public class ServiceFragment extends Fragment implements Response.ErrorListener,
     public void onServiceClick(ServiceModel item) {
         Gson gson = new Gson();
         String json =  gson.toJson(item);
-        Intent intent = new Intent(getContext(), ServiceDetailActivity.class);
-        intent.putExtra(Constants.EXTRA_SERVICE_DETAIL, json);
+        Intent intent = new Intent(getContext(), ServiceDetailActivity2.class);
+        intent.putExtra(Constants.EXTRA_SERVICE_DETAIL, item);
 
         startActivity(intent);
     }

@@ -58,17 +58,15 @@ public class ServiceListAdapter extends BaseAdapter {
         ServiceRecyclerAdapter adapter = new ServiceRecyclerAdapter(context, serviceModel.getServices(), listener);
         recycler.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true);
-        //layoutManager.scrollToPositionWithOffset(0, 0);
         layoutManager.setStackFromEnd(true);
         recycler.setLayoutManager(layoutManager);
-        //recycler.smoothScrollToPosition(0);
         return convertView;
     }
 
     public void addService(ServiceModel service) {
         boolean added = false;
         for (int j = 0; j < services.size(); j++ ){
-            if (services.get(j).getSkill().equals(service.getSkill())) {
+            if (services.get(j).getSkill().equals(service.getSkill_title())) {
                 services.get(j).getServices().add(service);
                 added = true;
                 break;
@@ -76,8 +74,8 @@ public class ServiceListAdapter extends BaseAdapter {
         }
         if (!added) {
             SkillServiceModel skillService = new SkillServiceModel();
-            skillService.setSkill(service.getSkill());;
-            List<ServiceModel> ss = new ArrayList<ServiceModel>();
+            skillService.setSkill(service.getSkill_title());;
+            ArrayList<ServiceModel> ss = new ArrayList<ServiceModel>();
             ss.add(service);
             skillService.setServices(ss);
             services.add(skillService);

@@ -15,13 +15,8 @@ import com.android.emerald.rentme.ProjectProgressDetailActivity;
 import com.android.emerald.rentme.R;
 import com.android.emerald.rentme.Utils.Constants;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-//import com.github.siyamed.shapeimageview.RoundedImageView;
+import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.google.gson.Gson;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -100,16 +95,9 @@ public class ProjectInProgressListAdapter extends BaseAdapter {
             }
         });
 
-        //RoundedImageView preview = (RoundedImageView)convertView.findViewById(R.id.img_project_progress_preview);
-        ImageView preview = (ImageView) convertView.findViewById(R.id.img_project_progress_preview);
-        Picasso.with(context).load(project.getPreview()).resize(300,200).centerCrop().into(preview);
-        /*
-        Glide.with(context).load(project.getPreview())
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(preview);
-        */
+        RoundedImageView preview = (RoundedImageView)convertView.findViewById(R.id.img_project_progress_preview);
+        Glide.with(context).load(project.getPreview()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(preview);
+
         return convertView;
     }
 

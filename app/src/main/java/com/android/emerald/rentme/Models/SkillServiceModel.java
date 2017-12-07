@@ -1,13 +1,13 @@
 package com.android.emerald.rentme.Models;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by emerald on 6/23/2017.
  */
 public class SkillServiceModel {
     private String skill;
-    private List<ServiceModel> services;
+    private ArrayList<ServiceModel> services;
 
     public SkillServiceModel() {
 
@@ -21,11 +21,11 @@ public class SkillServiceModel {
         this.skill = skill;
     }
 
-    public List<ServiceModel> getServices() {
+    public ArrayList<ServiceModel> getServices() {
         return services;
     }
 
-    public void setServices(List<ServiceModel> services) {
+    public void setServices(ArrayList<ServiceModel> services) {
         this.services = services;
     }
 }

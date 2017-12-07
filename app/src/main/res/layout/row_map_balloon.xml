@@ -15,11 +15,9 @@
         app:siBorderWidth="1dp"
         app:siBorderColor="@color/colorWeekUnselect"/>
     -->
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.github.siyamed.shapeimageview.CircularImageView
         android:id="@+id/img_marker"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/profile_empty"
-        app:civ_border_width="1dp"
-        app:civ_border_color="@color/colorWeekUnselect"/>
+        android:src="@drawable/profile_empty"/>
 </LinearLayout>

@@ -1,68 +1,66 @@
 package com.android.emerald.rentme.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by emerald on 5/30/2017.
  */
-public class UserModel {
+public class UserModel implements Serializable {
     private int id;
-    private int type;
-    private String avatar;
     private String name;
     private String email;
     private String phone;
     private String password;
     private String address;
-    private double latidue;
+    private double latitude;
     private double longitude;
     private int zipcode;
     private String description;
-    private String workday;
-    private int worktime;
-    private double rate;
     private String skills;
+    private String avatar;
+    private String fbId;
+    private String fbName;
+    private String fbProfileUrl;
+    private String ggId;
+    private String ggName;
+    private String ggProfileUrl;
+    private String wxId;
+    private String wxName;
+    private String wxProfileUrl;
+    private String ctime;
+    private String utime;
+    private int usr_df;
+    private String coverImg;
+    private String mainImg;
     private double distance;
 
     public UserModel() {
-        this.id = 0;
-        this.type = 0;
-        this.avatar = "";
-        this.name = "";
-        this.email = "";
-        this.phone = "";
-        this.password = "";
-        this.address = "";
-        this.latidue = 0;
-        this.longitude = 0;
-        this.zipcode = 0;
-        this.description = "";
-        this.workday = "[]";
-        this.worktime = 0;
-        this.rate = 0;
-        this.skills = "[]";
-        this.distance = 0;
+
     }
 
-    public UserModel(int id, int type, String avatar, String name, String email, String phone, String password,
-                     String address, double latidue, double longitude, int zipcode, String description,
-                     String workday, int worktime, double rate, String skills, double distance) {
+    public UserModel(int id, String name, String email, String phone, String password, String address, double latidue, double longitude, int zipcode, String description, String skills, String avatar, String fbId, String fbName, String fbProfileUrl, String ggId, String ggName, String ggProfileUrl, String wxId, String wxName, String wxProfileUrl, double distance) {
         this.id = id;
-        this.type = type;
-        this.avatar = avatar;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.password = password;
         this.address = address;
-        this.latidue = latidue;
+        this.latitude = latidue;
         this.longitude = longitude;
         this.zipcode = zipcode;
         this.description = description;
-        this.workday = workday;
-        this.worktime = worktime;
-        this.rate = rate;
         this.skills = skills;
+        this.avatar = avatar;
+        this.fbId = fbId;
+        this.fbName = fbName;
+        this.fbProfileUrl = fbProfileUrl;
+        this.ggId = ggId;
+        this.ggName = ggName;
+        this.ggProfileUrl = ggProfileUrl;
+        this.wxId = wxId;
+        this.wxName = wxName;
+        this.wxProfileUrl = wxProfileUrl;
         this.distance = distance;
     }
 
@@ -74,12 +72,20 @@ public class UserModel {
         this.id = id;
     }
 
-    public int getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
@@ -88,22 +94,6 @@ public class UserModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPassword() {
@@ -120,14 +110,6 @@ public class UserModel {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public double getLatidue() {
-        return latidue;
-    }
-
-    public void setLatidue(double latidue) {
-        this.latidue = latidue;
     }
 
     public double getLongitude() {
@@ -154,30 +136,6 @@ public class UserModel {
         this.description = description;
     }
 
-    public String getWorkday() {
-        return workday;
-    }
-
-    public void setWorkday(String workday) {
-        this.workday = workday;
-    }
-
-    public int getWorktime() {
-        return worktime;
-    }
-
-    public void setWorktime(int worktime) {
-        this.worktime = worktime;
-    }
-
-    public double getRate() {
-        return rate;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
-
     public String getSkills() {
         return skills;
     }
@@ -186,12 +144,84 @@ public class UserModel {
         this.skills = skills;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getFbId() {
+        return fbId;
+    }
+
+    public void setFbId(String fbId) {
+        this.fbId = fbId;
+    }
+
+    public String getFbName() {
+        return fbName;
+    }
+
+    public void setFbName(String fbName) {
+        this.fbName = fbName;
+    }
+
+    public String getFbProfileUrl() {
+        return fbProfileUrl;
+    }
+
+    public void setFbProfileUrl(String fbProfileUrl) {
+        this.fbProfileUrl = fbProfileUrl;
+    }
+
+    public String getGgId() {
+        return ggId;
+    }
+
+    public void setGgId(String ggId) {
+        this.ggId = ggId;
+    }
+
+    public String getGgName() {
+        return ggName;
+    }
+
+    public void setGgName(String ggName) {
+        this.ggName = ggName;
+    }
+
+    public String getGgProfileUrl() {
+        return ggProfileUrl;
+    }
+
+    public void setGgProfileUrl(String ggProfileUrl) {
+        this.ggProfileUrl = ggProfileUrl;
+    }
+
+    public String getWxId() {
+        return wxId;
+    }
+
+    public void setWxId(String wxId) {
+        this.wxId = wxId;
+    }
+
+    public String getWxName() {
+        return wxName;
+    }
+
+    public void setWxName(String wxName) {
+        this.wxName = wxName;
+    }
+
+    public String getWxProfileUrl() {
+        return wxProfileUrl;
+    }
+
+    public void setWxProfileUrl(String wxProfileUrl) {
+        this.wxProfileUrl = wxProfileUrl;
     }
 
     public double getDistance() {
@@ -200,5 +230,53 @@ public class UserModel {
 
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+
+    public String getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(String ctime) {
+        this.ctime = ctime;
+    }
+
+    public String getUtime() {
+        return utime;
+    }
+
+    public void setUtime(String utime) {
+        this.utime = utime;
+    }
+
+    public int getUsr_df() {
+        return usr_df;
+    }
+
+    public void setUsr_df(int usr_df) {
+        this.usr_df = usr_df;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getCoverImg() {
+        return coverImg;
+    }
+
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg;
+    }
+
+    public String getMainImg() {
+        return mainImg;
+    }
+
+    public void setMainImg(String mainImg) {
+        this.mainImg = mainImg;
     }
 }

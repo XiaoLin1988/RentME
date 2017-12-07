@@ -28,23 +28,17 @@ import com.android.emerald.rentme.Fragments.ServiceFragment;
 import com.android.emerald.rentme.Models.UserModel;
 import com.android.emerald.rentme.Service.FirebaseTracker;
 import com.android.emerald.rentme.Service.GPSTracker;
+import com.android.emerald.rentme.Utils.Constants;
 import com.android.emerald.rentme.Utils.Utils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import com.github.siyamed.shapeimageview.CircularImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
 
-    private CircleImageView imgAvatar;
+    private CircularImageView imgAvatar;
     private TextView txtUsername;
 
     private Toolbar toolbar;
@@ -106,25 +100,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         txtPage = (TextView)findViewById(R.id.txt_container_page);
         txtPage.setText("Project list");
 
-        //drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        /*
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.side_menu_open, R.string.side_menu_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        */
         navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
-        /*
-        if (curUser.getType() == 2) {
-            navigationView.getMenu().findItem(R.id.nav_post).setVisible(false);
-        }
-        */
+
         View headerViewView =  navigationView.getHeaderView(0);
-        imgAvatar = (CircleImageView)headerViewView.findViewById(R.id.img_nav_avatar);
-        if (!curUser.getAvatar().equals("") && curUser.getAvatar() != null && !curUser.getAvatar().equals("null")) {
-            //Bitmap myBitmap = BitmapFactory.decodeFile(curUser.getAvatar());
-            //imgAvatar.setImageBitmap(myBitmap);
-            Picasso.with(MainActivity.this).load(curUser.getAvatar()).into(imgAvatar);
+        imgAvatar = (CircularImageView) headerViewView.findViewById(R.id.img_nav_avatar);
+        if (curUser.getAvatar() != null && !curUser.getAvatar().equals("") && !curUser.getAvatar().equals("null")) {
+            Glide.with(MainActivity.this).load(curUser.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
         }
         txtUsername = (TextView)headerViewView.findViewById(R.id.txt_nav_username);
         txtUsername.setText(curUser.getName());
@@ -153,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void openMyProjects() {
         btnPlus.setVisibility(View.GONE);
-        //project = ProjectFragment.newInstance(MainActivity.this);
 
         FragmentManager fm = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
@@ -202,7 +183,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openCreateProject();
                 break;
             case R.id.nav_edit:
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                //startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                intent.putExtra(Constants.KEY_USER, curUser);
+                startActivity(intent);
                 break;
             case R.id.nav_projects:
                 openMyProjects();

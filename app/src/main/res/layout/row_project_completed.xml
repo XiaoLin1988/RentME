@@ -19,15 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="90dp">
 
-        <ImageView
-            android:id="@+id/img_project_complete_preview"
-            android:src="@drawable/sample_preview"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:scaleType="fitXY"
-            android:layout_width="95dp"
-            android:layout_height="70dp" />
-        <!--
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/img_project_complete_preview"
             android:layout_gravity="center_vertical"
@@ -38,7 +29,6 @@
             app:siBorderColor="@color/colorWhite"
             app:siRadius="4dp"
             app:siSquare="false"/>
-        -->
 
         <LinearLayout
             android:orientation="vertical"
@@ -66,18 +56,24 @@
                     android:layout_weight="0.7"
                     android:ellipsize="end" />
 
-                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                <com.willy.ratingbar.ScaleRatingBar
                     android:id="@+id/rating_project_complete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srb_starCornerRadius="0"
-                    app:srb_isIndicator="true"
-                    app:srb_starSize="18dp"
-                    app:srb_numberOfStars="5"
-                    app:srb_rating="0"
+                    android:visibility="gone"
+                    app:srb_numStars="5"
+                    app:srb_rating="4"
+                    app:srb_starWidth="18dp"
+                    app:srb_starHeight="18dp"
+                    app:srb_starPadding="0dp"
                     app:srb_stepSize="1"
-                    app:srb_borderColor="@color/colorYellow"
-                    app:srb_fillColor="@color/colorYellow" />
+                    app:srb_isIndicator="false"
+                    app:srb_clickable="true"
+                    app:srb_scrollable="true"
+                    app:srb_clearRatingEnabled="true"
+                    app:srb_drawableEmpty="@drawable/star_empty"
+                    app:srb_drawableFilled="@drawable/star_fill">
+                </com.willy.ratingbar.ScaleRatingBar>
 
             </LinearLayout>
 

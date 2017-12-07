@@ -17,6 +17,7 @@ import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.Models.SkillServiceModel;
 import com.android.emerald.rentme.R;
 import com.android.emerald.rentme.ServiceDetailActivity;
+import com.android.emerald.rentme.ServiceDetailActivity2;
 import com.android.emerald.rentme.Task.APIRequester;
 import com.android.emerald.rentme.Utils.Constants;
 import com.android.volley.Request;
@@ -32,8 +33,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by emerald on 6/23/2017.
@@ -65,11 +64,6 @@ public class ProjectCreate20Fragment extends Fragment implements ServiceRecycler
 
         APIRequester requester = new APIRequester(Request.Method.POST, url, params, this, this);
         AppController.getInstance().addToRequestQueue(requester, Constants.JSON_REQUEST);
-
-        /*
-        APIStringRequester requester = new APIStringRequester(Request.Method.POST, url, params, this, this);
-        AppController.getInstance().addToRequestQueue(requester, Constants.JSON_REQUEST);
-        */
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,10 +96,17 @@ public class ProjectCreate20Fragment extends Fragment implements ServiceRecycler
                 service.setId(obj.getInt("id"));
                 service.setTitle(obj.getString("title"));
                 service.setTalent_id(obj.getInt("talent_id"));
-                service.setSkill(obj.getString("skill"));
                 service.setPreview(obj.getString("preview"));
                 service.setBalance(obj.getInt("balance"));
                 service.setDetail(obj.getString("detail"));
+                service.setSkill_id(obj.getInt("skill_id"));
+                service.setSkill_title(obj.getString("skill_title"));
+                service.setSkill_preview(obj.getString("skill_preview"));
+                service.setReview_cnt(obj.getInt("review_cnt"));
+                if (!obj.getString("review_score").equals("null"))
+                    service.setReview_score(obj.getDouble("review_score"));
+                else
+                    service.setReview_score(0);
 
                 adapter.addService(service);
             }
@@ -116,10 +117,8 @@ public class ProjectCreate20Fragment extends Fragment implements ServiceRecycler
 
     @Override
     public void onServiceClick(ServiceModel item) {
-        Gson gson = new Gson();
-        String json =  gson.toJson(item);
-        Intent intent = new Intent(getContext(), ServiceDetailActivity.class);
-        intent.putExtra(Constants.EXTRA_SERVICE_DETAIL, json);
+        Intent intent = new Intent(getContext(), ServiceDetailActivity2.class);
+        intent.putExtra(Constants.EXTRA_SERVICE_DETAIL, item);
 
         startActivity(intent);
     }

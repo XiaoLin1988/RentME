@@ -3,6 +3,7 @@
     <color name="colorPrimary">#dd2c00</color>
     <color name="colorPrimaryDark">#891500</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorTransparent">#00000000</color>
     <color name="colorText">#ffffff</color>
     <color name="colorWeekSelect">#dd2c00</color>
     <color name="colorWeekUnselect">#CCCCCC</color>

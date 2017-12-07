@@ -45,17 +45,24 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+        <com.willy.ratingbar.ScaleRatingBar
             android:id="@+id/rating_card_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srb_starCornerRadius="0"
-            app:srb_isIndicator="true"
-            app:srb_starSize="12dp"
-            app:srb_numberOfStars="5"
-            app:srb_rating="3"
+            android:visibility="gone"
+            app:srb_numStars="5"
+            app:srb_rating="4"
+            app:srb_starWidth="20dp"
+            app:srb_starHeight="20dp"
+            app:srb_starPadding="0dp"
             app:srb_stepSize="1"
-            app:srb_fillColor="@color/colorYellow" />
+            app:srb_isIndicator="false"
+            app:srb_clickable="true"
+            app:srb_scrollable="true"
+            app:srb_clearRatingEnabled="true"
+            app:srb_drawableEmpty="@drawable/star_empty"
+            app:srb_drawableFilled="@drawable/star_fill">
+        </com.willy.ratingbar.ScaleRatingBar>
 
         <TextView
             android:id="@+id/txt_card_service_review"

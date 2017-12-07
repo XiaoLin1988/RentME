@@ -47,18 +47,19 @@ public class Constants {
     public static final String EXTRA_TALENT = "TALENT";
 
     public static final int MAX_SKILLS = 5;
-    public static final int SEARCH_RADIUS = 10;
+    public static final int SEARCH_RADIUS = 5000;
 
-    public static final String SITE_URL = "http://34.203.243.197/";
-    //public static final String API_ROOT_URL = "http://192.168.0.208/rentme/index.php/api/";
-    public static final String API_ROOT_URL = "http://34.203.243.197/index.php/api/";
+    //public static final String SITE_URL = "http://34.203.243.197/";
+    public static final String SITE_URL = "http://192.168.0.208/";
+    public static final String API_ROOT_URL = "http://192.168.0.208/rentme/index.php/api/";
+    //public static final String API_ROOT_URL = "http://34.203.243.197/index.php/api/";
     public static final String API_IMAGE_UPLOAD = "uploadImage";
     public static final String API_USER_LOGIN = "loginUser";
     public static final String API_USER_FORGOT = "forgotPassword";
     public static final String API_USER_EMAIL = "sendEmail";
     public static final String API_USER_REGISTER = "registerUser";
     public static final String API_USER_EDIT = "editUserProfile";
-    public static final String API_USER_SEARCH_BY_LOCATION = "searchByLocation";
+    public static final String API_USER_SEARCH_BY_LOCATION = "searchByLocation?XDEBUG_SESSION_START=16770";
     public static final String API_USER_SHARE_LOCATION = "shareLocation";
     public static final String API_USER_GET_BY_ID = "getUserById";
     public static final String API_USER_SERVICE = "getUserServices";
@@ -102,7 +103,17 @@ public class Constants {
     public static final int ACTION_DOODLE = 1025;
     public static final int ACTION_FRAME = 1026;
 
-    public static final int WALLET_ENVIRONMENT = WalletConstants.ENVIRONMENT_TEST;
-    public static final String MERCHANT_NAME = "RentME Founder";
-    public static final String CURRENCY_CODE_USD = "USD";
+    public static final int VALUE_REVIEW_SERVICE = 0;
+    public static final int VALUE_REVIEW_REVIEW = 1;
+
+    public static final int VALUE_LINK_YOUTUBE = 0;
+    public static final int VALUE_LINK_VIMEO = 1;
+    public static final int VALUE_LINK_NORMAL = 2;
+
+    public static final int VALUE_IMG_USER_COVER = 0;
+    public static final int VALUE_IMG_USER_MAIN = 1;
+    public static final int VALUE_IMG_SERVICE = 2;
+    public static final int VALUE_IMG_SKILL = 3;
+
+    public static final String KEY_USER = "key_user";
 }

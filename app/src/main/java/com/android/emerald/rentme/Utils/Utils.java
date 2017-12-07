@@ -8,14 +8,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityManagerCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 
 import com.android.emerald.rentme.Models.UserModel;
+import com.android.emerald.rentme.R;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -73,5 +79,38 @@ public class Utils {
     public static boolean checkPermission (Context context, String permission) {
         int res = context.checkCallingOrSelfPermission(permission);
         return (res == PackageManager.PERMISSION_GRANTED);
+    }
+
+    public static int getGridSpanCount(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        display.getMetrics(displayMetrics);
+        float screenWidth  = displayMetrics.widthPixels;
+        float cellWidth = activity.getResources().getDimension(R.dimen.recycler_item_size);
+        return Math.round(screenWidth / cellWidth);
+    }
+
+    public static String beautifyDate(Date date, boolean time) {
+        SimpleDateFormat formatter = null;
+        if (time)
+            formatter = new SimpleDateFormat("MMM dd, yyyy h:m a");
+        else
+            formatter = new SimpleDateFormat("MMM dd, yyyy");
+
+        String res = formatter.format(date);
+
+        return res;
+    }
+
+    public static Date stringToDate(String dt) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = format.parse(dt);
+            return date;
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 }

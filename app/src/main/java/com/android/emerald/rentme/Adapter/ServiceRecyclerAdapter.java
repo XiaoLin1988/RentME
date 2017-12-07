@@ -7,24 +7,23 @@ import android.text.style.LeadingMarginSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.emerald.rentme.Models.Effect;
 import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.R;
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.willy.ratingbar.ScaleRatingBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecyclerAdapter.ServiceViewHolder>{
     private Context context;
-    private List<ServiceModel> serviceList;
+    private ArrayList<ServiceModel> serviceList;
     private final OnServiceClickListener listener;
 
-    public ServiceRecyclerAdapter(Context context, List<ServiceModel> serviceList, OnServiceClickListener listener) {
+    public ServiceRecyclerAdapter(Context context, ArrayList<ServiceModel> serviceList, OnServiceClickListener listener) {
         this.context = context;
         this.serviceList = serviceList;
         this.listener = listener;
@@ -47,18 +46,23 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
         return result;
     }
 
+    public void refreshData(ArrayList<ServiceModel> sl) {
+        serviceList = sl;
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(final ServiceViewHolder holder, int position) {
         ServiceModel item = serviceList.get(position);
         if (!item.getPreview().equals(""))
-            Picasso.with(context).load(item.getPreview()).into(holder.imgPreview);
+            Glide.with(context).load(item.getPreview()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(holder.imgPreview);
         holder.txtBalance.setText("$" + Integer.toString(item.getBalance()));
 
         String str = "$" + Integer.toString(item.getBalance());
         holder.txtDetail.setText(createIndentedText(item.getDetail(), str.length() * 20 + 10, 0));
 
-        holder.rating.setRating((float) item.getScore());
-        holder.txtReviews.setText(Integer.toString(item.getReviews()) + " Reviews");
+        holder.rating.setRating((float) item.getReview_score());
+        holder.txtReviews.setText(Integer.toString(item.getReview_cnt()) + " Reviews");
         holder.bind(serviceList.get(position), listener);
     }
 
@@ -71,7 +75,7 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
         public ImageView imgPreview;
         public TextView txtBalance;
         public TextView txtDetail;
-        public SimpleRatingBar rating;
+        public ScaleRatingBar rating;
         public TextView txtReviews;
 
 
@@ -80,7 +84,7 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
             imgPreview = (ImageView)view.findViewById(R.id.img_card_service_preview);
             txtBalance = (TextView)view.findViewById(R.id.txt_card_service_balance);
             txtDetail = (TextView)view.findViewById(R.id.txt_card_service_detail);
-            rating = (SimpleRatingBar)view.findViewById(R.id.rating_card_service);
+            rating = (ScaleRatingBar)view.findViewById(R.id.rating_card_service);
             txtReviews = (TextView)view.findViewById(R.id.txt_card_service_review);
         }
 

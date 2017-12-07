@@ -62,6 +62,7 @@ public class ProjectProgressDetailActivity extends AppCompatActivity implements 
         Glide.with(ProjectProgressDetailActivity.this).load(project.getPreview())
                 .thumbnail(0.5f)
                 .crossFade()
+                .placeholder(R.drawable.placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgPreview);
 

@@ -55,29 +55,10 @@ public class GPSTracker extends Service {
 
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DoNotSleep");
 
-        // Toast.makeText(getApplicationContext(), "Service Created",
-        // Toast.LENGTH_SHORT).show();
-
         Log.e("Google", "Service Created");
 
     }
-    /*
-    public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.e("Google", "Service Started");
-
-        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.d("Google", "Permission not allowed");
-        } else {
-            Log.d("Google", "Permission allowed");
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, listener);
-        }
-
-        return START_STICKY;
-    }
-    */
     @Override
     @Deprecated
     public void onStart(Intent intent, int startId) {
@@ -125,7 +106,7 @@ public class GPSTracker extends Service {
                     public void onResponse(JSONObject response) {
                         Log.e("LOCATION", "location shared");
                         UserModel curUser = Utils.retrieveUserInfo(getApplicationContext());
-                        curUser.setLatidue(location.getLatitude());
+                        curUser.setLatitude(location.getLatitude());
                         curUser.setLongitude(location.getLongitude());
                         Utils.saveUserInfo(getApplicationContext(), curUser);
                     }

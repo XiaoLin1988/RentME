@@ -18,9 +18,7 @@ import android.widget.Toast;
 
 import com.android.emerald.rentme.AppController;
 import com.android.emerald.rentme.MainActivity;
-import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.Models.SkillModel;
-import com.android.emerald.rentme.Models.UserModel;
 import com.android.emerald.rentme.PhotoEditActivity;
 import com.android.emerald.rentme.R;
 import com.android.emerald.rentme.Task.APIRequester;
@@ -29,7 +27,7 @@ import com.android.emerald.rentme.Utils.Utils;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,9 +35,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by emerald on 6/6/2017.
- */
 public class ServiceCreate1Fragment extends Fragment implements View.OnClickListener, Response.Listener<JSONObject>, Response.ErrorListener {
 
     private Context context;
@@ -101,7 +96,7 @@ public class ServiceCreate1Fragment extends Fragment implements View.OnClickList
         if (requestCode == Constants.REQUEST_CODE_UPDATE_PIC) {
             if (resultCode == Activity.RESULT_OK) {
                 imgUrl = Constants.SITE_URL + "uploads/" + data.getStringExtra("data");
-                Picasso.with(context).load(imgUrl).resize(Constants.IMAGE_MAX_SIZE, Constants.IMAGE_MAX_SIZE).centerCrop().into(imgPreview);
+                Glide.with(context).load(imgUrl).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgPreview);
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 //TODO : Handle case
             } else {

@@ -13,7 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.emerald.rentme.Models.ObjectModel;
 import com.android.emerald.rentme.Models.UserModel;
+import com.android.emerald.rentme.RestAPI.RestClient;
+import com.android.emerald.rentme.RestAPI.UserClient;
 import com.android.emerald.rentme.Task.APIRequester;
 import com.android.emerald.rentme.Utils.Constants;
 import com.android.emerald.rentme.Utils.Utils;
@@ -28,6 +31,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindString;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+
 /**
  * Created by emerald on 5/29/2017.
  */
@@ -39,12 +47,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText editName;
     private EditText editPassword;
 
+    @BindString(R.string.error_load)
+    String errLoad;
+
+    @BindString(R.string.error_network)
+    String errNetwork;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        //Intent tracker = new Intent(LoginActivity.this, FirebaseTracker.class);
-        //startService(tracker);
+        ButterKnife.bind(this);
 
         UserModel curUser = Utils.retrieveUserInfo(getApplicationContext());
         if (curUser != null) {
@@ -82,18 +94,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (name.equals("") || password.equals("")) {
                     Toast.makeText(LoginActivity.this, "Please fill all fields.", Toast.LENGTH_LONG).show();
                 } else {
-                    String url = Constants.API_ROOT_URL + Constants.API_USER_LOGIN;
+                    RestClient<UserClient> restClient = new RestClient<>();
+                    UserClient userClient = restClient.getAppClient(UserClient.class);
 
-                    Map<String, String> params = new HashMap<>();
-                    params.put("name", name);
-                    params.put("password", password);
+                    Call<ObjectModel<UserModel>> call = userClient.loginUser(name, password);
+                    call.enqueue(new Callback<ObjectModel<UserModel>>() {
+                        @Override
+                        public void onResponse(Call<ObjectModel<UserModel>> call, retrofit2.Response<ObjectModel<UserModel>> response) {
+                            if (response.isSuccessful()) {
+                                UserModel curUser = response.body().getData();
 
-                    APIRequester requester = new APIRequester(Request.Method.POST, url, params, this, this);
-                    AppController.getInstance().addToRequestQueue(requester, Constants.JSON_REQUEST);
+                                Utils.saveUserInfo(LoginActivity.this, curUser);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginActivity.this, errLoad, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ObjectModel<UserModel>> call, Throwable t) {
+                            Toast.makeText(LoginActivity.this, errNetwork, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 break;
             case R.id.btn_login_signup:
-                //startActivity(new Intent(LoginActivity.this, RoleSelectActivity.class));
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 intent.putExtra(Constants.EXTRA_USERTYPE, 2);
                 startActivity(intent);
@@ -105,7 +131,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     @Override
     public void onErrorResponse(VolleyError error) {
-
+        int a = 0;
+        a += 5;
     }
 
     @Override
@@ -123,15 +150,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     curUser.setId(user.getInt("id"));
                     curUser.setName(user.getString("name"));
                     curUser.setEmail(user.getString("email"));
-                    curUser.setType(user.getInt("type"));
                     curUser.setPhone(user.getString("phone"));
                     curUser.setAddress(user.getString("address"));
-                    curUser.setLatidue(user.getDouble("latitude"));
+                    curUser.setLatitude(user.getDouble("latitude"));
                     curUser.setLongitude(user.getDouble("longitude"));
                     curUser.setZipcode(user.getInt("zipcode"));
-                    curUser.setWorkday(user.getString("workday"));
-                    curUser.setWorktime(user.getInt("worktime"));
-                    curUser.setRate(user.getDouble("rate"));
                     curUser.setPassword(user.getString("password"));
                     curUser.setSkills(user.getString("skills"));
                     curUser.setAvatar(user.getString("avatar"));

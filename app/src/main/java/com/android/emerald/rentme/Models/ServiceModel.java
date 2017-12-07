@@ -1,19 +1,22 @@
 package com.android.emerald.rentme.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by emerald on 6/23/2017.
  */
-public class ServiceModel {
+public class ServiceModel implements Serializable {
     private int id;
     private String title;
     private int talent_id;
-    private int skill_id;
-    private String skill;
     private String preview;
     private String detail;
     private int balance;
-    private double score;
-    private int reviews;
+    private int skill_id;
+    private String skill_title;
+    private String skill_preview;
+    private int review_cnt;
+    private double review_score;
 
     public ServiceModel() {
 
@@ -59,22 +62,6 @@ public class ServiceModel {
         this.balance = balance;
     }
 
-    public double getScore() {
-        return score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-    public int getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(int reviews) {
-        this.reviews = reviews;
-    }
-
     public int getTalent_id() {
         return talent_id;
     }
@@ -91,11 +78,35 @@ public class ServiceModel {
         this.skill_id = skill_id;
     }
 
-    public String getSkill() {
-        return skill;
+    public String getSkill_preview() {
+        return skill_preview;
     }
 
-    public void setSkill(String skill) {
-        this.skill = skill;
+    public void setSkill_preview(String skill_preview) {
+        this.skill_preview = skill_preview;
+    }
+
+    public String getSkill_title() {
+        return skill_title;
+    }
+
+    public void setSkill_title(String skill_title) {
+        this.skill_title = skill_title;
+    }
+
+    public int getReview_cnt() {
+        return review_cnt;
+    }
+
+    public void setReview_cnt(int review_cnt) {
+        this.review_cnt = review_cnt;
+    }
+
+    public double getReview_score() {
+        return review_score;
+    }
+
+    public void setReview_score(double review_score) {
+        this.review_score = review_score;
     }
 }

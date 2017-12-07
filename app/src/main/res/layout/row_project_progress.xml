@@ -21,16 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="90dp">
 
-        <ImageView
-            android:id="@+id/img_project_progress_preview"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_width="95dp"
-            android:layout_height="70dp"
-            android:focusable="false"
-            android:clickable="false"
-            android:src="@drawable/placeholder" />
-        <!--
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/img_project_progress_preview"
             android:layout_gravity="center_vertical"
@@ -43,7 +33,6 @@
             app:siBorderColor="@color/colorWhite"
             app:siRadius="4dp"
             app:siSquare="false"/>
-        -->
 
         <LinearLayout
             android:orientation="vertical"

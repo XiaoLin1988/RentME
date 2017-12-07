@@ -9,17 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/colorPrimary">
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.github.siyamed.shapeimageview.CircularImageView
             android:id="@+id/img_project_create2_avatar"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/profile_empty"
             android:scaleType="centerCrop"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            app:civ_border_width="0dp"
-            app:civ_border_color="#FF000000"/>
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <ScrollView

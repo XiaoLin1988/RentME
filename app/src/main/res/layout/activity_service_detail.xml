@@ -101,16 +101,14 @@
                             android:layout_toLeftOf="@+id/img_service_detail_useravatar"
                             android:text="I didn't attach description"
                             android:textColor="@color/colorBlack" />
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <com.github.siyamed.shapeimageview.CircularImageView
                             android:id="@+id/img_service_detail_useravatar"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentTop="true"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/profile_empty"
-                            android:scaleType="centerCrop"
-                            app:civ_border_width="0dp"
-                            app:civ_border_color="#FF000000" />
+                            android:scaleType="centerCrop" />
                     </RelativeLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -140,8 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:orientation="horizontal" >
-
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        could you wupdate apk r
                             android:id="@+id/img_service_detail_rateavatar"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentTop="true"
@@ -170,18 +167,24 @@
                                 android:textStyle="bold"
                                 android:textColor="@color/colorBlack" />
 
-                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                            <com.willy.ratingbar.ScaleRatingBar
                                 android:id="@+id/rate_service_detail_score"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:visibility="gone"
-                                app:srb_starCornerRadius="0"
-                                app:srb_isIndicator="true"
-                                app:srb_starSize="12dp"
-                                app:srb_numberOfStars="5"
-                                app:srb_rating="3"
+                                app:srb_numStars="5"
+                                app:srb_rating="4"
+                                app:srb_starWidth="20dp"
+                                app:srb_starHeight="20dp"
+                                app:srb_starPadding="0dp"
                                 app:srb_stepSize="1"
-                                app:srb_fillColor="@color/colorYellow" />
+                                app:srb_isIndicator="false"
+                                app:srb_clickable="true"
+                                app:srb_scrollable="true"
+                                app:srb_clearRatingEnabled="true"
+                                app:srb_drawableEmpty="@drawable/star_empty"
+                                app:srb_drawableFilled="@drawable/star_fill">
+                            </com.willy.ratingbar.ScaleRatingBar>
                             <!--
                             <TextView
                                 android:id="@+id/txt_service_detail_ratedate"
