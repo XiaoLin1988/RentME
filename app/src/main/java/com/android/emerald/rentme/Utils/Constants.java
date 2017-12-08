@@ -23,11 +23,18 @@ public class Constants {
     public static final int IMAGE_MAX_SIZE = 1024;
 
     public static final String IMAGE_PATH = "image_path";
+
     public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
+
     public static final int REQUEST_CODE_UPDATE_PIC = 0x1;
     public static final int REQUEST_CODE_PICK_GALLERY = 0x2;
     public static final int REQUEST_CODE_TAKE_PICTURE = 0x3;
     public static final int REQUEST_CODE_CROPPED_PICTURE = 0x4;
+    public static final int REQUEST_SERVICE_CREATE = 0x5;
+    public static final int REQUEST_POST_PHOTO = 0x6;
+    public static final int REQUEST_POST_VIDEO = 0x7;
+    public static final int REQUEST_POST_WEB = 0x8;
+
     public static final String ERROR_MSG = "error_msg";
     public static final String ERROR = "error";
 
@@ -116,4 +123,9 @@ public class Constants {
     public static final int VALUE_IMG_SKILL = 3;
 
     public static final String KEY_USER = "key_user";
+    public static final String KEY_VIDEO = "key_video";
+    public static final String KEY_PHOTO = "key_photo";
+    public static final String KEY_WEB = "key_web";
+
+    public static final String KEY_TRANSITION = "key_transition";
 }

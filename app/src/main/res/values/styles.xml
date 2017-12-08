@@ -17,6 +17,11 @@
         <item name="android:typeface">serif</item>
     </style>
 
+    <style name="AppTheme.MyTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowContentOverlay">@color/colorBlack</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+    </style>
+
     <style name="TransparentActionBar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:windowActionBarOverlay">true</item>
         <item name="windowActionBarOverlay">true</item>
@@ -41,4 +46,13 @@
         <item name="mrl_rippleAlpha">0.2</item>
     </style>
 
+    <style name="DialogAnimationSlide">
+        <item name="android:windowEnterAnimation">@anim/slider_up</item>
+        <item name="android:windowExitAnimation">@anim/slider_bottom</item>
+    </style>
+
+    <style name="DialogAnimationScale">
+        <item name="android:windowEnterAnimation">@anim/scale_in</item>
+        <item name="android:windowExitAnimation">@anim/scale_out</item>
+    </style>
 </resources>

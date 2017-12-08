@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:fitsSystemWindows="true">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbar"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp"
-            android:fitsSystemWindows="true">
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorWhite"
+                android:paddingRight="5dp"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax">
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:id="@+id/ryt_profile_cover"
+                    android:id="@+id/ryt_service_cover"
                     android:layout_width="match_parent"
                     android:layout_height="400dp">
 
@@ -92,22 +102,22 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/ryt_profile_content"
-                    android:layout_below="@+id/ryt_profile_cover"
+                    android:id="@+id/ryt_service_detail"
+                    android:layout_below="@+id/ryt_service_cover"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="10dp"
                     android:background="@color/colorBlack">
 
                     <com.wang.avi.AVLoadingIndicatorView
-                        android:id="@+id/loading_profile_content"
+                        android:id="@+id/loading_service_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
                         app:indicatorName="BallPulseIndicator" />
 
                     <LinearLayout
-                        android:id="@+id/lyt_profile_content"
+                        android:id="@+id/lyt_service_content"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="visible"
@@ -181,116 +191,31 @@
 
             </RelativeLayout>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin"/>
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="vertical">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="What we'll do"
-                    android:textSize="@dimen/font_large"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorBlack"/>
-
-                <com.borjabravo.readmoretextview.ReadMoreTextView
-                    android:id="@+id/txt_service_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:paddingBottom="5dp"
-                    android:textSize="@dimen/font_normal"
-                    android:textColor="@color/colorBlack"
-                    app:trimLines="4"
-                    app:trimCollapsedText="read more"
-                    app:showTrimExpandedText="false"
-                    app:colorClickableText="@color/colorAccent"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorGray"/>
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Reviews"
+                        android:text="What we'll do"
                         android:textSize="@dimen/font_large"
                         android:textStyle="bold"
                         android:textColor="@color/colorBlack"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <com.github.siyamed.shapeimageview.CircularImageView
-                            android:id="@+id/img_review_avatar"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            android:src="@drawable/profile_empty"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/txt_review_name"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:textSize="@dimen/font_large"
-                                android:textStyle="bold"/>
-                            <TextView
-                                android:id="@+id/txt_review_date"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:singleLine="true"
-                                android:ellipsize="marquee"
-                                android:textSize="@dimen/font_normal" />
-                        </LinearLayout>
-                    </LinearLayout>
-
                     <com.borjabravo.readmoretextview.ReadMoreTextView
-                        android:id="@+id/txt_review_content"
+                        android:id="@+id/txt_service_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:paddingBottom="5dp"
-                        android:text="@string/project_description"
                         android:textSize="@dimen/font_normal"
                         android:textColor="@color/colorBlack"
                         app:trimLines="4"
@@ -301,55 +226,142 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lyt_review_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorGray"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Reviews"
+                            android:textSize="@dimen/font_large"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorBlack"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+                            <com.github.siyamed.shapeimageview.CircularImageView
+                                android:id="@+id/img_review_avatar"
+                                android:layout_width="50dp"
+                                android:layout_height="56dp"
+                                android:src="@drawable/main"
+                                android:scaleType="centerCrop"
+                                app:siBorderColor="@color/colorWhite"
+                                app:siSquare="false"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/txt_review_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:ellipsize="marquee"
+                                    android:text="Koji"
+                                    android:textSize="@dimen/font_normal"
+                                    android:textColor="@color/colorBlack"
+                                    android:textStyle="bold"/>
+                                <TextView
+                                    android:id="@+id/txt_review_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:singleLine="true"
+                                    android:ellipsize="marquee"
+                                    android:text="Dec 4, 2017"
+                                    android:textSize="@dimen/font_normal" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <com.borjabravo.readmoretextview.ReadMoreTextView
+                            android:id="@+id/txt_review_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:text="@string/project_description"
+                            android:textSize="@dimen/font_normal"
+                            android:textColor="@color/colorBlack"
+                            app:trimLines="4"
+                            app:trimCollapsedText="read more"
+                            app:showTrimExpandedText="false"
+                            app:colorClickableText="@color/colorAccent"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorGray"/>
+
+                    <com.balysv.materialripple.MaterialRippleLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/ryt_read_reviews"
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:text="Read all reviews"
+                                android:textSize="@dimen/font_large"/>
+
+                            <com.willy.ratingbar.ScaleRatingBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="10dp"
+                                app:srb_numStars="5"
+                                app:srb_rating="4"
+                                app:srb_starWidth="18dp"
+                                app:srb_starHeight="18dp"
+                                app:srb_starPadding="0dp"
+                                app:srb_stepSize="1"
+                                app:srb_isIndicator="false"
+                                app:srb_clickable="true"
+                                app:srb_scrollable="true"
+                                app:srb_clearRatingEnabled="true"
+                                app:srb_drawableEmpty="@drawable/star_empty"
+                                app:srb_drawableFilled="@drawable/star_fill">
+                            </com.willy.ratingbar.ScaleRatingBar>
+
+                        </RelativeLayout>
+
+                    </com.balysv.materialripple.MaterialRippleLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="@color/colorGray"/>
 
-                <com.balysv.materialripple.MaterialRippleLayout
-                    style="@style/RippleStyleGray"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize">
-
-                    <RelativeLayout
-                        android:id="@+id/ryt_read_reviews"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="Read all reviews"
-                            android:textSize="@dimen/font_large"/>
-
-                        <com.willy.ratingbar.ScaleRatingBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
-                            app:srb_numStars="5"
-                            app:srb_rating="4"
-                            app:srb_starWidth="18dp"
-                            app:srb_starHeight="18dp"
-                            app:srb_starPadding="0dp"
-                            app:srb_stepSize="1"
-                            app:srb_isIndicator="false"
-                            app:srb_clickable="true"
-                            app:srb_scrollable="true"
-                            app:srb_clearRatingEnabled="true"
-                            app:srb_drawableEmpty="@drawable/star_empty"
-                            app:srb_drawableFilled="@drawable/star_fill">
-                        </com.willy.ratingbar.ScaleRatingBar>
-
-                </RelativeLayout>
-
-            </com.balysv.materialripple.MaterialRippleLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorGray"/>
+            </LinearLayout>
 
         </LinearLayout>
 

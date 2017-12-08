@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initVariables() {
-        //project = new ProjectFragment();
         project = ProjectFragment.newInstance(MainActivity.this);
         post = ProjectCreateFragment.newInstance(MainActivity.this);
         service = ServiceFragment.newInstance(MainActivity.this);
@@ -147,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void openCreateService() {
+        /*
         btnPlus.setVisibility(View.GONE);
 
         FragmentManager fm = getSupportFragmentManager();
@@ -157,6 +157,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ft.replace(R.id.frame_container, createservice);
         ft.commit();
+        */
+
+        Intent intent = new Intent(this, ServiceCreateActivity.class);
+        startActivityForResult(intent, Constants.REQUEST_SERVICE_CREATE);
     }
 
     private void openMyServices() {
@@ -177,15 +181,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.nav_services:
                 openMyServices();
-                //openCreateService();
                 break;
             case R.id.nav_post:
                 openCreateProject();
                 break;
             case R.id.nav_edit:
-                //startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                 Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 intent.putExtra(Constants.KEY_USER, curUser);
+
                 startActivity(intent);
                 break;
             case R.id.nav_projects:
@@ -195,10 +198,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Utils.saveUserInfo(getApplicationContext(), null);
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
-                /*
-                Intent intent = new Intent(getApplicationContext(), GPSTracker.class);
-                stopService(intent);
-                */
                 finish();
                 break;
         }

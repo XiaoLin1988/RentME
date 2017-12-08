@@ -27,7 +27,7 @@
     <string name="title_activity_maps">Map</string>
 
     <string name="error_load">Loading Failed</string>
-    <string name="error_network">Loading Failed</string>
+    <string name="error_network">Please check network status</string>
 
     <string name="project_description">Software solution for a PC surveillance. Allows to transmit PC desktop and webcam view as a video feeds from an virtual ONVIF IP security camera.
 The PC with installed software acts as any other physical IP cameras and streams the desktop and webcam as live video feeds.
@@ -36,4 +36,8 @@ ITV is a software-only, easily integrated solution for any organization that nee
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="joined">Member since </string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>

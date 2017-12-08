@@ -1,14 +1,19 @@
 package com.android.emerald.rentme;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +21,7 @@ import android.widget.Toast;
 
 import com.android.emerald.rentme.Adapter.ServiceRecyclerAdapter;
 import com.android.emerald.rentme.Adapter.SkillServiceRecyclerAdapter;
+import com.android.emerald.rentme.Interface.OnServiceClickListener;
 import com.android.emerald.rentme.Models.ArrayModel;
 import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.Models.SkillServiceModel;
@@ -37,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileActivity extends AppCompatActivity implements ServiceRecyclerAdapter.OnServiceClickListener {
+public class ProfileActivity extends AppCompatActivity implements OnServiceClickListener {
     private UserModel userModel;
 
     @Bind(R.id.img_profile_cover)
@@ -83,6 +89,9 @@ public class ProfileActivity extends AppCompatActivity implements ServiceRecycle
     @BindString(R.string.error_network)
     String errNetwork;
 
+    @BindString(R.string.joined)
+    String joined;
+
     private Toolbar toolbar;
     private AVLoadingIndicatorView loadingContent;
 
@@ -109,6 +118,11 @@ public class ProfileActivity extends AppCompatActivity implements ServiceRecycle
         bar.setDisplayShowHomeEnabled(true);
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeButtonEnabled(true);
+
+        Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         bar.setTitle(null);
     }
 
@@ -154,15 +168,16 @@ public class ProfileActivity extends AppCompatActivity implements ServiceRecycle
         txtMood.setText(userModel.getDescription());
         txtLocation.setText(userModel.getAddress());
         Date date = Utils.stringToDate(userModel.getCtime());
-        txtJoined.setText(Utils.beautifyDate(date, false));
+        txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));
 
-        Glide.with(this).load(userModel.getCoverImg()).asBitmap().fitCenter().placeholder(R.drawable.placeholder).into(imgCover);
-        Glide.with(this).load(userModel.getMainImg()).asBitmap().fitCenter().placeholder(R.drawable.profile_empty).into(imgMain);
+        Glide.with(this).load(userModel.getCoverImg()).asBitmap().fitCenter().placeholder(R.drawable.cover).into(imgCover);
+        Glide.with(this).load(userModel.getMainImg()).asBitmap().fitCenter().placeholder(R.drawable.main).into(imgMain);
 
 
         adapterSkillService = new SkillServiceRecyclerAdapter(this, new ArrayList<SkillServiceModel>(), this);
         recyclerServices.setAdapter(adapterSkillService);
         recyclerServices.setLayoutManager(new LinearLayoutManager(this));
+        recyclerServices.setNestedScrollingEnabled(false);
 
         getUserServices();
     }
@@ -193,10 +208,18 @@ public class ProfileActivity extends AppCompatActivity implements ServiceRecycle
     }
 
     @Override
-    public void onServiceClick(ServiceModel service) {
-        Intent intent = new Intent(this, ServiceDetailActivity2.class);
-        intent.putExtra(Constants.EXTRA_SERVICE_DETAIL, service);
+    public void onServiceClick(View view, ServiceModel service) {
+        ServiceDetailActivity2.navigate(this, view, service);
+    }
 
-        startActivity(intent);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

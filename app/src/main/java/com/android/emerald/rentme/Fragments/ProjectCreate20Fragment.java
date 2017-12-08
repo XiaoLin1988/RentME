@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.android.emerald.rentme.Adapter.ServiceListAdapter;
 import com.android.emerald.rentme.Adapter.ServiceRecyclerAdapter;
 import com.android.emerald.rentme.AppController;
+import com.android.emerald.rentme.Interface.OnServiceClickListener;
 import com.android.emerald.rentme.MainActivity;
 import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.Models.SkillServiceModel;
@@ -37,7 +38,7 @@ import java.util.Map;
 /**
  * Created by emerald on 6/23/2017.
  */
-public class ProjectCreate20Fragment extends Fragment implements ServiceRecyclerAdapter.OnServiceClickListener, Response.ErrorListener, Response.Listener<JSONObject> {
+public class ProjectCreate20Fragment extends Fragment implements OnServiceClickListener, Response.ErrorListener, Response.Listener<JSONObject> {
     private int talentId;
 
     private ListView listServices;
@@ -116,7 +117,7 @@ public class ProjectCreate20Fragment extends Fragment implements ServiceRecycler
     }
 
     @Override
-    public void onServiceClick(ServiceModel item) {
+    public void onServiceClick(View view, ServiceModel item) {
         Intent intent = new Intent(getContext(), ServiceDetailActivity2.class);
         intent.putExtra(Constants.EXTRA_SERVICE_DETAIL, item);
 

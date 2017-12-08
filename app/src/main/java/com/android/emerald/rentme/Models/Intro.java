@@ -1,9 +1,11 @@
 package com.android.emerald.rentme.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by emerald on 12/4/2017.
  */
-public class Intro {
+public class Intro implements Serializable {
     private String link;
     private int type;  // 0 : image, 1 : youtube 2 : vimeo, 3 : web post
 

@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.android.emerald.rentme.Adapter.ServiceListAdapter;
 import com.android.emerald.rentme.Adapter.ServiceRecyclerAdapter;
 import com.android.emerald.rentme.AppController;
+import com.android.emerald.rentme.Interface.OnServiceClickListener;
 import com.android.emerald.rentme.MainActivity;
 import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.Models.SkillServiceModel;
@@ -38,7 +39,7 @@ import java.util.Map;
 /**
  * Created by emerald on 6/29/2017.
  */
-public class ServiceFragment extends Fragment implements Response.ErrorListener, Response.Listener<JSONObject>,ServiceRecyclerAdapter.OnServiceClickListener {
+public class ServiceFragment extends Fragment implements Response.ErrorListener, Response.Listener<JSONObject>,OnServiceClickListener {
     private Context context;
 
     private ListView listServices;
@@ -49,7 +50,6 @@ public class ServiceFragment extends Fragment implements Response.ErrorListener,
     public static ServiceFragment newInstance(Context ctx) {
         ServiceFragment fragment = new ServiceFragment();
         fragment.context = ctx;
-        //fragment.getTalentServices();
         return fragment;
     }
 
@@ -120,7 +120,7 @@ public class ServiceFragment extends Fragment implements Response.ErrorListener,
     }
 
     @Override
-    public void onServiceClick(ServiceModel item) {
+    public void onServiceClick(View view, ServiceModel item) {
         Gson gson = new Gson();
         String json =  gson.toJson(item);
         Intent intent = new Intent(getContext(), ServiceDetailActivity2.class);

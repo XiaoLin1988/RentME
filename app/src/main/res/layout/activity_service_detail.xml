@@ -138,17 +138,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:orientation="horizontal" >
-                        could you wupdate apk r
-                            android:id="@+id/img_service_detail_rateavatar"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:visibility="gone"
-                            android:src="@drawable/profile_empty"
-                            android:scaleType="centerCrop"
-                            app:civ_border_width="0dp"
-                            app:civ_border_color="#FF000000" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -210,8 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
-                        android:background="@color/colorWeekUnselect">
-                    </LinearLayout>
+                        android:background="@color/colorWeekUnselect"/>
 
                 </LinearLayout>
 

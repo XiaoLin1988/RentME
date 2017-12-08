@@ -42,15 +42,16 @@ public class IntroAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == (RelativeLayout)object;
+        return view == object;
     }
 
     public Object instantiateItem(ViewGroup container, int position) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.card_intro, container, false);
+        container.addView(itemView);
 
         final ImageView imgIntro = (ImageView)itemView.findViewById(R.id.img_intro);
-        WebView webIntro = (WebView)itemView.findViewById(R.id.web_intro);
+        final WebView webIntro = (WebView)itemView.findViewById(R.id.web_intro);
         final AVLoadingIndicatorView loading = (AVLoadingIndicatorView)itemView.findViewById(R.id.loading_content);
         loading.show();
 
@@ -67,29 +68,41 @@ public class IntroAdapter extends PagerAdapter {
                 }
             });
         } else {
-            webIntro.setVisibility(View.VISIBLE);
+            String data = "";
+            String link = intro.getLink();
+            if (link.startsWith("http://player.vimeo.com/video/")) {
+                data = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"%link%?autoplay=1&loop=1\" width=\"100%\" height=\"100%\" frameborder=\"0\"  style=\"outline:none;border:none;padding:0px;\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
+            } else if (link.startsWith("https://www.youtube.com/watch?v=")) {
+                data = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe width=\"100%\" height=\"100%\" style=\"outline:none;border:none;padding:0px;\" src=\"%link%?&playsinline=1\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+            }
+            data = data.replace("%link%", link);
 
-            webIntro.setWebViewClient(new HelloWebViewClient());
+            webIntro.clearHistory();
             webIntro.getSettings().setJavaScriptEnabled(true);
             webIntro.getSettings().setAppCacheEnabled(true);
             webIntro.getSettings().setDomStorageEnabled(true);
-            webIntro.loadUrl(intro.getLink());
+            webIntro.getSettings().setPluginState(WebSettings.PluginState.ON);
+            webIntro.setWebViewClient(new WebViewClient(){
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    return false;
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    loading.hide();
+                    loading.setVisibility(View.GONE);
+                    webIntro.setVisibility(View.VISIBLE);
+                    super.onPageFinished(view, url);
+                }
+            });
+            webIntro.loadData(data, "text/html", "utf-8");
         }
 
         return itemView;
     }
 
-    private class HelloWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.setVisibility(View.GONE);
-            return false;
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            view.setVisibility(View.VISIBLE);
-            super.onPageFinished(view, url);
-        }
+    @Override
+    public void destroyItem(ViewGroup collection, int position, Object view) {
+        collection.removeView((View) view);
     }
 }

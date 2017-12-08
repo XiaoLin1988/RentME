@@ -43,7 +43,7 @@ public class ProjectCreate0Fragment extends Fragment implements Response.Listene
     public static ProjectCreate0Fragment newInstance(Context context, OnSkillSelectListener l) {
         ProjectCreate0Fragment fragment = new ProjectCreate0Fragment();
         fragment.context = context;
-        fragment.prepareData();
+        //fragment.prepareData();
         fragment.listener = l;
         return fragment;
     }
@@ -66,7 +66,8 @@ public class ProjectCreate0Fragment extends Fragment implements Response.Listene
     }
 
     private void initViewVariables(View view) {
-        ((MainActivity)getContext()).setPageTitel("Select required skill");
+        //((MainActivity)getContext()).setPageTitel("Select required skill");
+        skills = new ArrayList<>();
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_project_create0);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -77,7 +78,6 @@ public class ProjectCreate0Fragment extends Fragment implements Response.Listene
             @Override
             public void onClick(View view, int position) {
                 SkillModel s = skills.get(position);
-                //((ProjectCreateFragment)getParentFragment()).selectSkill(s);
                 listener.onSkillSelect(s);
             }
 
@@ -86,6 +86,8 @@ public class ProjectCreate0Fragment extends Fragment implements Response.Listene
 
             }
         }));
+
+        prepareData();
     }
 
     @Override
@@ -101,7 +103,7 @@ public class ProjectCreate0Fragment extends Fragment implements Response.Listene
                     skill.setPath(jsonSkills.getJSONObject(i).getString("preview"));
 
                     skills.add(skill);
-                    //adapter.add(skill);
+                    adapter.add(skill);
                 }
             }
         } catch (JSONException e) {

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.emerald.rentme.Interface.OnServiceClickListener;
 import com.android.emerald.rentme.Models.ArrayModel;
 import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.Models.SkillServiceModel;
@@ -19,9 +20,9 @@ import java.util.ArrayList;
 public class SkillServiceRecyclerAdapter extends RecyclerView.Adapter<SkillServiceRecyclerAdapter.SkillServiceViewHolder> {
     private Context context;
     private ArrayList<SkillServiceModel> skills;
-    private ServiceRecyclerAdapter.OnServiceClickListener listener;
+    private OnServiceClickListener listener;
 
-    public SkillServiceRecyclerAdapter(Context context, ArrayList<SkillServiceModel> skills, ServiceRecyclerAdapter.OnServiceClickListener listener) {
+    public SkillServiceRecyclerAdapter(Context context, ArrayList<SkillServiceModel> skills, OnServiceClickListener listener) {
         this.context = context;
         this.skills = skills;
         this.listener = listener;
@@ -80,7 +81,7 @@ public class SkillServiceRecyclerAdapter extends RecyclerView.Adapter<SkillServi
             recyclerService = (RecyclerView)itemView.findViewById(R.id.recycler_row_service);
             adapterService = new ServiceRecyclerAdapter(context, new ArrayList<ServiceModel>(), listener);
             recyclerService.setAdapter(adapterService);
-            recyclerService.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true));
+            recyclerService.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         }
     }
 }

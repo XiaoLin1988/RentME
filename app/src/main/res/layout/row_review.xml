@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/lyt_review_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal">
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/img_review_avatar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/main"
+                android:scaleType="centerCrop"
+                app:siBorderColor="@color/colorWhite"
+                app:siSquare="false"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txt_review_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:text="Koji"
+                    android:textSize="@dimen/font_normal"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/txt_review_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:text="Dec 4, 2017"
+                    android:textSize="@dimen/font_normal" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+    <com.borjabravo.readmoretextview.ReadMoreTextView
+        android:id="@+id/txt_review_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="@string/project_description"
+        android:textSize="@dimen/font_normal"
+        android:textColor="@color/colorBlack"
+        app:trimLines="4"
+        app:trimCollapsedText="read more"
+        app:showTrimExpandedText="false"
+        app:colorClickableText="@color/colorAccent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_review_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_review_links"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorGray"/>
+
+</LinearLayout>

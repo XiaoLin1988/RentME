@@ -8,11 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.emerald.rentme.Interface.OnServiceClickListener;
+import com.android.emerald.rentme.Listener.SingleClickListener;
 import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.R;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.vision.text.Line;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.ArrayList;
@@ -34,10 +38,6 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
         View view = LayoutInflater.from(context).inflate(R.layout.card_service_item, parent, false);
 
         return new ServiceViewHolder(view);
-    }
-
-    public interface OnServiceClickListener {
-        void onServiceClick(ServiceModel service);
     }
 
     SpannableString createIndentedText(String text, int marginFirstLine, int marginNextLines) {
@@ -62,7 +62,7 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
         holder.txtDetail.setText(createIndentedText(item.getDetail(), str.length() * 20 + 10, 0));
 
         holder.rating.setRating((float) item.getReview_score());
-        holder.txtReviews.setText(Integer.toString(item.getReview_cnt()) + " Reviews");
+        holder.txtReviews.setText(Integer.toString(item.getReview_cnt()));
         holder.bind(serviceList.get(position), listener);
     }
 
@@ -77,7 +77,7 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
         public TextView txtDetail;
         public ScaleRatingBar rating;
         public TextView txtReviews;
-
+        public LinearLayout lytParent;
 
         public ServiceViewHolder(View view) {
             super(view);
@@ -86,13 +86,14 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
             txtDetail = (TextView)view.findViewById(R.id.txt_card_service_detail);
             rating = (ScaleRatingBar)view.findViewById(R.id.rating_card_service);
             txtReviews = (TextView)view.findViewById(R.id.txt_card_service_review);
+            lytParent = (LinearLayout)view.findViewById(R.id.lyt_parent);
         }
 
         public void bind(final ServiceModel service, final OnServiceClickListener listener) {
-            itemView.setOnClickListener(new View.OnClickListener(){
+            lytParent.setOnClickListener(new SingleClickListener() {
                 @Override
-                public void onClick(View v) {
-                    listener.onServiceClick(service);
+                public void onSingleClick(View v) {
+                    listener.onServiceClick(v, service);
                 }
             });
         }

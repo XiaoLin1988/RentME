@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.emerald.rentme.Interface.OnServiceClickListener;
 import com.android.emerald.rentme.Models.ServiceModel;
 import com.android.emerald.rentme.Models.SkillServiceModel;
 import com.android.emerald.rentme.R;
@@ -22,9 +23,9 @@ import java.util.List;
 public class ServiceListAdapter extends BaseAdapter {
     private Context context;
     private List<SkillServiceModel> services;
-    private ServiceRecyclerAdapter.OnServiceClickListener listener;
+    private OnServiceClickListener listener;
 
-    public ServiceListAdapter (Context context, List<SkillServiceModel> services, ServiceRecyclerAdapter.OnServiceClickListener listener) {
+    public ServiceListAdapter (Context context, List<SkillServiceModel> services, OnServiceClickListener listener) {
         this.context = context;
         this.services = services;
         this.listener = listener;

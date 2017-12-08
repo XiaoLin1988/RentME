@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"/>
-
-    </android.support.design.widget.AppBarLayout>
+    <include
+        layout="@layout/toolbar" />
 
     <LinearLayout
+        android:layout_below="@+id/appBar"
+        android:layout_above="@+id/btn_post"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -63,8 +56,10 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/lyt_web_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
@@ -96,4 +91,18 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_post"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:elevation="2dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/colorWhite"
+        android:text="Post Link"
+        android:textStyle="bold"
+        android:background="@drawable/button_blue_round" />
+
+</RelativeLayout>

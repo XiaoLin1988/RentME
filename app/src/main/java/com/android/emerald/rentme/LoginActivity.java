@@ -1,5 +1,6 @@
 package com.android.emerald.rentme;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.android.emerald.rentme.RestAPI.RestClient;
 import com.android.emerald.rentme.RestAPI.UserClient;
 import com.android.emerald.rentme.Task.APIRequester;
 import com.android.emerald.rentme.Utils.Constants;
+import com.android.emerald.rentme.Utils.DialogUtil;
 import com.android.emerald.rentme.Utils.Utils;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -94,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (name.equals("") || password.equals("")) {
                     Toast.makeText(LoginActivity.this, "Please fill all fields.", Toast.LENGTH_LONG).show();
                 } else {
+                    final ProgressDialog dialog = DialogUtil.showProgressDialog(LoginActivity.this, "Please wait while checking account");
                     RestClient<UserClient> restClient = new RestClient<>();
                     UserClient userClient = restClient.getAppClient(UserClient.class);
 
@@ -101,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     call.enqueue(new Callback<ObjectModel<UserModel>>() {
                         @Override
                         public void onResponse(Call<ObjectModel<UserModel>> call, retrofit2.Response<ObjectModel<UserModel>> response) {
+                            dialog.dismiss();
                             if (response.isSuccessful()) {
                                 UserModel curUser = response.body().getData();
 
@@ -114,6 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         @Override
                         public void onFailure(Call<ObjectModel<UserModel>> call, Throwable t) {
+                            dialog.dismiss();
                             Toast.makeText(LoginActivity.this, errNetwork, Toast.LENGTH_SHORT).show();
                         }
                     });

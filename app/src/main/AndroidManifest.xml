@@ -76,6 +76,8 @@
         <activity android:name=".ServiceDetailActivity2"
             android:screenOrientation="portrait" >
         </activity>
+        <activity android:name=".ServiceCreateActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ProfileActivity"
             android:screenOrientation="portrait" >
         </activity>
