@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:elevation="2dp"
-        android:text="Upload Images"
+        android:text="Post Images"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         android:background="@drawable/button_blue_round" />

@@ -60,6 +60,8 @@ public class ServiceFragment extends Fragment implements Response.ErrorListener,
 
     private void getTalentServices() {
         Map<String, String> params = new HashMap<>();
+        if (context == null)
+            context = getContext();
         params.put("talentid", Integer.toString(Utils.retrieveUserInfo(context).getId()));
 
         String url = Constants.API_ROOT_URL + Constants.API_USER_SERVICE;

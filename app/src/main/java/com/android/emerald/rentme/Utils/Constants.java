@@ -81,6 +81,8 @@ public class Constants {
     public static final String API_REVIEW_CONSUMER = "leaveConsumerReview";
     public static final String API_REVIEW_TALENT = "leaveTalentReview";
     public static final String API_SKILL_GET = "getCategories";
+    public static final String API_COMMON_UPLOAD_LINK = "uploadLinks";
+    public static final String API_COMMON_UPLOAD_IMAGE = "uploadImages";
 
     public static final int ACTION_CROP = 1000;
     public static final int ACTION_BOOST = 1001;

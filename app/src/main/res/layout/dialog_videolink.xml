@@ -1,39 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_layout"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorWhite"
+        android:paddingRight="5dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorWhite"
-            android:paddingRight="5dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageButton
-                    android:id="@+id/img_close"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:src="@drawable/close"
-                    android:scaleType="fitXY"
-                    android:background="?selectableItemBackgroundBorderless"/>
-            </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+            android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/img_close"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:src="@drawable/close"
+                android:scaleType="fitXY"
+                android:background="?selectableItemBackgroundBorderless"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
@@ -108,4 +104,4 @@
             android:background="@drawable/button_blue_round" />
     </RelativeLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

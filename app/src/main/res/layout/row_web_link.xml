@@ -3,13 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="75dp"
     android:background="@color/colorWeekUnselect">
 
     <ImageView
         android:id="@+id/img_link_thumbnail"
         android:layout_width="?attr/actionBarSize"
         android:layout_height="?attr/actionBarSize"
-        android:src="@drawable/sample_preview"
+        android:src="@drawable/placeholder"
         android:scaleType="centerCrop"/>
 
     <LinearLayout
@@ -17,12 +19,32 @@
         android:layout_toRightOf="@+id/img_link_thumbnail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txt_link_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:text=""
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_normal"/>
+
+        <TextView
+            android:id="@+id/txt_link_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:text=""
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_normal"/>
 
     </LinearLayout>
 </RelativeLayout>
