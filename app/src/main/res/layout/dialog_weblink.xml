@@ -39,45 +39,26 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <RelativeLayout
+            <LinearLayout
+                android:layout_toLeftOf="@+id/btn_weblink_fetch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/view_round">
 
-                <LinearLayout
-                    android:layout_toLeftOf="@+id/btn_weblink_fetch"
+                <EditText
+                    android:id="@+id/edit_weblink"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/view_round">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/multiline_edittext"
+                    android:hint="Please input your web link"
+                    android:singleLine="true"
+                    android:textColorHint="@color/colorWeekUnselect"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/font_normal" />
 
-                    <EditText
-                        android:id="@+id/edit_weblink"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:background="@drawable/multiline_edittext"
-                        android:hint="Please input your web link"
-                        android:singleLine="true"
-                        android:textColorHint="@color/colorWeekUnselect"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/font_normal" />
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_weblink_fetch"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:elevation="2dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="Submit"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/font_normal"
-                    android:background="@drawable/button_blue_round" />
-
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/lyt_web_content"
@@ -154,7 +135,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
             android:textColor="@color/colorWhite"
-            android:text="Post Link"
+            android:text="Validate Link"
             android:textStyle="bold"
             android:background="@drawable/button_blue_round" />
     </RelativeLayout>

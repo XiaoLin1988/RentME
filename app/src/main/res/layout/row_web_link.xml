@@ -1,50 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="?attr/actionBarSize"
     android:layout_marginTop="5dp"
-    android:layout_marginLeft="75dp"
-    android:background="@color/colorWeekUnselect">
+    android:background="@drawable/edit_border_round"
+    android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/img_link_thumbnail"
-        android:layout_width="?attr/actionBarSize"
-        android:layout_height="?attr/actionBarSize"
-        android:src="@drawable/placeholder"
-        android:scaleType="centerCrop"/>
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_link_thumbnail"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:src="@drawable/placeholder"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:id="@+id/lyt_link_body"
+            android:layout_toRightOf="@+id/img_link_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_link_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:text=""
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/font_normal"/>
+
+            <TextView
+                android:id="@+id/txt_link_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:text=""
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/font_normal"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/lyt_link_body"
-        android:layout_toRightOf="@+id/img_link_thumbnail"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/txt_link_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:text=""
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/font_normal"/>
-
-        <TextView
-            android:id="@+id/txt_link_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:text=""
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/font_normal"/>
+        <ImageView
+            android:id="@+id/row_post_remove"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="10dp"
+            android:src="@drawable/close"/>
 
     </LinearLayout>
-</RelativeLayout>
+
+</LinearLayout>

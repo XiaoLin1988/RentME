@@ -72,13 +72,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srb_numStars="5"
-                        app:srb_rating="4.5"
+                        app:srb_rating="0"
                         app:srb_starWidth="12dp"
                         app:srb_starHeight="12dp"
                         app:srb_starPadding="0dp"
-                        app:srb_stepSize="0.5"
+                        app:srb_stepSize="1"
                         app:srb_isIndicator="false"
-                        app:srb_clickable="true"
+                        app:srb_clickable="false"
                         app:srb_scrollable="true"
                         app:srb_clearRatingEnabled="true"
                         app:srb_drawableEmpty="@drawable/star_empty"
@@ -94,7 +94,7 @@
                             android:id="@+id/txt_card_service_review"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="12" />
+                            android:text="0" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

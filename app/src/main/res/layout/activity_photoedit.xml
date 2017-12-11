@@ -38,7 +38,7 @@
 
     </RelativeLayout>
 
-    <com.android.emerald.rentme.Views.PhotoWorkView
+    <com.android.jianchen.rentme.Views.PhotoWorkView
         android:id="@+id/img_photoedit_panel"
         android:src="@drawable/placeholder"
         android:layout_below="@+id/lyt_tool"

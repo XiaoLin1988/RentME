@@ -1,0 +1,122 @@
+package com.android.jianchen.rentme.Fragments;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.android.jianchen.rentme.Adapter.ServiceListAdapter;
+import com.android.jianchen.rentme.AppController;
+import com.android.jianchen.rentme.Interface.OnServiceClickListener;
+import com.android.jianchen.rentme.MainActivity;
+import com.android.jianchen.rentme.Models.ServiceModel;
+import com.android.jianchen.rentme.Models.SkillServiceModel;
+import com.android.jianchen.rentme.R;
+import com.android.jianchen.rentme.ServiceDetailActivity2;
+import com.android.jianchen.rentme.Task.APIRequester;
+import com.android.jianchen.rentme.Utils.Constants;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by emerald on 6/23/2017.
+ */
+public class ProjectCreate20Fragment extends Fragment implements OnServiceClickListener, Response.ErrorListener, Response.Listener<JSONObject> {
+    private int talentId;
+
+    private ListView listServices;
+    private ServiceListAdapter adapter;
+
+    private List<SkillServiceModel> services;
+
+    public static ProjectCreate20Fragment newInstance(int tid) {
+        ProjectCreate20Fragment fragment = new ProjectCreate20Fragment();
+        fragment.talentId = tid;
+        fragment.getTalentServices();
+        return fragment;
+    }
+
+    public ProjectCreate20Fragment () {
+        services = new ArrayList<>();
+    }
+
+    private void getTalentServices() {
+        Map<String, String> params = new HashMap<>();
+        params.put("talentid", Integer.toString(talentId));
+
+        String url = Constants.API_ROOT_URL + Constants.API_USER_SERVICE;
+
+        APIRequester requester = new APIRequester(Request.Method.POST, url, params, this, this);
+        AppController.getInstance().addToRequestQueue(requester, Constants.JSON_REQUEST);
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ((MainActivity)getContext()).setPageTitel("Talent Services");
+        View view = inflater.inflate(R.layout.fragment_project_create20, container, false);
+
+        initViewVariables(view);
+
+        return view;
+    }
+
+    private void initViewVariables(View view) {
+        listServices = (ListView)view.findViewById(R.id.list_project_create20_services);
+        adapter = new ServiceListAdapter(getContext(), services, this);
+        listServices.setAdapter(adapter);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        try {
+            JSONArray array = response.getJSONArray("data");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                ServiceModel service = new ServiceModel();
+                service.setId(obj.getInt("id"));
+                service.setTitle(obj.getString("title"));
+                service.setTalent_id(obj.getInt("talent_id"));
+                service.setPreview(obj.getString("preview"));
+                service.setBalance(obj.getInt("balance"));
+                service.setDetail(obj.getString("detail"));
+                service.setSkill_id(obj.getInt("skill_id"));
+                service.setSkill_title(obj.getString("skill_title"));
+                service.setSkill_preview(obj.getString("skill_preview"));
+                service.setReview_cnt(obj.getInt("review_cnt"));
+                if (!obj.getString("review_score").equals("null"))
+                    service.setReview_score(obj.getDouble("review_score"));
+                else
+                    service.setReview_score(0);
+
+                adapter.addService(service);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onServiceClick(View view, ServiceModel item) {
+        Intent intent = new Intent(getContext(), ServiceDetailActivity2.class);
+        intent.putExtra(Constants.EXTRA_SERVICE_DETAIL, item);
+
+        startActivity(intent);
+    }
+}

@@ -535,12 +535,12 @@
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
-                    <com.android.emerald.rentme.Views.FlowLayout
+                    <jianchen.rentme.Views.FlowLayout
                         android:id="@+id/flow_register_skills"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    </com.android.emerald.rentme.Views.FlowLayout>
+                    </jianchen.rentme.Views.FlowLayout>
                 </LinearLayout>
                 -->
 

@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:layout_marginLeft="75dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="200dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/edit_border_round"
+    android:orientation="horizontal">
 
-    <WebView
-        android:id="@+id/web_video"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="match_parent">
+
+        <WebView
+            android:id="@+id/web_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack"/>
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/loading_indicator"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/colorBlack"/>
+        android:gravity="center_vertical">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/loading_indicator"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
-        android:layout_centerInParent="true"/>
+        <ImageView
+            android:id="@+id/row_post_remove"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="10dp"
+            android:src="@drawable/close"/>
 
-</RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

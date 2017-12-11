@@ -3,92 +3,103 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:descendantFocusability="blocksDescendants"
     android:background="@color/colorEmpty"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_marginBottom="3dp"
-        android:layout_marginTop="3dp"
-        android:elevation="2dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:background="@drawable/view_shadow"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="90dp">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true">
 
-        <com.github.siyamed.shapeimageview.RoundedImageView
-            android:id="@+id/img_project_complete_preview"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_width="95dp"
-            android:layout_height="70dp"
-            android:src="@drawable/placeholder"
-            app:siBorderColor="@color/colorWhite"
-            app:siRadius="4dp"
-            app:siSquare="false"/>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+        <com.balysv.materialripple.MaterialRippleLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/lyt_parent"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
+                android:layout_height="90dp">
 
-                <TextView
-                    android:id="@+id/txt_project_complete_title"
+                <com.github.siyamed.shapeimageview.RoundedImageView
+                    android:id="@+id/img_project_complete_preview"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_width="95dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/placeholder"
+                    app:siBorderColor="@color/colorWhite"
+                    app:siRadius="4dp"
+                    app:siSquare="false"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="project title"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:singleLine="true"
-                    android:textColor="@color/colorBlue"
-                    android:layout_weight="0.7"
-                    android:ellipsize="end" />
+                    android:layout_height="match_parent">
 
-                <com.willy.ratingbar.ScaleRatingBar
-                    android:id="@+id/rating_project_complete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:srb_numStars="5"
-                    app:srb_rating="4"
-                    app:srb_starWidth="18dp"
-                    app:srb_starHeight="18dp"
-                    app:srb_starPadding="0dp"
-                    app:srb_stepSize="1"
-                    app:srb_isIndicator="false"
-                    app:srb_clickable="true"
-                    app:srb_scrollable="true"
-                    app:srb_clearRatingEnabled="true"
-                    app:srb_drawableEmpty="@drawable/star_empty"
-                    app:srb_drawableFilled="@drawable/star_fill">
-                </com.willy.ratingbar.ScaleRatingBar>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt_project_complete_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="project title"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:singleLine="true"
+                            android:textColor="@color/colorBlue"
+                            android:layout_weight="0.7"
+                            android:ellipsize="end" />
+
+                        <com.willy.ratingbar.ScaleRatingBar
+                            android:id="@+id/rating_project_complete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:srb_numStars="5"
+                            app:srb_rating="0"
+                            app:srb_starWidth="18dp"
+                            app:srb_starHeight="18dp"
+                            app:srb_starPadding="0dp"
+                            app:srb_stepSize="1"
+                            app:srb_isIndicator="true"
+                            app:srb_clickable="false"
+                            app:srb_scrollable="true"
+                            app:srb_clearRatingEnabled="true"
+                            app:srb_drawableEmpty="@drawable/star_empty"
+                            app:srb_drawableFilled="@drawable/star_fill">
+                        </com.willy.ratingbar.ScaleRatingBar>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txt_project_complete_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/project_description"
+                        android:maxLines="2"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/txt_project_complete_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/project_description"
-                android:maxLines="2"
-                android:textSize="14sp"
-                android:inputType="textMultiLine"
-                android:singleLine="true" />
+        </com.balysv.materialripple.MaterialRippleLayout>
 
-        </LinearLayout>
-
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

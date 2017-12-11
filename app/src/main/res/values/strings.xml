@@ -34,6 +34,8 @@ The PC with installed software acts as any other physical IP cameras and streams
 ITV is a virtual ONVIF IP camera which allows one to easily include PC workstations in the surveillance system of an organization. The software captures computer screens and webcams, then streams them as real-time live video feeds from a virtual IP camera.
 ITV is a software-only, easily integrated solution for any organization that needs to monitor PC operator activities with their existing surveillance environment.</string>
 
+    <string name="help_video">Please input Youtube or Vimeo video link</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="joined">Member since </string>

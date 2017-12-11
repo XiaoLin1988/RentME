@@ -8,6 +8,7 @@
             android:icon="@drawable/menu_project"
             android:title="My Projects" />
     </group>
+    <!--
     <group
         android:id="@+id/menugroup_services"
         android:checkableBehavior="none">
@@ -16,6 +17,7 @@
             android:icon="@drawable/menu_project"
             android:title="My Services" />
     </group>
+    -->
     <group
         android:id="@+id/menugroup_create"
         android:checkableBehavior="none">
@@ -30,7 +32,7 @@
         <item
             android:id="@+id/nav_edit"
             android:icon="@drawable/menu_edit"
-            android:title="Edit Profile" />
+            android:title="My Profile" />
     </group>
     <group
         android:id="@+id/menugroup_signout"
