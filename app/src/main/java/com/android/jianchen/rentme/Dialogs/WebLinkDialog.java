@@ -25,6 +25,8 @@ import com.leocardz.link.preview.library.SourceContent;
 import com.leocardz.link.preview.library.TextCrawler;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -138,6 +140,14 @@ public class WebLinkDialog extends Dialog implements View.OnClickListener {
                 }
                 break;
             case R.id.btn_post:
+                String URL_REGEX = "^((https?|ftp)://|(youtube|vimeo)|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
+                Pattern p = Pattern.compile(URL_REGEX);
+                Matcher m = p.matcher(editLink.getText().toString());
+                if (!m.find()) {
+                    Toast.makeText(getContext(), "Please input validate video url", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (!validate) {
                     String query = editLink.getText().toString();
                     if (!query.equals("")) {

@@ -15,6 +15,8 @@ public class ReviewModel implements Serializable {
     private String rv_ctime;
     private String user_name;
     private String user_avatar;
+    private int rate_count;
+    private int review_count;
 
     public int getId() {
         return id;
@@ -86,5 +88,21 @@ public class ReviewModel implements Serializable {
 
     public void setUser_avatar(String user_avatar) {
         this.user_avatar = user_avatar;
+    }
+
+    public int getRate_count() {
+        return rate_count;
+    }
+
+    public void setRate_count(int rate_count) {
+        this.rate_count = rate_count;
+    }
+
+    public int getReview_count() {
+        return review_count;
+    }
+
+    public void setReview_count(int review_count) {
+        this.review_count = review_count;
     }
 }

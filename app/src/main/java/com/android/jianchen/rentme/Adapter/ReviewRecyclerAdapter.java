@@ -111,6 +111,8 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             Date date = Utils.stringToDate(review.getRv_ctime());
             ((ReviewViewHolder)holder).txtDate.setText(Utils.beautifyDate(date, false));
             ((ReviewViewHolder)holder).txtContent.setText(review.getRv_content());
+            ((ReviewViewHolder)holder).txtRateCount.setText(review.getRate_count());
+            ((ReviewViewHolder)holder).txtReviewCount.setText(review.getReview_count());
 
             ((ReviewViewHolder)holder).bindRate(review);
             //((ReviewViewHolder)holder).bindRateDetail(review);

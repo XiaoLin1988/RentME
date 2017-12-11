@@ -68,7 +68,7 @@ public class Constants {
     public static final String API_USER_EMAIL = "sendEmail";
     public static final String API_USER_REGISTER = "registerUser";
     public static final String API_USER_EDIT = "editUserProfile";
-    public static final String API_USER_SEARCH_BY_LOCATION = "searchByLocation?XDEBUG_SESSION_START=16770";
+    public static final String API_USER_SEARCH_BY_LOCATION = "searchByLocation";
     public static final String API_USER_SHARE_LOCATION = "shareLocation";
     public static final String API_USER_GET_BY_ID = "getUserById";
     public static final String API_USER_SERVICE = "getUserServices";
