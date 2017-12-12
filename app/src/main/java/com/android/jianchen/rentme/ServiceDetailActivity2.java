@@ -169,25 +169,11 @@ public class ServiceDetailActivity2 extends AppCompatActivity implements View.On
 
         getServiceReviews();
 
-        ArrayList<Intro> introList = new ArrayList<>();
-
-        Intro intro1 = new Intro();
-        intro1.setType(1);
-        intro1.setLink("https://www.youtube.com/watch?v=7bDLIV96LD4");
-        introList.add(intro1);
-
-        Intro intro2 = new Intro();
-        intro2.setType(2);
-        intro2.setLink("http://player.vimeo.com/video/24577973?player_id=player&autoplay=1&title=0&byline=0&portrait=0&api=1");
-        introList.add(intro2);
-
-        Intro intro3 = new Intro();
-        intro3.setType(3);
-        intro3.setLink("http://player.vimeo.com/video/24577973?player_id=player&autoplay=1&title=0&byline=0&portrait=0&api=1");
-        introList.add(intro3);
-
+        /*
         adapter = new IntroAdapter(this, introList);
         pagerService.setAdapter(adapter);
+        */
+
     }
 
     private void getServiceReviews() {
@@ -196,7 +182,7 @@ public class ServiceDetailActivity2 extends AppCompatActivity implements View.On
         RestClient<ServiceClient> restClient = new RestClient<>();
         ServiceClient serviceClient = restClient.getAppClient(ServiceClient.class);
 
-        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(service.getId(), curpage);
+        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(service.getId(), Utils.retrieveUserInfo(ServiceDetailActivity2.this).getId(), curpage);
         call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
             @Override
             public void onResponse(Call<ArrayModel<ReviewModel>> call, retrofit2.Response<ArrayModel<ReviewModel>> response) {
@@ -299,6 +285,10 @@ public class ServiceDetailActivity2 extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ryt_read_reviews:
+                /*
+                ReviewDialog dialog = new ReviewDialog(ServiceDetailActivity2.this, service.getId(), reviews);
+                dialog.show();
+                */
                 ReviewDialog dialog = new ReviewDialog(ServiceDetailActivity2.this, service.getId(), reviews);
                 dialog.show();
                 break;

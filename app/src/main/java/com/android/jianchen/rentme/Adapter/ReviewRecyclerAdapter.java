@@ -111,11 +111,12 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             Date date = Utils.stringToDate(review.getRv_ctime());
             ((ReviewViewHolder)holder).txtDate.setText(Utils.beautifyDate(date, false));
             ((ReviewViewHolder)holder).txtContent.setText(review.getRv_content());
-            ((ReviewViewHolder)holder).txtRateCount.setText(review.getRate_count());
-            ((ReviewViewHolder)holder).txtReviewCount.setText(review.getReview_count());
+            ((ReviewViewHolder)holder).txtRateCount.setText(String.valueOf(review.getRate_count()));
+            ((ReviewViewHolder)holder).txtReviewCount.setText(String.valueOf(review.getReview_count())) ;
+            if (review.isRated())
+                ((ReviewViewHolder)holder).imgRate.setImageResource(R.drawable.heart_fill);
 
             ((ReviewViewHolder)holder).bindRate(review);
-            //((ReviewViewHolder)holder).bindRateDetail(review);
             ((ReviewViewHolder)holder).bindReviewDetail(review);
         } else {
             ((LoadingViewHolder)holder).loading.show();
@@ -171,28 +172,10 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             lytReview.setOnClickListener(new SingleClickListener() {
                 @Override
                 public void onSingleClick(View v) {
-                    RestClient<ReviewClient> restClient = new RestClient<ReviewClient>();
-                    ReviewClient reviewClient = restClient.getAppClient(ReviewClient.class);
-
-                    Call<ArrayModel<ReviewModel>> call = reviewClient.getReviewReviews(review.getId());
-                    call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
-                        @Override
-                        public void onResponse(Call<ArrayModel<ReviewModel>> call, Response<ArrayModel<ReviewModel>> response) {
-                            if (response.isSuccessful() && response.body().getStatus()) {
-                                ArrayList<ReviewModel> r = response.body().getData();
-                                ReviewDialog dialog = new ReviewDialog(context, review.getId(), r);
-                                dialog.setType(Constants.VALUE_REVIEW);
-                                dialog.show();
-                            } else {
-                                Toast.makeText(context, context.getResources().getString(R.string.error_network), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ArrayModel<ReviewModel>> call, Throwable t) {
-                            Toast.makeText(context, context.getResources().getString(R.string.error_network), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    if (review.getReview_count() == 0)
+                        return;
+                    ReviewDialog dialog = new ReviewDialog(context, review.getId());
+                    dialog.show();
                 }
             });
         }
@@ -213,10 +196,10 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
                                 int previousCount = Integer.parseInt(txtRateCount.getText().toString());
                                 if (r == 0) {
                                     txtRateCount.setText(String.valueOf(previousCount - 1));
-                                    imgRate.setBackgroundResource(R.drawable.heart);
+                                    imgRate.setImageResource(R.drawable.heart);
                                 } else {
                                     txtRateCount.setText(String.valueOf(previousCount + 1));
-                                    imgRate.setBackgroundResource(R.drawable.heart_fill);
+                                    imgRate.setImageResource(R.drawable.heart_fill);
                                 }
                             } else {
                                 Toast.makeText(context, context.getResources().getString(R.string.error_load), Toast.LENGTH_SHORT).show();

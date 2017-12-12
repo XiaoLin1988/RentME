@@ -40,6 +40,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -194,7 +195,28 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         Date date = Utils.stringToDate(userModel.getCtime());
         txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));
 
-        Glide.with(this).load(userModel.getCoverImg()).asBitmap().fitCenter().placeholder(R.drawable.cover).into(imgCover);
+        if (userModel.getCoverImg() == null || userModel.getCoverImg().equals("")) {
+            int pos = new Random().nextInt(5) % 5;
+            switch (pos) {
+                case 0:
+                    Glide.with(this).load(R.drawable.cover1).asBitmap().fitCenter().into(imgCover);
+                    break;
+                case 1:
+                    Glide.with(this).load(R.drawable.cover2).asBitmap().fitCenter().into(imgCover);
+                    break;
+                case 2:
+                    Glide.with(this).load(R.drawable.cover3).asBitmap().fitCenter().into(imgCover);
+                    break;
+                case 3:
+                    Glide.with(this).load(R.drawable.cover4).asBitmap().fitCenter().into(imgCover);
+                    break;
+                case 4:
+                    Glide.with(this).load(R.drawable.cover5).asBitmap().fitCenter().into(imgCover);
+                    break;
+            }
+        } else {
+            Glide.with(this).load(userModel.getCoverImg()).asBitmap().fitCenter().placeholder(R.drawable.cover).into(imgCover);
+        }
         Glide.with(this).load(userModel.getMainImg()).asBitmap().fitCenter().placeholder(R.drawable.main).into(imgMain);
 
 

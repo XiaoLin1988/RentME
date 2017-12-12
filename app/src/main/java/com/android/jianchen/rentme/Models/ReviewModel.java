@@ -15,6 +15,7 @@ public class ReviewModel implements Serializable {
     private String rv_ctime;
     private String user_name;
     private String user_avatar;
+    private boolean rated;
     private int rate_count;
     private int review_count;
 
@@ -104,5 +105,13 @@ public class ReviewModel implements Serializable {
 
     public void setReview_count(int review_count) {
         this.review_count = review_count;
+    }
+
+    public boolean isRated() {
+        return rated;
+    }
+
+    public void setRated(boolean rated) {
+        this.rated = rated;
     }
 }

@@ -10,21 +10,26 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.jianchen.rentme.Adapter.ReviewRecyclerAdapter;
 import com.android.jianchen.rentme.Interface.OnLoadMoreListener;
 import com.android.jianchen.rentme.LeaveReviewActivity;
 import com.android.jianchen.rentme.Models.ArrayModel;
+import com.android.jianchen.rentme.Models.ObjectModel;
 import com.android.jianchen.rentme.Models.ReviewModel;
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.RestAPI.RestClient;
+import com.android.jianchen.rentme.RestAPI.ReviewClient;
 import com.android.jianchen.rentme.RestAPI.ServiceClient;
 import com.android.jianchen.rentme.Utils.Constants;
+import com.android.jianchen.rentme.Utils.Utils;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by emerald on 12/8/2017.
@@ -33,17 +38,24 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
     RecyclerView recyclerReview;
     ReviewRecyclerAdapter adapterReview;
 
-    private int type = Constants.VALUE_SERVICE;
-    private int serviceId;
     private ArrayList<ReviewModel> reviews;
 
     private LinearLayout lytReview, lytRate;
     private ImageView imgRate;
 
+    private int type = Constants.VALUE_SERVICE;
+    private int id;
+
+    private int serviceId;
+    private int reviewId;
+
+    // Service Review Dialog
     public ReviewDialog(Context context, int sid, ArrayList<ReviewModel> rl) {
         super(context);
-        reviews = rl;
+
         serviceId = sid;
+        type = Constants.VALUE_SERVICE;
+        reviews = rl;
 
         this.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -52,6 +64,28 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
         this.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationSlide;
 
         initDialog();
+    }
+
+    // Review Review Dialog
+    public ReviewDialog(Context context, int rid) {
+        super(context);
+
+        reviewId = rid;
+        type = Constants.VALUE_REVIEW;
+        reviews = new ArrayList<>();
+        reviews.add(new ReviewModel());
+
+        this.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.setContentView(R.layout.dialog_review);
+        this.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        this.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationSlide;
+
+        initDialog();
+
+        findViewById(R.id.ryt_review).setVisibility(View.VISIBLE);
+
+        getReviewReviews(0);
     }
 
     private void initDialog() {
@@ -72,46 +106,47 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
         lytReview.setOnClickListener(this);
     }
 
-    public void setType(int type) {
-        this.type = type;
-        if (type == Constants.VALUE_REVIEW) {
-            findViewById(R.id.ryt_review).setVisibility(View.VISIBLE);
-        }
+    private void createRate() {
+        RestClient<ReviewClient> restClient = new RestClient<>();
+        ReviewClient reviewClient = restClient.getAppClient(ReviewClient.class);
+
+        Call<ObjectModel<Integer>> call = reviewClient.createRate(Constants.VALUE_REVIEW, reviewId, Utils.retrieveUserInfo(getContext()).getId());
+        call.enqueue(new Callback<ObjectModel<Integer>>() {
+            @Override
+            public void onResponse(Call<ObjectModel<Integer>> call, Response<ObjectModel<Integer>> response) {
+                if (response.isSuccessful() && response.body().getStatus()) {
+                    int r = response.body().getData();
+                    if (r == 0) {
+                        imgRate.setImageResource(R.drawable.heart);
+                    } else {
+                        imgRate.setImageResource(R.drawable.heart_fill);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObjectModel<Integer>> call, Throwable t) {
+
+            }
+        });
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                dismiss();
-                break;
-            case R.id.lyt_review_rate:
-
-                break;
-            case R.id.lyt_review_review:
-                Intent intent = new Intent(getContext(), LeaveReviewActivity.class);
-                intent.putExtra(Constants.EXTRA_REVIEW_TYPE, Constants.VALUE_REVIEW);
-                //intent.putExtra(Constants.KEY_REVIEW, review);
-                getContext().startActivity(intent);
-                break;
-        }
-    }
-
-    @Override
-    public void onLoadMore(int curpage) {
-        RestClient<ServiceClient> restClient = new RestClient<>();
+    private void getServiceReviews(int curpage) {
+        RestClient<ServiceClient> restClient = new RestClient<ServiceClient>();
         ServiceClient serviceClient = restClient.getAppClient(ServiceClient.class);
 
-        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(serviceId, curpage);
+        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(serviceId, Utils.retrieveUserInfo(getContext()).getId(), curpage);
         call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
             @Override
-            public void onResponse(Call<ArrayModel<ReviewModel>> call, retrofit2.Response<ArrayModel<ReviewModel>> response) {
-                adapterReview.setLoaded();
-                if (response.isSuccessful()) {
-                    ArrayModel<ReviewModel> r = response.body();
-                    reviews = r.getData();
-                    if (reviews.size() > 0) {
-                        adapterReview.addReviews(reviews);
+            public void onResponse(Call<ArrayModel<ReviewModel>> call, Response<ArrayModel<ReviewModel>> response) {
+                if (response.isSuccessful() && response.body().getStatus()) {
+                    adapterReview.setLoaded();
+                    if (response.isSuccessful()) {
+                        ArrayModel<ReviewModel> r = response.body();
+                        reviews = r.getData();
+                        if (reviews.size() > 0) {
+                            adapterReview.addReviews(reviews);
+                        }
                     }
                 }
             }
@@ -121,5 +156,59 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
                 adapterReview.setLoaded();
             }
         });
+    }
+
+    private void getReviewReviews(int curpage) {
+        RestClient<ReviewClient> restClient = new RestClient<ReviewClient>();
+        ReviewClient reviewClient = restClient.getAppClient(ReviewClient.class);
+
+        Call<ArrayModel<ReviewModel>> call = reviewClient.getReviewReview(reviewId, Utils.retrieveUserInfo(getContext()).getId(), curpage);
+        call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
+            @Override
+            public void onResponse(Call<ArrayModel<ReviewModel>> call, Response<ArrayModel<ReviewModel>> response) {
+                if (response.isSuccessful() && response.body().getStatus()) {
+                    adapterReview.setLoaded();
+                    if (response.isSuccessful()) {
+                        ArrayModel<ReviewModel> r = response.body();
+                        reviews = r.getData();
+                        if (reviews.size() > 0) {
+                            adapterReview.addReviews(reviews);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayModel<ReviewModel>> call, Throwable t) {
+                adapterReview.setLoaded();
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_close:
+                dismiss();
+                break;
+            case R.id.lyt_review_rate:
+                createRate();
+                break;
+            case R.id.lyt_review_review:
+                Intent intent = new Intent(getContext(), LeaveReviewActivity.class);
+                intent.putExtra(Constants.EXTRA_REVIEW_TYPE, Constants.VALUE_REVIEW);
+                intent.putExtra(Constants.KEY_REVIEW_ID, id);
+                getContext().startActivity(intent);
+                break;
+        }
+    }
+
+    @Override
+    public void onLoadMore(int curpage) {
+        if (type == Constants.VALUE_SERVICE) {
+            getServiceReviews(curpage);
+        } else if (type == Constants.VALUE_REVIEW) {
+            getReviewReviews(curpage);
+        }
     }
 }

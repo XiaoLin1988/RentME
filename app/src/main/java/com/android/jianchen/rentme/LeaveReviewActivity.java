@@ -68,8 +68,11 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
     ArrayList<String> videoLinks;
 
     private int reviewType;
+    /*
     private ProjectModel service;
     private ReviewModel review;
+    */
+    private int reviewId;
 
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -77,11 +80,14 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
         ButterKnife.bind(this);
 
         reviewType = getIntent().getIntExtra(Constants.EXTRA_REVIEW_TYPE, Constants.VALUE_SERVICE);
+        reviewId = getIntent().getIntExtra(Constants.KEY_REVIEW_ID, 0);
+        /*
         if (reviewType == Constants.VALUE_SERVICE) {
             service = (ProjectModel)getIntent().getSerializableExtra(Constants.KEY_SERVICE);
         } else {
             review = (ReviewModel)getIntent().getSerializableExtra(Constants.KEY_REVIEW);
         }
+        */
 
         initViews();
     }
@@ -150,22 +156,24 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
     private void createReview() {
         final ProgressDialog dialog = DialogUtil.showProgressDialog(this, "Please wait while creating review");
 
+        /*
         ReviewModel r = new ReviewModel();
         r.setRv_content(editContent.getText().toString());
         r.setRv_score((int)rating.getRating());
         if (reviewType == Constants.VALUE_SERVICE) {
             r.setRv_type(Constants.VALUE_SERVICE);
-            r.setRv_fid(service.getSv_id());
+            r.setRv_fid(reviewId);
         } else if (reviewType == Constants.VALUE_REVIEW) {
             r.setRv_type(Constants.VALUE_REVIEW);
-            r.setRv_fid(review.getId());
+            r.setRv_fid(reviewId);
         }
         r.setRv_usr_id(Utils.retrieveUserInfo(this).getId());
+        */
 
         RestClient<ReviewClient> restClient = new RestClient<>();
         ReviewClient reviewClient = restClient.getAppClient(ReviewClient.class);
 
-        Call<ObjectModel<Integer>> call = reviewClient.createReview(reviewType, 31, editContent.getText().toString(), (int)rating.getRating(), Utils.retrieveUserInfo(this).getId());
+        Call<ObjectModel<Integer>> call = reviewClient.createReview(reviewType, reviewId, editContent.getText().toString(), (int)rating.getRating(), Utils.retrieveUserInfo(this).getId());
         call.enqueue(new Callback<ObjectModel<Integer>>() {
             @Override
             public void onResponse(Call<ObjectModel<Integer>> call, Response<ObjectModel<Integer>> response) {

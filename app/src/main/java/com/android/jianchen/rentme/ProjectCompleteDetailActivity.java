@@ -80,7 +80,7 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
             case R.id.btn_project_complete_detail_leave:
                 Intent intent = new Intent(this, LeaveReviewActivity.class);
                 intent.putExtra(Constants.EXTRA_REVIEW_TYPE, Constants.VALUE_SERVICE);
-                intent.putExtra(Constants.KEY_SERVICE, project);
+                intent.putExtra(Constants.KEY_REVIEW_ID, project.getSv_id());
                 startActivity(intent);
                 break;
             case R.id.btn_project_complete_detail_back:

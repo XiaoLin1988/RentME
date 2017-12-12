@@ -24,7 +24,12 @@ public interface ReviewClient {
     @FormUrlEncoded
     Call<ObjectModel<Integer>> createRate(@Field("type") int type, @Field("foreign_id") int foreign_id, @Field("user_id") int user_id);
 
+    /*
     @POST(Constants.API_REVIEW_REVIEW)
     @FormUrlEncoded
     Call<ArrayModel<ReviewModel>> getReviewReviews(@Field("review_id") int review_id);
+    */
+    @POST(Constants.API_REVIEW_REVIEW)
+    @FormUrlEncoded
+    Call<ArrayModel<ReviewModel>> getReviewReview(@Field("review_id") int review_id, @Field("user_id") int user_id, @Field("curpage") int curpage);
 }
