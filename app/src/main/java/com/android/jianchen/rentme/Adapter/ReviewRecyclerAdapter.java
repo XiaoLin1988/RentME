@@ -14,13 +14,12 @@ import android.widget.Toast;
 import com.android.jianchen.rentme.Dialogs.ReviewDialog;
 import com.android.jianchen.rentme.Interface.OnLoadMoreListener;
 import com.android.jianchen.rentme.Listener.SingleClickListener;
-import com.android.jianchen.rentme.Models.ArrayModel;
 import com.android.jianchen.rentme.Models.ObjectModel;
 import com.android.jianchen.rentme.Models.ReviewModel;
+import com.android.jianchen.rentme.Models.WebLink;
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.RestAPI.RestClient;
 import com.android.jianchen.rentme.RestAPI.ReviewClient;
-import com.android.jianchen.rentme.Utils.Constants;
 import com.android.jianchen.rentme.Utils.Utils;
 import com.bumptech.glide.Glide;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -116,6 +115,8 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             if (review.isRated())
                 ((ReviewViewHolder)holder).imgRate.setImageResource(R.drawable.heart_fill);
 
+            ((ReviewViewHolder)holder).refreshWebLinks(review.getWeb_links());
+            ((ReviewViewHolder)holder).refreshVideos(review.getVideos());
             ((ReviewViewHolder)holder).bindRate(review);
             ((ReviewViewHolder)holder).bindReviewDetail(review);
         } else {
@@ -152,6 +153,14 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
         public ImageView imgRate;
         public TextView txtRateCount;
 
+        public RecyclerView recyclerPhotos;
+
+        public RecyclerView recyclerWebLinks;
+        public WebLinkRecyclerAdapter adapterWebLinks;
+
+        public RecyclerView recyclerVideos;
+        public VideoLinkRecyclerAdapter adapterVideos;
+
         public ReviewViewHolder(View itemView) {
             super(itemView);
 
@@ -166,6 +175,18 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             lytRate = (LinearLayout)itemView.findViewById(R.id.lyt_review_rate);
             txtRateCount = (TextView)itemView.findViewById(R.id.txt_rate_count);
             imgRate = (ImageView)itemView.findViewById(R.id.img_review_rate);
+
+            recyclerPhotos = (RecyclerView)itemView.findViewById(R.id.recycler_photos);
+
+            recyclerWebLinks = (RecyclerView)itemView.findViewById(R.id.recycler_web_links);
+            adapterWebLinks = new WebLinkRecyclerAdapter(new ArrayList<WebLink>());
+            recyclerWebLinks.setAdapter(adapterWebLinks);
+            recyclerWebLinks.setLayoutManager(new LinearLayoutManager(context));
+
+            recyclerVideos = (RecyclerView)itemView.findViewById(R.id.recycler_videos);
+            adapterVideos = new VideoLinkRecyclerAdapter(new ArrayList<String>());
+            recyclerVideos.setAdapter(adapterVideos);
+            recyclerVideos.setLayoutManager(new LinearLayoutManager(context));
         }
 
         public void bindReviewDetail(final ReviewModel review) {
@@ -213,6 +234,14 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
                     });
                 }
             });
+        }
+
+        public void refreshVideos(ArrayList<String> vl) {
+            adapterVideos.refreshData(vl);
+        }
+
+        public void refreshWebLinks(ArrayList<WebLink> wl) {
+            adapterWebLinks.refreshData(wl);
         }
     }
 

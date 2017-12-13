@@ -61,6 +61,11 @@ public class WebLinkRecyclerAdapter extends RecyclerView.Adapter<WebLinkRecycler
         notifyItemInserted(webLinks.size() - 1);
     }
 
+    public void refreshData(ArrayList<WebLink> wl) {
+        webLinks = wl;
+        notifyDataSetChanged();
+    }
+
     public class WebLinkViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgThumb;
         private TextView txtTitle;

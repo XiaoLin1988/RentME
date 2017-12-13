@@ -1,6 +1,8 @@
 package com.android.jianchen.rentme;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -20,16 +22,21 @@ import com.android.jianchen.rentme.Dialogs.WebLinkDialog;
 import com.android.jianchen.rentme.Interface.OnDialogSelectListener;
 import com.android.jianchen.rentme.Interface.OnPostVideoListener;
 import com.android.jianchen.rentme.Interface.OnPostWebListener;
+import com.android.jianchen.rentme.Listener.LoadCompleteListener;
 import com.android.jianchen.rentme.Models.ObjectModel;
 import com.android.jianchen.rentme.Models.ProjectModel;
 import com.android.jianchen.rentme.Models.ReviewModel;
 import com.android.jianchen.rentme.Models.WebLink;
+import com.android.jianchen.rentme.RestAPI.CommonClient;
 import com.android.jianchen.rentme.RestAPI.RestClient;
 import com.android.jianchen.rentme.RestAPI.ReviewClient;
 import com.android.jianchen.rentme.Utils.Constants;
 import com.android.jianchen.rentme.Utils.DialogUtil;
 import com.android.jianchen.rentme.Utils.Utils;
 import com.willy.ratingbar.ScaleRatingBar;
+
+import org.json.JSONException;
+import org.json.JSONStringer;
 
 import java.util.ArrayList;
 
@@ -177,10 +184,85 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
         call.enqueue(new Callback<ObjectModel<Integer>>() {
             @Override
             public void onResponse(Call<ObjectModel<Integer>> call, Response<ObjectModel<Integer>> response) {
-                dialog.dismiss();
                 if (response.isSuccessful() && response.body().getStatus()) {
+                    int reviewId = response.body().getData();
 
+                    RestClient<CommonClient> restClient1 = new RestClient<>();
+                    CommonClient commonClient = restClient1.getAppClient(CommonClient.class);
+                    int loadCount = 0;
+                    if (webLinks.size() > 0)
+                        loadCount ++;
+                    if (videoLinks.size() > 0)
+                        loadCount ++;
+                    if (loadCount > 0) {
+                        final LoadCompleteListener loadListener = new LoadCompleteListener(loadCount) {
+                            @Override
+                            public void onLoaded() {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        };
+                        if (webLinks.size() > 0) {
+                            JSONStringer webs = new JSONStringer();
+                            try {
+                                webs = webs.array();
+                                for (int i = 0; i < webLinks.size(); i++) {
+                                    webs.object();
+                                    webs.key("title").value(webLinks.get(i).getTitle());
+                                    webs.key("content").value(webLinks.get(i).getContent());
+                                    webs.key("thumbnail").value(webLinks.get(i).getThumbnail());
+                                    webs.key("link").value(webLinks.get(i).getLink());
+                                    webs.endObject();
+                                }
+                                webs.endArray();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            Call<ObjectModel<String>> call1 = commonClient.uploadWebs(Constants.VALUE_REVIEW, reviewId, webs);
+                            call1.enqueue(new Callback<ObjectModel<String>>() {
+                                @Override
+                                public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
+                                    loadListener.setLoaded();
+                                    if (response.isSuccessful() && response.body().getStatus()) {
+                                        int a = 0;
+                                        a += 5;
+                                    } else {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ObjectModel<String>> call, Throwable t) {
+                                    loadListener.setLoaded();
+                                }
+                            });
+                        }
+                        if (videoLinks.size() > 0) {
+                            Call<ObjectModel<String>> call1 = commonClient.uploadVideos(Constants.VALUE_REVIEW, reviewId, videoLinks);
+                            call1.enqueue(new Callback<ObjectModel<String>>() {
+                                @Override
+                                public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
+                                    loadListener.setLoaded();
+                                    if (response.isSuccessful() && response.body().getStatus()) {
+                                        int a = 0;
+                                        a += 5;
+                                    } else {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ObjectModel<String>> call, Throwable t) {
+                                    loadListener.setLoaded();
+                                }
+                            });
+                        }
+                    } else {
+                        dialog.dismiss();
+                    }
                 } else {
+                    dialog.dismiss();
                     Toast.makeText(LeaveReviewActivity.this, getResources().getString(R.string.error_load), Toast.LENGTH_SHORT).show();
                 }
             }

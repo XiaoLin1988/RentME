@@ -64,6 +64,11 @@ public class VideoLinkRecyclerAdapter extends RecyclerView.Adapter<VideoLinkRecy
         notifyItemInserted(videoLinks.size() - 1);
     }
 
+    public void refreshData(ArrayList<String> vl) {
+        videoLinks = vl;
+        notifyDataSetChanged();
+    }
+
     public class VideoViewHolder extends RecyclerView.ViewHolder {
         public AVLoadingIndicatorView loading;
         public WebView webView;

@@ -1,6 +1,7 @@
 package com.android.jianchen.rentme.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by emerald on 12/7/2017.
@@ -18,6 +19,8 @@ public class ReviewModel implements Serializable {
     private boolean rated;
     private int rate_count;
     private int review_count;
+    private ArrayList<WebLink> web_links;
+    private ArrayList<String> videos;
 
     public int getId() {
         return id;
@@ -113,5 +116,21 @@ public class ReviewModel implements Serializable {
 
     public void setRated(boolean rated) {
         this.rated = rated;
+    }
+
+    public ArrayList<WebLink> getWeb_links() {
+        return web_links;
+    }
+
+    public void setWeb_links(ArrayList<WebLink> web_links) {
+        this.web_links = web_links;
+    }
+
+    public ArrayList<String> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(ArrayList<String> videos) {
+        this.videos = videos;
     }
 }
