@@ -44,7 +44,6 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
     private ImageView imgRate;
 
     private int type = Constants.VALUE_SERVICE;
-    private int id;
 
     private int serviceId;
     private int reviewId;
@@ -83,8 +82,6 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
 
         initDialog();
 
-        findViewById(R.id.ryt_review).setVisibility(View.VISIBLE);
-
         getReviewReviews(0);
     }
 
@@ -104,6 +101,9 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
 
         lytReview = (LinearLayout)findViewById(R.id.lyt_review_review);
         lytReview.setOnClickListener(this);
+
+        if (type == Constants.VALUE_REVIEW)
+            findViewById(R.id.ryt_review).setVisibility(View.VISIBLE);
     }
 
     private void createRate() {
@@ -197,7 +197,10 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
             case R.id.lyt_review_review:
                 Intent intent = new Intent(getContext(), LeaveReviewActivity.class);
                 intent.putExtra(Constants.EXTRA_REVIEW_TYPE, Constants.VALUE_REVIEW);
-                intent.putExtra(Constants.KEY_REVIEW_ID, id);
+                if (type == Constants.VALUE_SERVICE)
+                    intent.putExtra(Constants.KEY_REVIEW_ID, serviceId);
+                else
+                    intent.putExtra(Constants.KEY_REVIEW_ID, reviewId);
                 getContext().startActivity(intent);
                 break;
         }

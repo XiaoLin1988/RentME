@@ -168,12 +168,6 @@ public class ServiceDetailActivity2 extends AppCompatActivity implements View.On
         buyService.setOnClickListener(this);
 
         getServiceReviews();
-
-        /*
-        adapter = new IntroAdapter(this, introList);
-        pagerService.setAdapter(adapter);
-        */
-
     }
 
     private void getServiceReviews() {
@@ -285,10 +279,6 @@ public class ServiceDetailActivity2 extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ryt_read_reviews:
-                /*
-                ReviewDialog dialog = new ReviewDialog(ServiceDetailActivity2.this, service.getId(), reviews);
-                dialog.show();
-                */
                 ReviewDialog dialog = new ReviewDialog(ServiceDetailActivity2.this, service.getId(), reviews);
                 dialog.show();
                 break;
