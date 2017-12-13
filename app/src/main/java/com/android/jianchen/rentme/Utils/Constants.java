@@ -71,6 +71,7 @@ public class Constants {
     public static final String API_USER_SHARE_LOCATION = "user/shareLocation";
     public static final String API_USER_GET_BY_ID = "user/getUserById";
     public static final String API_USER_SERVICE = "user/getUserServices";
+    public static final String API_USER_SKILL = "user/getUserSkills";
     public static final String API_SERVICE_REVIEW = "service/getServiceReviews";
     public static final String API_SERVICE_CREATE = "service/createService";
     public static final String API_PROJECT_CREATE = "project/createProject";
