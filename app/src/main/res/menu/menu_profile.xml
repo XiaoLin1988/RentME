@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_edit"
         android:title="Edit profile"
-        android:icon="@drawable/plus_black"
-        android:orderInCategory="100" />
+        android:icon="@drawable/ic_create"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
     <item android:id="@+id/action_create"
         android:title="Create service"
         android:icon="@drawable/plus_black"
-        android:orderInCategory="100" />
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
 </menu>

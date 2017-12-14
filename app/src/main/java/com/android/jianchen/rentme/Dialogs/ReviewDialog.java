@@ -46,7 +46,8 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
     private int type = Constants.VALUE_SERVICE;
 
     private int serviceId;
-    private int reviewId;
+    //private int reviewId;
+    private ReviewModel review;
 
     // Service Review Dialog
     public ReviewDialog(Context context, int sid, ArrayList<ReviewModel> rl) {
@@ -66,11 +67,14 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
     }
 
     // Review Review Dialog
-    public ReviewDialog(Context context, int rid) {
+    public ReviewDialog(Context context, ReviewModel rv) {
         super(context);
 
-        reviewId = rid;
+        //reviewId = rid;
+
         type = Constants.VALUE_REVIEW;
+        review = rv;
+
         reviews = new ArrayList<>();
         reviews.add(new ReviewModel());
 
@@ -102,15 +106,18 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
         lytReview = (LinearLayout)findViewById(R.id.lyt_review_review);
         lytReview.setOnClickListener(this);
 
-        if (type == Constants.VALUE_REVIEW)
+        if (type == Constants.VALUE_REVIEW) {
             findViewById(R.id.ryt_review).setVisibility(View.VISIBLE);
+            if (review.isRated())
+                imgRate.setImageResource(R.drawable.heart_fill);
+        }
     }
 
     private void createRate() {
         RestClient<ReviewClient> restClient = new RestClient<>();
         ReviewClient reviewClient = restClient.getAppClient(ReviewClient.class);
 
-        Call<ObjectModel<Integer>> call = reviewClient.createRate(Constants.VALUE_REVIEW, reviewId, Utils.retrieveUserInfo(getContext()).getId());
+        Call<ObjectModel<Integer>> call = reviewClient.createRate(Constants.VALUE_REVIEW, review.getId(), Utils.retrieveUserInfo(getContext()).getId());
         call.enqueue(new Callback<ObjectModel<Integer>>() {
             @Override
             public void onResponse(Call<ObjectModel<Integer>> call, Response<ObjectModel<Integer>> response) {
@@ -132,7 +139,7 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
     }
 
     private void getServiceReviews(int curpage) {
-        RestClient<ServiceClient> restClient = new RestClient<ServiceClient>();
+        RestClient<ServiceClient> restClient = new RestClient<>();
         ServiceClient serviceClient = restClient.getAppClient(ServiceClient.class);
 
         Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(serviceId, Utils.retrieveUserInfo(getContext()).getId(), curpage);
@@ -162,7 +169,7 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
         RestClient<ReviewClient> restClient = new RestClient<ReviewClient>();
         ReviewClient reviewClient = restClient.getAppClient(ReviewClient.class);
 
-        Call<ArrayModel<ReviewModel>> call = reviewClient.getReviewReview(reviewId, Utils.retrieveUserInfo(getContext()).getId(), curpage);
+        Call<ArrayModel<ReviewModel>> call = reviewClient.getReviewReview(review.getId(), Utils.retrieveUserInfo(getContext()).getId(), curpage);
         call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
             @Override
             public void onResponse(Call<ArrayModel<ReviewModel>> call, Response<ArrayModel<ReviewModel>> response) {
@@ -200,7 +207,7 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
                 if (type == Constants.VALUE_SERVICE)
                     intent.putExtra(Constants.KEY_REVIEW_ID, serviceId);
                 else
-                    intent.putExtra(Constants.KEY_REVIEW_ID, reviewId);
+                    intent.putExtra(Constants.KEY_REVIEW_ID, review.getId());
                 getContext().startActivity(intent);
                 break;
         }

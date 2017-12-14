@@ -58,9 +58,29 @@
             android:padding="20dp"
             android:orientation="vertical">
 
+            <com.willy.ratingbar.ScaleRatingBar
+                android:id="@+id/rating_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:srb_numStars="5"
+                app:srb_rating="0"
+                app:srb_starWidth="35dp"
+                app:srb_starHeight="35dp"
+                app:srb_starPadding="5dp"
+                app:srb_stepSize="1"
+                app:srb_isIndicator="false"
+                app:srb_clickable="true"
+                app:srb_scrollable="true"
+                app:srb_clearRatingEnabled="true"
+                app:srb_drawableEmpty="@drawable/star_empty"
+                app:srb_drawableFilled="@drawable/star_fill">
+            </com.willy.ratingbar.ScaleRatingBar>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/view_round">
 
                 <EditText
@@ -76,25 +96,6 @@
                     android:lines="6" />
 
             </LinearLayout>
-
-            <com.willy.ratingbar.ScaleRatingBar
-                android:id="@+id/rating_review"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:srb_numStars="5"
-                app:srb_rating="0"
-                app:srb_starWidth="20dp"
-                app:srb_starHeight="20dp"
-                app:srb_starPadding="0dp"
-                app:srb_stepSize="1"
-                app:srb_isIndicator="false"
-                app:srb_clickable="true"
-                app:srb_scrollable="true"
-                app:srb_clearRatingEnabled="true"
-                app:srb_drawableEmpty="@drawable/star_empty"
-                app:srb_drawableFilled="@drawable/star_fill">
-            </com.willy.ratingbar.ScaleRatingBar>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_photos"

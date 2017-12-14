@@ -1,35 +1,39 @@
 {
   "project_info": {
-    "project_number": "920371387518",
-    "firebase_url": "https://rentme-169707.firebaseio.com",
-    "project_id": "rentme-169707",
-    "storage_bucket": "rentme-169707.appspot.com"
+    "project_number": "280970342567",
+    "firebase_url": "https://rentme-175516.firebaseio.com",
+    "project_id": "rentme-175516",
+    "storage_bucket": "rentme-175516.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:920371387518:android:3c5b878d83c8df04",
+        "mobilesdk_app_id": "1:280970342567:android:acd533148a657638",
         "android_client_info": {
           "package_name": "com.android.jianchen.rentme"
         }
       },
       "oauth_client": [
         {
-          "client_id": "920371387518-c0if0v5161cb6t1329q0s7j2brooca9c.apps.googleusercontent.com",
+          "client_id": "280970342567-11todhfpen8aruasju767mmk1a518r26.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "280970342567-v2all2bsvho9e784kekd65ee1915apcc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.android.emerald.rentme",
-            "certificate_hash": "5cc812468898290305881a0fd000326e9f172a0e"
+            "package_name": "com.android.jianchen.rentme",
+            "certificate_hash": "e5a993c24df41ec7c5708e95c60af5982a8c1da1"
           }
         },
         {
-          "client_id": "920371387518-6t0avp2adriff6jjjvepbbfuppnr5nrb.apps.googleusercontent.com",
+          "client_id": "280970342567-e9peatsoujgf8okss8lva39rfk51njer.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBi15ByjbDTYPChSC5NKEm6ueDklMYutXc"
+          "current_key": "AIzaSyDTrSKLw5AMSmJIlnEEBmnrHyFZs31EP24"
         }
       ],
       "services": {
@@ -40,7 +44,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "920371387518-6t0avp2adriff6jjjvepbbfuppnr5nrb.apps.googleusercontent.com",
+              "client_id": "280970342567-11todhfpen8aruasju767mmk1a518r26.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

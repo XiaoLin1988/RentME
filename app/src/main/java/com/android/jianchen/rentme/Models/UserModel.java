@@ -32,6 +32,7 @@ public class UserModel implements Serializable {
     private int usr_df;
     private String coverImg;
     private String mainImg;
+    private int earning;
     private double distance;
 
     public UserModel() {
@@ -277,5 +278,13 @@ public class UserModel implements Serializable {
 
     public void setMainImg(String mainImg) {
         this.mainImg = mainImg;
+    }
+
+    public int getEarning() {
+        return earning;
+    }
+
+    public void setEarning(int earning) {
+        this.earning = earning;
     }
 }

@@ -193,9 +193,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             lytReview.setOnClickListener(new SingleClickListener() {
                 @Override
                 public void onSingleClick(View v) {
-                    if (review.getReview_count() == 0)
-                        return;
-                    ReviewDialog dialog = new ReviewDialog(context, review.getId());
+                    ReviewDialog dialog = new ReviewDialog(context, review);
                     dialog.show();
                 }
             });

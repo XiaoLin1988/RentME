@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -73,8 +74,8 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     @Bind(R.id.txt_profile_earned)
     TextView txtEarning;
 
-    @Bind(R.id.img_profile_mobile)
-    ImageView imgMobile;
+    @Bind(R.id.img_profile_email)
+    ImageView imgEmail;
 
     @Bind(R.id.img_profile_facebook)
     ImageView imgFacebook;
@@ -97,6 +98,8 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
 
     @BindString(R.string.joined)
     String joined;
+
+    private Menu menu;
 
     private Toolbar toolbar;
     private AVLoadingIndicatorView loadingContent;
@@ -135,17 +138,37 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                     upArrow.setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_ATOP);
                     getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
-                    Drawable pencil = getResources().getDrawable(R.drawable.abc_ic_menu_overflow_material);
-                    upArrow.setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_ATOP);
-                    toolbar.setOverflowIcon(pencil);
+                    if (menu != null) {
+                        MenuItem menuEdit = menu.findItem(R.id.action_edit);
+                        Drawable editDrawable = menuEdit.getIcon();
+                        Drawable editWrap = DrawableCompat.wrap(editDrawable);
+                        DrawableCompat.setTint(editWrap, getResources().getColor(R.color.colorBlack));
+                        menuEdit.setIcon(editWrap);
+
+                        MenuItem menuCreate = menu.findItem(R.id.action_create);
+                        Drawable createDrawable = menuCreate.getIcon();
+                        Drawable createWrap = DrawableCompat.wrap(createDrawable);
+                        DrawableCompat.setTint(createWrap, getResources().getColor(R.color.colorBlack));
+                        menuCreate.setIcon(createWrap);
+                    }
                 } else if (state == State.EXPANDED){
                     Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
                     upArrow.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
                     getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
-                    Drawable pencil = getResources().getDrawable(R.drawable.abc_ic_menu_overflow_material);
-                    upArrow.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-                    toolbar.setOverflowIcon(pencil);
+                    if (menu != null) {
+                        MenuItem menuEdit = menu.findItem(R.id.action_edit);
+                        Drawable editDrawable = menuEdit.getIcon();
+                        Drawable editWrap = DrawableCompat.wrap(editDrawable);
+                        DrawableCompat.setTint(editWrap, getResources().getColor(R.color.colorWhite));
+                        menuEdit.setIcon(editWrap);
+
+                        MenuItem menuCreate = menu.findItem(R.id.action_create);
+                        Drawable createDrawable = menuCreate.getIcon();
+                        Drawable createWrap = DrawableCompat.wrap(createDrawable);
+                        DrawableCompat.setTint(createWrap, getResources().getColor(R.color.colorWhite));
+                        menuCreate.setIcon(createWrap);
+                    }
                 }
             }
         });
@@ -165,10 +188,10 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
             }
         }, 1500);
 
-        if (userModel.getPhone() == null || userModel.getPhone().equals("")) {
-            imgMobile.setImageResource(R.drawable.mobile_u);
+        if (userModel.getEmail() == null || userModel.getEmail().equals("")) {
+            imgEmail.setImageResource(R.drawable.email_u);
         } else {
-            imgMobile.setImageResource(R.drawable.mobile_a);
+            imgEmail.setImageResource(R.drawable.email_a);
         }
 
         if (userModel.getFbId() == null || userModel.getFbId().equals("")) {
@@ -191,7 +214,16 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
 
         txtName.setText(userModel.getName());
         txtMood.setText(userModel.getDescription());
-        txtLocation.setText(userModel.getAddress());
+        if (userModel.getAddress().equals(""))
+            txtLocation.setText("Address is not set yet.");
+        else
+            txtLocation.setText(userModel.getAddress());
+
+        if (userModel.getEarning() == 0) {
+            txtEarning.setText("No earning yet");
+        } else {
+            txtEarning.setText(String.format("%d earnings", userModel.getEarning()));
+        }
         Date date = Utils.stringToDate(userModel.getCtime());
         txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));
 
@@ -217,7 +249,7 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         } else {
             Glide.with(this).load(userModel.getCoverImg()).asBitmap().fitCenter().placeholder(R.drawable.cover).into(imgCover);
         }
-        Glide.with(this).load(userModel.getMainImg()).asBitmap().fitCenter().placeholder(R.drawable.main).into(imgMain);
+        Glide.with(this).load(userModel.getAvatar()).asBitmap().fitCenter().placeholder(R.drawable.profile_empty).into(imgMain);
 
 
         adapterSkillService = new SkillServiceRecyclerAdapter(this, new ArrayList<SkillServiceModel>(), this);
@@ -282,13 +314,20 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_profile, menu);
-        /*
-        Drawable normalDrawable = item.getIcon();
-        Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
-        DrawableCompat.setTint(wrapDrawable, context.getResources().getColor(color));
 
-        item.setIcon(wrapDrawable);
-        */
+        MenuItem menuEdit = menu.findItem(R.id.action_edit);
+        Drawable editDrawable = menuEdit.getIcon();
+        Drawable editWrap = DrawableCompat.wrap(editDrawable);
+        DrawableCompat.setTint(editWrap, getResources().getColor(R.color.colorWhite));
+        menuEdit.setIcon(editWrap);
+
+        MenuItem menuCreate = menu.findItem(R.id.action_create);
+        Drawable createDrawable = menuCreate.getIcon();
+        Drawable createWrap = DrawableCompat.wrap(createDrawable);
+        DrawableCompat.setTint(createWrap, getResources().getColor(R.color.colorWhite));
+        menuCreate.setIcon(createWrap);
+
+        this.menu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 

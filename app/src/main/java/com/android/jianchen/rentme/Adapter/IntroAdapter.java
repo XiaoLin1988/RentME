@@ -34,7 +34,7 @@ public class IntroAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return introList.size();
+        return /*introList.size();*/ 5;
     }
 
     @Override
@@ -52,6 +52,18 @@ public class IntroAdapter extends PagerAdapter {
         final AVLoadingIndicatorView loading = (AVLoadingIndicatorView)itemView.findViewById(R.id.loading_content);
         loading.show();
 
+        Glide.with(context).load(R.drawable.cover1 + position).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                loading.hide();
+                loading.setVisibility(View.GONE);
+
+                imgIntro.setVisibility(View.VISIBLE);
+                imgIntro.setImageBitmap(resource);
+            }
+        });
+
+        /*
         Intro intro = introList.get(position);
         if (intro.getType() == 0) { // Image
             Glide.with(context).load(intro.getLink()).asBitmap().into(new SimpleTarget<Bitmap>(400, 400) {
@@ -94,6 +106,7 @@ public class IntroAdapter extends PagerAdapter {
             });
             webIntro.loadData(data, "text/html", "utf-8");
         }
+        */
 
         return itemView;
     }

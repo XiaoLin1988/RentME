@@ -157,6 +157,9 @@ public class ServiceDetailActivity2 extends AppCompatActivity implements View.On
     }
 
     private void initViews() {
+        IntroAdapter introAdapter = new IntroAdapter(this, new ArrayList<Intro>());
+        pagerService.setAdapter(introAdapter);
+
         txtSkill.setText(service.getSkill_title());
         txtTitle.setText(service.getTitle());
         txtPrice.setText(Integer.toString(service.getBalance()));
@@ -165,6 +168,9 @@ public class ServiceDetailActivity2 extends AppCompatActivity implements View.On
         rytReadAll.setOnClickListener(this);
         rateScore.setRating((float)service.getReview_score());
 
+        if (service.getTalent_id() == Utils.retrieveUserInfo(this).getId()) {
+            buyService.setText("Delete");
+        }
         buyService.setOnClickListener(this);
 
         getServiceReviews();
@@ -283,12 +289,21 @@ public class ServiceDetailActivity2 extends AppCompatActivity implements View.On
                 dialog.show();
                 break;
             case R.id.btn_service_buy:
-                DialogUtil.showConfirmDialog(this, "Do you really want to buy this service", new OnConfirmListener() {
-                    @Override
-                    public void onConfirm() {
-                        doPayment();
-                    }
-                });
+                if (service.getId() == Utils.retrieveUserInfo(ServiceDetailActivity2.this).getId()) {
+                    DialogUtil.showConfirmDialog(this, "Do you really want to delete this service", new OnConfirmListener() {
+                        @Override
+                        public void onConfirm() {
+
+                        }
+                    });
+                } else {
+                    DialogUtil.showConfirmDialog(this, "Do you really want to buy this service", new OnConfirmListener() {
+                        @Override
+                        public void onConfirm() {
+                            doPayment();
+                        }
+                    });
+                }
                 break;
         }
     }
