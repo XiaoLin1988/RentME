@@ -26,6 +26,7 @@ import butterknife.BindString;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by emerald on 12/14/2017.
@@ -33,9 +34,6 @@ import retrofit2.Callback;
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.btn_back)
     ImageView btnBack;
-
-    @Bind(R.id.img_user_avatar)
-    CircularImageView imgAvatar;
 
     @Bind(R.id.edit_user_email)
     EditText editEmail;
@@ -65,6 +63,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void initViews() {
         btnBack.setOnClickListener(this);
+        btnSignup.setOnClickListener(this);
     }
 
     @Override
@@ -82,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     Call<ObjectModel<Integer>> call = userClient.signupUser(Utils.getUserName(editEmail.getText().toString()), editEmail.getText().toString(), editPassword.getText().toString());
                     call.enqueue(new Callback<ObjectModel<Integer>>() {
                         @Override
-                        public void onResponse(Call<ObjectModel<Integer>> call, retrofit2.Response<ObjectModel<Integer>> response) {
+                        public void onResponse(Call<ObjectModel<Integer>> call, Response<ObjectModel<Integer>> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body().getStatus()) {
                                 UserModel user = new UserModel();
@@ -113,13 +112,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private boolean validate() {
         if (editEmail.getText().toString().equals("")) {
-            Snackbar.make(findViewById(android.R.id.content), "Please validate email", 1000);
+            Snackbar.make(findViewById(android.R.id.content), "Please validate email", Snackbar.LENGTH_SHORT).show();
             return false;
         } else if (editPassword.getText().toString().equals("")) {
-            Snackbar.make(findViewById(android.R.id.content), "Please input password", 1000);
+            Snackbar.make(findViewById(android.R.id.content), "Please input password", Snackbar.LENGTH_SHORT).show();
             return false;
         } else if (!editPassword.getText().toString().equals(editConfirm.getText().toString())) {
-            Snackbar.make(findViewById(android.R.id.content), "Confirm password doesn't match", 1000);
+            Snackbar.make(findViewById(android.R.id.content), "Confirm password doesn't match", Snackbar.LENGTH_SHORT).show();
             return false;
         } else {
             return true;

@@ -62,7 +62,7 @@ public class Utils {
 
     public static String getUserName(String email) {
         int index = email.lastIndexOf("@");
-        String name = email.substring(0, index - 1);
+        String name = email.substring(0, index);
         return name;
     }
 

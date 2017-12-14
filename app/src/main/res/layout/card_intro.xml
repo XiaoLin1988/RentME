@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="400dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorWhite">
+    android:background="@drawable/gradient_bg">
 
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/loading_content"
@@ -12,7 +12,7 @@
         android:layout_centerInParent="true"
         android:visibility="visible"
         app:indicatorName="BallPulseIndicator"
-        app:indicatorColor="@color/colorBlue"/>
+        app:indicatorColor="@color/colorWhite"/>
 
     <ImageView
         android:id="@+id/img_intro"
