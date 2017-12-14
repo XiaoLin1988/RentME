@@ -123,8 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
             case R.id.btn_login_signup:
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                intent.putExtra(Constants.EXTRA_USERTYPE, 2);
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
                 break;
             case R.id.txt_login_forgot:

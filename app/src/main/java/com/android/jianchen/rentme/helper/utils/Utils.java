@@ -60,6 +60,12 @@ public class Utils {
         return curUser;
     }
 
+    public static String getUserName(String email) {
+        int index = email.lastIndexOf("@");
+        String name = email.substring(0, index - 1);
+        return name;
+    }
+
     public static String getSaltString() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();

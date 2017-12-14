@@ -66,6 +66,7 @@ public class Constants {
     //public static final String API_ROOT_URL = "http://34.203.243.197/index.php/api/";
     public static final String API_IMAGE_UPLOAD = "common/uploadImage";
     public static final String API_USER_LOGIN = "user/loginUser";
+    public static final String API_USER_SIGNUP = "user/signupUser";
     public static final String API_USER_FORGOT = "user/forgotPassword";
     public static final String API_USER_REGISTER = "user/registerUser";
     public static final String API_USER_EDIT = "user/editUserProfile";

@@ -21,6 +21,10 @@ public interface UserClient {
     @FormUrlEncoded
     Call<ObjectModel<UserModel>> loginUser(@Field("name") String name, @Field("password") String password);
 
+    @POST(Constants.API_USER_SIGNUP)
+    @FormUrlEncoded
+    Call<ObjectModel<Integer>> signupUser(@Field("name") String name, @Field("email") String email, @Field("password") String password);
+
     @POST(Constants.API_USER_SEARCH_BY_LOCATION)
     @FormUrlEncoded
     Call<ArrayList<UserModel>> searchByLocation(@Field("latitude") double latitude, @Field("longitude") double longitude, @Field("skill") String skill);

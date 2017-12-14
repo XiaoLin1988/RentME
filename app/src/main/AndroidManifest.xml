@@ -39,21 +39,22 @@
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/facebook_app_name" />
-
-
         <activity
             android:name=".activity.root.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.root.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.root.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.root.ImageCropActivity"
@@ -77,22 +78,23 @@
         <activity
             android:name=".activity.myprojects.PayActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.me.ServiceDetailActivity"
+        <activity
+            android:name=".activity.me.ServiceDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.me.ServiceCreateActivity"
+        <activity
+            android:name=".activity.me.ServiceCreateActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.me.ProfileActivity"
+        <activity
+            android:name=".activity.me.ProfileActivity"
             android:screenOrientation="portrait" >
         </activity>
-
-        <activity android:name=".activity.myprojects.LeaveReviewActivity"
-            android:screenOrientation="portrait"></activity>
-
+        <activity
+            android:name=".activity.myprojects.LeaveReviewActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.root.LoginActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.root.SocialLoginActivity"
             android:screenOrientation="portrait" >

@@ -106,8 +106,6 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_close:
-                if (videoListener != null)
-                    videoListener.onPostVideo(videoLink);
                 dismiss();
                 break;
             case R.id.btn_post:

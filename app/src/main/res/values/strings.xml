@@ -27,6 +27,7 @@
     <string name="title_activity_maps">Map</string>
 
     <string name="error_load">Loading Failed</string>
+    <string name="error_signup">Register new account failed</string>
     <string name="error_loginSignup">Account Validation Failed</string>
     <string name="error_network">Please check network status</string>
 

@@ -57,7 +57,7 @@
                     android:background="@drawable/multiline_edittext"
                     android:singleLine="true"
                     android:hint="Enter your email"
-                    android:text="jian1108@yahoo.com"
+                    android:text="ann@yahoo.com"
                     android:textColorHint="@color/colorWeekUnselect"
                     android:textColor="@color/colorBlack"
                     android:textSize="16dp" />

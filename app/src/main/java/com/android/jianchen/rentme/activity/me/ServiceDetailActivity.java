@@ -213,6 +213,11 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
         });
     }
 
+    private void deleteService() {
+
+        finish();
+    }
+
     private void doPayment() {
         //Creating a paypalpayment
         PayPalPayment payment = new PayPalPayment(new BigDecimal(service.getBalance()), "USD", "Buy \"" + service.getTitle() + "\" service", PayPalPayment.PAYMENT_INTENT_SALE);
@@ -294,7 +299,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                     DialogUtil.showConfirmDialog(this, "Do you really want to delete this service", new OnConfirmListener() {
                         @Override
                         public void onConfirm() {
-
+                            deleteService();
                         }
                     });
                 } else {
