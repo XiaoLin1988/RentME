@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.jianchen.rentme.Events.ProjectCreateEvent;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
 import com.android.jianchen.rentme.activity.myprojects.fragment.ProjectFragment;
 import com.android.jianchen.rentme.activity.search.fragment.ProjectCreateFragment;
 import com.android.jianchen.rentme.model.rentme.UserModel;

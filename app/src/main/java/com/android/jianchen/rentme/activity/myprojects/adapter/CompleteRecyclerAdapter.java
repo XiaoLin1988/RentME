@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.jianchen.rentme.Events.ProjectCompleteEvent;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectCompleteEvent;
 import com.android.jianchen.rentme.helper.listener.SingleClickListener;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.activity.myprojects.ProjectCompleteDetailActivity;

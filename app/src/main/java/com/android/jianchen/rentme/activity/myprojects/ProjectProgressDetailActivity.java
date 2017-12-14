@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.jianchen.rentme.Events.ProjectCompleteEvent;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectCompleteEvent;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.R;
