@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.jianchen.rentme.model.rentme.EffectModel;
+import com.android.jianchen.rentme.model.photoedit.EffectModel;
 import com.android.jianchen.rentme.R;
 
 import java.util.List;

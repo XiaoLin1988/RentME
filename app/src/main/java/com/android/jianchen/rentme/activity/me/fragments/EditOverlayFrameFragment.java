@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.jianchen.rentme.activity.me.adapter.EditFrameAdapter;
-import com.android.jianchen.rentme.model.rentme.EffectModel;
+import com.android.jianchen.rentme.model.photoedit.EffectModel;
 import com.android.jianchen.rentme.activity.me.PhotoEditActivity;
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.helper.Constants;
