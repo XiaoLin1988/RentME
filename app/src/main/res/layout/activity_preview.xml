@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:elevation="6dp"
                     android:singleLine="true"
-                    android:text="zhang nemo"
+                    android:text="zhangasfsafsadfasfadsfasfadsf nemo"
                     android:textSize="@dimen/font_xxlarge"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>

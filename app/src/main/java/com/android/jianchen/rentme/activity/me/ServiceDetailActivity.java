@@ -295,6 +295,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                 dialog.show();
                 break;
             case R.id.btn_service_buy:
+                /*
                 if (service.getId() == Utils.retrieveUserInfo(ServiceDetailActivity.this).getId()) {
                     DialogUtil.showConfirmDialog(this, "Do you really want to delete this service", new OnConfirmListener() {
                         @Override
@@ -310,6 +311,13 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                         }
                     });
                 }
+                */
+                DialogUtil.showConfirmDialog(this, "Do you really want to buy this service", new OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        doPayment();
+                    }
+                });
                 break;
         }
     }
@@ -344,8 +352,6 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "Payment cancelled by user", Toast.LENGTH_SHORT).show();
-
-                createProject();
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                 DialogUtil.showAlertDialog(this, "An invalid Payment or PayPalConfiguration was submitted");
                 Toast.makeText(this, "Payment cancelled by user", Toast.LENGTH_SHORT).show();

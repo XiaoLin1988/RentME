@@ -19,7 +19,6 @@ import com.android.jianchen.rentme.helper.utils.DialogUtil;
 import com.android.jianchen.rentme.helper.utils.Utils;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
-import com.github.siyamed.shapeimageview.CircularImageView;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -28,9 +27,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by emerald on 12/14/2017.
- */
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.btn_back)
     ImageView btnBack;
@@ -113,6 +109,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private boolean validate() {
         if (editEmail.getText().toString().equals("")) {
             Snackbar.make(findViewById(android.R.id.content), "Please validate email", Snackbar.LENGTH_SHORT).show();
+            return false;
+        } if (!editEmail.getText().toString().contains("@")) {
+            Snackbar.make(findViewById(android.R.id.content), "Please input validate email", Snackbar.LENGTH_SHORT).show();
             return false;
         } else if (editPassword.getText().toString().equals("")) {
             Snackbar.make(findViewById(android.R.id.content), "Please input password", Snackbar.LENGTH_SHORT).show();
