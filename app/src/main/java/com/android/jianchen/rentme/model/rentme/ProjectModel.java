@@ -15,6 +15,7 @@ public class ProjectModel implements Serializable {
     private int sv_balance;
     private String sv_detail;
     private int talent_id;
+    private int consumer_id;
     private int skill_id;
 
     public int getPr_id() {
@@ -87,6 +88,14 @@ public class ProjectModel implements Serializable {
 
     public void setTalent_id(int talent_id) {
         this.talent_id = talent_id;
+    }
+
+    public int getConsumer_id() {
+        return consumer_id;
+    }
+
+    public void setConsumer_id(int consumer_id) {
+        this.consumer_id = consumer_id;
     }
 
     public int getSkill_id() {

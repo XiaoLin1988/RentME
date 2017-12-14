@@ -4,7 +4,7 @@ package com.android.jianchen.rentme.helper;
  * Created by emerald on 5/30/2017.
  */
 public class Constants {
-    public static final String FIREBASE_ROOT = "https://rentme-169707.firebaseio.com/";
+    public static final String FIREBASE_ROOT = "https://rentme-175516.firebaseio.com/";
 
     public static final String PAYPAL_CLIENT_ID = "Ae1hNYiWsL_zv4WFp3wtt7tKOuIw-9bhm7ETOsRjHjSaDwXxjHypzvBLoe6mKINONdfnepZzRLpVIgvK";
     public static final int PAYPAL_REQUEST_CODE = 2001;

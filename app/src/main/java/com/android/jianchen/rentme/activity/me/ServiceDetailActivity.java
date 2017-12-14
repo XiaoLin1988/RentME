@@ -258,6 +258,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                     project.setSv_id(service.getId());
                     project.setSv_preview(service.getPreview());
                     project.setSv_title(service.getTitle());
+                    project.setConsumer_id(Utils.retrieveUserInfo(ServiceDetailActivity.this).getId());
                     project.setTalent_id(service.getTalent_id());
                     project.setSv_detail(service.getDetail());
                     projectListener.onProjectCreate(project);
@@ -351,6 +352,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                     }
                 }
             } else if (resultCode == RESULT_CANCELED) {
+                //createProject();
                 Toast.makeText(this, "Payment cancelled by user", Toast.LENGTH_SHORT).show();
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                 DialogUtil.showAlertDialog(this, "An invalid Payment or PayPalConfiguration was submitted");

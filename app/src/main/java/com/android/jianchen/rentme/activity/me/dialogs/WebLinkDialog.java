@@ -141,9 +141,10 @@ public class WebLinkDialog extends Dialog implements View.OnClickListener {
                 if (!validate) {
                     String query = editLink.getText().toString();
                     if (!query.equals("")) {
-                        fetchWebData(query);
-                    } else if (!query.startsWith("http://") || query.startsWith("https://")) {
-                        fetchWebData("http://" + query);
+                        if (!query.startsWith("http://") || !query.startsWith("https://"))
+                            fetchWebData("http://" + query);
+                        else
+                            fetchWebData(query);
                     }
                 } else {
                     if (webListener != null) {

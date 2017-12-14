@@ -5,7 +5,9 @@
     android:background="@color/colorEmpty"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp">
+    android:paddingTop="5dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
 
     <com.github.siyamed.shapeimageview.CircularImageView
         android:id="@+id/img_row_chatting_avatar"
@@ -45,6 +47,7 @@
             android:layout_height="16dp"
             android:layout_marginTop="20dp"
             android:layout_alignParentRight="true"
+            android:tint="#C7EDFC"
             android:src="@drawable/bubble_arrow2" />
     </RelativeLayout>
 

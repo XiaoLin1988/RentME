@@ -303,10 +303,15 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                 startActivityForResult(intent, Constants.REQUEST_SERVICE_CREATE);
                 return true;
             case R.id.action_edit:
+                /*
                 Intent intent2 = new Intent(ProfileActivity.this, RegisterActivity.class);
                 intent2.putExtra(Constants.EXTRA_USERTYPE, 0);
 
                 startActivity(intent2);
+                */
+                Intent intent1 = new Intent(ProfileActivity.this, PreviewActivity.class);
+
+                startActivity(intent1);
                 return true;
         }
         return super.onOptionsItemSelected(item);

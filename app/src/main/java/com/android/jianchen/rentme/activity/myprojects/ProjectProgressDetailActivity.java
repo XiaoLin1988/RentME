@@ -32,7 +32,7 @@ import retrofit2.Response;
  */
 public class ProjectProgressDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ProjectModel service;
+    private ProjectModel project;
 
     private ImageView btnBack;
     private TextView txtPage;
@@ -43,13 +43,13 @@ public class ProjectProgressDetailActivity extends AppCompatActivity implements 
     private TextView txtDescription;
     private TextView txtBalance;
 
-    private Button btnComplete, btnPay;
+    private Button btnComplete, btnChat;
 
     protected void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
         setContentView(R.layout.activity_project_progress_detail);
 
-        service = (ProjectModel) getIntent().getSerializableExtra(Constants.EXTRA_PROJECT_DETAIL);
+        project = (ProjectModel) getIntent().getSerializableExtra(Constants.EXTRA_PROJECT_DETAIL);
 
         initViewVariables();
     }
@@ -59,10 +59,10 @@ public class ProjectProgressDetailActivity extends AppCompatActivity implements 
         btnBack.setOnClickListener(this);
 
         txtPage = (TextView)findViewById(R.id.txt_project_progress_detail_page);
-        txtPage.setText(service.getSv_title());
+        txtPage.setText(project.getSv_title());
 
         imgPreview = (ImageView)findViewById(R.id.img_progress_detail_preview);
-        Glide.with(ProjectProgressDetailActivity.this).load(service.getSv_preview())
+        Glide.with(ProjectProgressDetailActivity.this).load(project.getSv_preview())
                 .thumbnail(0.5f)
                 .crossFade()
                 .placeholder(R.drawable.placeholder)
@@ -70,21 +70,19 @@ public class ProjectProgressDetailActivity extends AppCompatActivity implements 
                 .into(imgPreview);
 
         txtTitle = (TextView)findViewById(R.id.txt_project_progress_detail_title);
-        txtTitle.setText(service.getSv_title());
+        txtTitle.setText(project.getSv_title());
 
         txtDescription = (TextView)findViewById(R.id.txt_project_progress_detail_description);
-        txtDescription.setText(service.getSv_detail());
+        txtDescription.setText(project.getSv_detail());
 
         txtBalance = (TextView)findViewById(R.id.txt_project_progress_detail_balance);
-        txtBalance.setText(Integer.toString(service.getSv_balance()));
+        txtBalance.setText(Integer.toString(project.getSv_balance()));
 
         btnComplete = (Button)findViewById(R.id.btn_project_progress_detail_complete);
         btnComplete.setOnClickListener(this);
 
-        /*
-        btnPay = (Button)findViewById(R.id.btn_project_progress_detail_pay);
-        btnPay.setOnClickListener(this);
-        */
+        btnChat = (Button)findViewById(R.id.btn_project_progress_detail_chat);
+        btnChat.setOnClickListener(this);
     }
 
     @Override
@@ -93,22 +91,21 @@ public class ProjectProgressDetailActivity extends AppCompatActivity implements 
             case R.id.btn_project_progress_detail_chat:
                 Intent intent = new Intent(ProjectProgressDetailActivity.this, ChattingActivity.class);
                 String json = getIntent().getStringExtra(Constants.EXTRA_PROJECT_DETAIL);
-                intent.putExtra(Constants.EXTRA_PROJECT_DETAIL, service.getSv_id());
+                intent.putExtra(Constants.EXTRA_PROJECT_DETAIL, project.getPr_id());
                 startActivity(intent);
-                finish();
                 break;
             case R.id.btn_project_progress_detail_complete:
                 final ProgressDialog dialog = DialogUtil.showProgressDialog(this, "Completing project");
 
                 RestClient<ProjectClient> restClient = new RestClient<>();
                 ProjectClient client = restClient.getAppClient(ProjectClient.class);
-                Call<ObjectModel<Boolean>> call = client.completeProject(service.getPr_id());
+                Call<ObjectModel<Boolean>> call = client.completeProject(project.getPr_id());
                 call.enqueue(new Callback<ObjectModel<Boolean>>() {
                     @Override
                     public void onResponse(Call<ObjectModel<Boolean>> call, Response<ObjectModel<Boolean>> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body().getStatus()) {
-                            EventBus.getDefault().post(new ProjectCompleteEvent(service));
+                            EventBus.getDefault().post(new ProjectCompleteEvent(project));
                             finish();
                         } else {
                             Toast.makeText(ProjectProgressDetailActivity.this, getResources().getString(R.string.error_load), Toast.LENGTH_SHORT).show();
