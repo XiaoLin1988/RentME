@@ -224,7 +224,7 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         if (userModel.getEarning() == 0) {
             txtEarning.setText("No earning yet");
         } else {
-            txtEarning.setText(String.format("%d earnings", userModel.getEarning()));
+            txtEarning.setText(Utils.getUserEarning(userModel.getEarning()));
         }
         Date date = Utils.stringToDate(userModel.getCtime());
         txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));

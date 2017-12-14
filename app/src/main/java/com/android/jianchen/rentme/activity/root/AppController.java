@@ -1,6 +1,7 @@
 package com.android.jianchen.rentme.activity.root;
 
 import android.app.Application;
+import android.os.StrictMode;
 import android.text.TextUtils;
 
 import com.android.jianchen.rentme.helper.utils.LruBitmapCache;
@@ -10,6 +11,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.firebase.client.Firebase;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 /**
  * Created by emerald on 6/1/2017.
@@ -26,9 +29,17 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
         Firebase.setAndroidContext(this);
-        mInstance = this;
+
         Utils.overrideFont(getApplicationContext(), "SERIF", "roboto.ttf");
+
+        Iconify.with(new FontAwesomeModule());
+
+        mInstance = this;
     }
 
     public static synchronized AppController getInstance() {

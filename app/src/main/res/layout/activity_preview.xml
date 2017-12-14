@@ -4,20 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorTransparent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     </android.support.design.widget.AppBarLayout>
 
@@ -25,8 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        app:layout_collapseMode="parallax">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/ryt_profile_cover"
@@ -34,12 +32,22 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/ryt_profile_content">
 
-            <ImageView
-                android:id="@+id/img_profile_cover"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager_cover"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/cover"
-                android:scaleType="centerCrop"/>
+                android:layout_height="match_parent"/>
+
+            <com.rd.PageIndicatorView
+                android:id="@+id/ind_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                app:piv_viewPager="@+id/pager_cover"
+                app:piv_dynamicCount="true"
+                app:piv_radius="6dp"
+                app:piv_animationType="worm"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,24 +62,22 @@
                 android:padding="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <com.joanzapata.iconify.widget.IconTextView
                     android:id="@+id/txt_profile_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="6dp"
-                    android:singleLine="true"
-                    android:text="zhangasfsafsadfasfadsfasfadsf nemo"
+                    android:text="Jian Chen {fa-pencil}"
                     android:textSize="@dimen/font_xxlarge"
                     android:textStyle="bold"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorWhite" />
 
-                <TextView
+                <com.joanzapata.iconify.widget.IconTextView
                     android:id="@+id/txt_profile_mood"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="6dp"
                     android:layout_marginTop="10dp"
-                    android:text="A great attitude becomes a great day which becomes a great month which becomes a great year which becomes a great life"
+                    android:text="A great attitude becomes a great day which becomes a great month which becomes a great year which becomes a great life {fa_pencil}"
                     android:textSize="@dimen/font_large"
                     android:textStyle="bold"
                     android:textColor="@color/colorWhite"/>
@@ -120,12 +126,12 @@
                         android:layout_height="16dp"
                         android:src="@drawable/location"/>
 
-                    <TextView
+                    <com.joanzapata.iconify.widget.IconTextView
                         android:id="@+id/txt_profile_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="Barcelona"
+                        android:text="Barcelona {fa-pencil}"
                         android:textSize="@dimen/font_normal"
                         android:textColor="@color/colorWhite"/>
                 </LinearLayout>

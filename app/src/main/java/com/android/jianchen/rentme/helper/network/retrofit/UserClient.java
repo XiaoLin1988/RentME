@@ -33,7 +33,6 @@ public interface UserClient {
     @FormUrlEncoded
     Call<ArrayModel<ServiceModel>> getUserSkills(@Field("talentid") int talentid);
 
-
     @POST(Constants.API_USER_GOOGLE_CHECK)
     @FormUrlEncoded
     Call<ObjectModel<UserModel>> checkGoogleUser(@Field("email") String email, @Field("name") String name, @Field("avatar") String avatar);
@@ -42,4 +41,10 @@ public interface UserClient {
     @POST(Constants.API_USER_FACEBOOK_CHECK)
     @FormUrlEncoded
     Call<ObjectModel<UserModel>> checkFacebookUser(@Field("email") String email, @Field("name") String name, @Field("avatar") String avatar);
+
+    /*
+    @POST(Constants.API_USER_EDIT)
+    @FormUrlEncoded
+    Call<ObjectModel<UserModel>> loginUser(@Field("name") String name, @Field("password") String password);
+    */
 }

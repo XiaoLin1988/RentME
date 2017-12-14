@@ -66,6 +66,20 @@ public class Utils {
         return name;
     }
 
+    public static String getUserEarning(int earning) {
+        if (earning == 0) {
+            return "No earning yet";
+        } else {
+            if (earning < 100) {
+                return String.valueOf(earning) + " earning";
+            } else {
+                int count = earning / 100;
+                earning = count * 100;
+                return String.valueOf(earning) + "+ earning";
+            }
+        }
+    }
+
     public static String getSaltString() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
