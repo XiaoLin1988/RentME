@@ -33,6 +33,7 @@ public class Constants {
     public static final int REQUEST_POST_VIDEO = 0x7;
     public static final int REQUEST_POST_WEB = 0x8;
     public static final int REQUEST_PROJECT_CREATE = 0x9;
+    public static final int REQUEST_GOOGLE_SIGNIN = 10;
 
 
     public static final String ERROR_MSG = "error_msg";
@@ -60,7 +61,8 @@ public class Constants {
 
     //public static final String SITE_URL = "http://34.203.243.197/";
     public static final String SITE_URL = "http://192.168.0.208/";
-    public static final String API_ROOT_URL = "http://192.168.0.208/rentme/index.php/";
+    public static final String API_ROOT_URL = "http://192.168.0.206/rentme/index.php/";
+
     //public static final String API_ROOT_URL = "http://34.203.243.197/index.php/api/";
     public static final String API_IMAGE_UPLOAD = "common/uploadImage";
     public static final String API_USER_LOGIN = "user/loginUser";
@@ -87,6 +89,12 @@ public class Constants {
     public static final String API_COMMON_UPLOAD_VIDEO = "common/uploadVideos";
     public static final String API_COMMON_UPLOAD_WEB = "common/uploadWebs";
     public static final String API_COMMON_UPLOAD_IMAGE = "common/uploadImages";
+
+    // Social Login
+    public static final String API_USER_GOOGLE_CHECK = "user/checkGoogleUser";
+    public static final String API_USER_FACEBOOK_CHECK = "user/checkFacebookUser";
+
+
 
     public static final int ACTION_CROP = 1000;
     public static final int ACTION_BOOST = 1001;
@@ -129,11 +137,17 @@ public class Constants {
 
     public static final String KEY_USER = "key_user";
     public static final String KEY_VIDEO = "key_video";
-    public static final String KEY_PHOTO = "key_photo";
     public static final String KEY_WEB = "key_web";
     public static final String KEY_REVIEW_ID = "key_review_id";
-    public static final String KEY_REVIEW = "key_review";
     public static final String KEY_SERVICE = "key_service";
 
     public static final String KEY_TRANSITION = "key_transition";
+
+
+
+    public static final String LOGINMODE_FACEBOOK = "FACEBOOK";
+    public static final String LOGINMODE_GOOGLE = "GOOGLE";
+    public static final String LOGINMODE_EMAIL = "EMAIL";
+
+
 }

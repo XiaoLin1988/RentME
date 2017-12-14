@@ -1,9 +1,7 @@
 {
   "project_info": {
     "project_number": "280970342567",
-    "firebase_url": "https://rentme-175516.firebaseio.com",
-    "project_id": "rentme-175516",
-    "storage_bucket": "rentme-175516.appspot.com"
+    "project_id": "rentme-175516"
   },
   "client": [
     {
@@ -15,10 +13,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "280970342567-11todhfpen8aruasju767mmk1a518r26.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
           "client_id": "280970342567-v2all2bsvho9e784kekd65ee1915apcc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -29,11 +23,19 @@
         {
           "client_id": "280970342567-e9peatsoujgf8okss8lva39rfk51njer.apps.googleusercontent.com",
           "client_type": 3
+        },
+        {
+          "client_id":"280970342567-v2all2bsvho9e784kekd65ee1915apcc.apps.googleusercontent.com",
+          "project_id":"rentme-175516",
+          "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+          "token_uri":"https://accounts.google.com/o/oauth2/token",
+          "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+          "redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDTrSKLw5AMSmJIlnEEBmnrHyFZs31EP24"
+          "current_key": "AIzaSyDByKH2Mai3Km1MnMWMudvMDBSrABdrPYY"
         }
       ],
       "services": {
@@ -41,16 +43,11 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "280970342567-11todhfpen8aruasju767mmk1a518r26.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 2
+          "status": 1
         }
       }
     }

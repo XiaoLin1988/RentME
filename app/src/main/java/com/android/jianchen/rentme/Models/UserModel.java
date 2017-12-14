@@ -35,6 +35,10 @@ public class UserModel implements Serializable {
     private int earning;
     private double distance;
 
+
+
+    private String loginMode; // fb, gg, email
+
     public UserModel() {
 
     }
@@ -287,4 +291,13 @@ public class UserModel implements Serializable {
     public void setEarning(int earning) {
         this.earning = earning;
     }
+
+    public String getLoginMode() {
+        return loginMode;
+    }
+
+    public void setLoginMode(String loginMode) {
+        this.loginMode = loginMode;
+    }
+
 }

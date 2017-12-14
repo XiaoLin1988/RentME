@@ -278,6 +278,7 @@ public class RegisterActivity extends AppCompatActivity implements WeekdaysDataS
                         }
                     });
                 } else {
+
                     Map<String, String> params = new HashMap<>();
                     params.put("name", name);
                     params.put("email", email);

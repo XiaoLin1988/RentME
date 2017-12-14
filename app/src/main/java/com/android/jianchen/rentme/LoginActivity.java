@@ -55,6 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         UserModel curUser = Utils.retrieveUserInfo(getApplicationContext());
         if (curUser != null) {
+            curUser.setLoginMode(Constants.LOGINMODE_EMAIL);
+            Utils.saveUserInfo(LoginActivity.this, curUser);
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -77,6 +79,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editPassword = (EditText)findViewById(R.id.edit_login_password);
         editPassword.setTypeface(Typeface.SERIF);
         editPassword.setTransformationMethod(new PasswordTransformationMethod());
+
+
     }
 
     @Override
@@ -100,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             dialog.dismiss();
                             if (response.isSuccessful()) {
                                 UserModel curUser = response.body().getData();
-
+                                curUser.setLoginMode(Constants.LOGINMODE_EMAIL);
                                 Utils.saveUserInfo(LoginActivity.this, curUser);
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
@@ -157,6 +161,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     curUser.setSkills(user.getString("skills"));
                     curUser.setAvatar(user.getString("avatar"));
                     curUser.setDescription(user.getString("description"));
+
+                    curUser.setLoginMode(Constants.LOGINMODE_EMAIL);
 
                     Utils.saveUserInfo(getApplicationContext(), curUser);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

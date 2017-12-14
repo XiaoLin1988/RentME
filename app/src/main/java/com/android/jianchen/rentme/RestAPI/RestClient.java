@@ -19,9 +19,9 @@ public class RestClient<T> {
     public T getAppClient(Class<? extends T> type) {
         if (service == null) {
             OkHttpClient okClient = new OkHttpClient.Builder()
-                    .readTimeout(15, TimeUnit.SECONDS)
-                    .connectTimeout(15, TimeUnit.SECONDS)
-                    .writeTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
                     .retryOnConnectionFailure(true)
                     .build();
             Gson gson = new GsonBuilder()

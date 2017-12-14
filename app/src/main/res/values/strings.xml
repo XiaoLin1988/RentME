@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">\@ME</string>
-    <string name="google_map_key">AIzaSyDByKH2Mai3Km1MnMWMudvMDBSrABdrPYY</string>
+    <string name="google_map_key">AIzaSyAc8abvFwi-NkUFORjOPg-Dv-sgW1gLK90</string>
     <string name="choose_picture">Choose Picture</string>
     <string name="choose_camera">From Camera</string>
     <string name="choose_gallery">From Gallery</string>
@@ -27,6 +27,7 @@
     <string name="title_activity_maps">Map</string>
 
     <string name="error_load">Loading Failed</string>
+    <string name="error_loginSignup">Account Validation Failed</string>
     <string name="error_network">Please check network status</string>
 
     <string name="project_description">Software solution for a PC surveillance. Allows to transmit PC desktop and webcam view as a video feeds from an virtual ONVIF IP security camera.
@@ -42,4 +43,9 @@ ITV is a software-only, easily integrated solution for any organization that nee
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+
+    <string name="facebook_app_id">505552376490600</string>
+    <string name="fb_login_protocol_scheme">fb505552376490600</string>
+    <string name="facebook_app_name">Rentme</string>
+
 </resources>

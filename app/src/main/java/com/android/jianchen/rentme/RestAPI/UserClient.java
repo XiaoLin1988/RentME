@@ -28,4 +28,18 @@ public interface UserClient {
     @POST(Constants.API_USER_SERVICE)
     @FormUrlEncoded
     Call<ArrayModel<ServiceModel>> getUserSkills(@Field("talentid") int talentid);
+
+
+    @POST(Constants.API_USER_GOOGLE_CHECK)
+    @FormUrlEncoded
+    Call<ObjectModel<UserModel>> checkGoogleUser(@Field("email") String email, @Field("name") String name, @Field("avatar") String avatar);
+
+
+    @POST(Constants.API_USER_FACEBOOK_CHECK)
+    @FormUrlEncoded
+    Call<ObjectModel<UserModel>> checkFacebookUser(@Field("email") String email, @Field("name") String name, @Field("avatar") String avatar);
+
+
+
+
 }

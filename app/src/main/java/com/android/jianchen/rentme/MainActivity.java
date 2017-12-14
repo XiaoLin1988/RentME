@@ -26,6 +26,7 @@ import com.android.jianchen.rentme.Service.GPSTracker;
 import com.android.jianchen.rentme.Utils.Constants;
 import com.android.jianchen.rentme.Utils.Utils;
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
 import com.github.siyamed.shapeimageview.CircularImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -102,11 +103,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         View headerViewView =  navigationView.getHeaderView(0);
         imgAvatar = (CircularImageView) headerViewView.findViewById(R.id.img_nav_avatar);
-        if (curUser.getAvatar() != null && !curUser.getAvatar().equals("") && !curUser.getAvatar().equals("null")) {
-            Glide.with(MainActivity.this).load(curUser.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
-        }
         txtUsername = (TextView)headerViewView.findViewById(R.id.txt_nav_username);
-        txtUsername.setText(curUser.getName());
+
+        if (curUser.getLoginMode().equals(Constants.LOGINMODE_GOOGLE)) {
+
+            Glide.with(MainActivity.this).load(curUser.getGgProfileUrl()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
+            txtUsername.setText(curUser.getGgName());
+
+        }
+        else if (curUser.getLoginMode().equals(Constants.LOGINMODE_FACEBOOK)) {
+
+            Glide.with(MainActivity.this).load(curUser.getFbProfileUrl()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
+            txtUsername.setText(curUser.getFbName());
+
+        }
+        else if (curUser.getLoginMode().equals(Constants.LOGINMODE_EMAIL)) {
+
+            if (curUser.getAvatar() != null && !curUser.getAvatar().equals("") && !curUser.getAvatar().equals("null")) {
+                Glide.with(MainActivity.this).load(curUser.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
+            }
+            txtUsername.setText(curUser.getName());
+        }
+
+
+
+
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentManager fm = getSupportFragmentManager();
@@ -197,7 +218,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_signout:
                 Utils.saveUserInfo(getApplicationContext(), null);
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, SocialLoginActivity.class));
+
+                // facebook log out
+                LoginManager.getInstance().logOut();
 
                 finish();
                 break;

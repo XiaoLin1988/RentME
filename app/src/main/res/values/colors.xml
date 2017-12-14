@@ -18,4 +18,10 @@
     <color name="colorYellow">#FFCE12</color>
     <color name="colorMenuBack">#101010</color>
     <color name="colorDivider">#232323</color>
+
+    <color name="colorGoogleGray">#89000000</color>
+    <color name="colorGoogleBlue">#4285f4</color>
+    <color name="colorFBBlue">#3b5998</color>
+    <color name="colorWXGreen">#62b900</color>
+
 </resources>
