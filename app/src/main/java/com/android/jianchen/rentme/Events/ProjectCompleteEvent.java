@@ -1,6 +1,6 @@
 package com.android.jianchen.rentme.Events;
 
-import com.android.jianchen.rentme.Models.ProjectModel;
+import com.android.jianchen.rentme.model.rentme.ProjectModel;
 
 /**
  * Created by emerald on 12/10/2017.
