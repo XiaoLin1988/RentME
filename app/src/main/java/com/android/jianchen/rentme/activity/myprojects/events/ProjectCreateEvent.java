@@ -1,14 +1,14 @@
-package com.android.jianchen.rentme.Events;
+package com.android.jianchen.rentme.activity.myprojects.events;
 
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 
 /**
  * Created by emerald on 12/10/2017.
  */
-public class ProjectCompleteEvent {
+public class ProjectCreateEvent {
     private ProjectModel project;
 
-    public ProjectCompleteEvent(ProjectModel project) {
+    public ProjectCreateEvent(ProjectModel project) {
         this.project = project;
     }
 

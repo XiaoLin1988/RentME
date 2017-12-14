@@ -1,4 +1,4 @@
-package com.android.jianchen.rentme.model.rentme;
+package com.android.jianchen.rentme.model.photoedit;
 
 public class EffectModel {
     private int action;

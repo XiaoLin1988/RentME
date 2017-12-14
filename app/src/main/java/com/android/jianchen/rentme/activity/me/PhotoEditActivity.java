@@ -27,7 +27,7 @@ import com.android.jianchen.rentme.activity.me.adapter.EditScaleAdapter;
 import com.android.jianchen.rentme.activity.me.fragments.EditFilterFragment;
 import com.android.jianchen.rentme.activity.me.fragments.EditOverlayFragment;
 import com.android.jianchen.rentme.activity.me.fragments.EditScaleFragment;
-import com.android.jianchen.rentme.model.rentme.EffectModel;
+import com.android.jianchen.rentme.model.photoedit.EffectModel;
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.helper.utils.BitmapUtil;
 import com.android.jianchen.rentme.helper.Constants;
