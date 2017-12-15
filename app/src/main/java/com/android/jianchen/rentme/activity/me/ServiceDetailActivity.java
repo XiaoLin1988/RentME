@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +27,6 @@ import android.widget.Toast;
 import com.android.jianchen.rentme.activity.me.adapter.IntroAdapter;
 import com.android.jianchen.rentme.activity.me.dialogs.ReviewDialog;
 import com.android.jianchen.rentme.activity.me.events.ServiceDeleteEvent;
-import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
 import com.android.jianchen.rentme.helper.delegator.OnConfirmListener;
 import com.android.jianchen.rentme.helper.delegator.OnProjectCreateListener;
 import com.android.jianchen.rentme.model.rentme.ArrayModel;
@@ -164,6 +162,11 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initViews() {
+        ArrayList<IntroModel> intros = new ArrayList<>();
+        for (int i = 0; i < service.getWeb_links().size(); i++) {
+            IntroModel intro = new IntroModel();
+            intro.setType(3);
+        }
         IntroAdapter introAdapter = new IntroAdapter(this, new ArrayList<IntroModel>());
         pagerService.setAdapter(introAdapter);
 

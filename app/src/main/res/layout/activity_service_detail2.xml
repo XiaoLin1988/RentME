@@ -31,6 +31,11 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_bg"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/ind_service"
                         android:layout_marginTop="10dp"
@@ -120,7 +125,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:text="Barcelona"
+                                android:text="Livingston, NJ 07039, USA"
                                 android:textSize="@dimen/font_normal"
                                 android:textColor="@color/colorBlack"/>
                         </LinearLayout>

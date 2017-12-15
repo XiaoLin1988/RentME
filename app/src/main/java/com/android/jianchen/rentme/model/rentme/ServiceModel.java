@@ -1,6 +1,7 @@
 package com.android.jianchen.rentme.model.rentme;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by emerald on 6/23/2017.
@@ -17,6 +18,8 @@ public class ServiceModel implements Serializable {
     private String skill_preview;
     private int review_cnt;
     private double review_score;
+    private ArrayList<WebLinkModel> web_links;
+    private ArrayList<String> videos;
 
     public ServiceModel() {
 
@@ -108,5 +111,21 @@ public class ServiceModel implements Serializable {
 
     public void setReview_score(double review_score) {
         this.review_score = review_score;
+    }
+
+    public ArrayList<WebLinkModel> getWeb_links() {
+        return web_links;
+    }
+
+    public void setWeb_links(ArrayList<WebLinkModel> web_links) {
+        this.web_links = web_links;
+    }
+
+    public ArrayList<String> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(ArrayList<String> videos) {
+        this.videos = videos;
     }
 }

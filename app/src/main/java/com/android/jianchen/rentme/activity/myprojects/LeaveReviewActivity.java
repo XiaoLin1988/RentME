@@ -105,13 +105,6 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
 
         reviewType = getIntent().getIntExtra(Constants.EXTRA_REVIEW_TYPE, Constants.VALUE_SERVICE);
         reviewId = getIntent().getIntExtra(Constants.KEY_REVIEW_ID, 0);
-        /*
-        if (reviewType == Constants.VALUE_SERVICE) {
-            service = (ProjectModel)getIntent().getSerializableExtra(Constants.KEY_SERVICE);
-        } else {
-            review = (ReviewModel)getIntent().getSerializableExtra(Constants.KEY_REVIEW);
-        }
-        */
 
         initViews();
     }
@@ -262,7 +255,6 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
                         loadCount ++;
                     if (photoPathArray.size() > 0)
                         loadCount ++;
-
 
                     if (loadCount > 0) {
                         final LoadCompleteListener loadListener = new LoadCompleteListener(loadCount) {

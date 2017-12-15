@@ -6,15 +6,15 @@ import java.io.Serializable;
  * Created by emerald on 12/4/2017.
  */
 public class IntroModel implements Serializable {
-    private String link;
+    private Object data;
     private int type;  // 0 : image, 1 : youtube 2 : vimeo, 3 : web post
 
-    public String getLink() {
-        return link;
+    public Object getLink() {
+        return data;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setLink(Object data) {
+        this.data = data;
     }
 
     public int getType() {
