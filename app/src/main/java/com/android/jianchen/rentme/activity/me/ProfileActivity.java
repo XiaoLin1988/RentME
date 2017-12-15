@@ -75,7 +75,7 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     @Bind(R.id.img_profile_cover)
     ImageView imgCover;
 
-    @Bind(R.id.pager_subcover)
+    @Bind(R.id.pager_cover)
     ViewPager pagerSubCover;
     GalleryPagerAdapter adapterCover;
 
@@ -300,6 +300,11 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                     Glide.with(this).load(R.drawable.cover5).asBitmap().fitCenter().into(imgCover);
                     break;
             }
+
+            ArrayList<String> arrayList = new ArrayList<String>();
+            adapterCover = new GalleryPagerAdapter(this, pagerSubCover, arrayList);
+            pagerSubCover.setAdapter(adapterCover);
+
         }
         else {
             // cover image
@@ -379,6 +384,7 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                         adapterCover = new GalleryPagerAdapter(ProfileActivity.this, pagerSubCover, userModel.getCoverImg());
                         pagerSubCover.setAdapter(adapterCover);
                         imgCover.setVisibility(View.GONE);
+                        pagerSubCover.setVisibility(View.VISIBLE);
                     }
 
                 } else {

@@ -427,9 +427,6 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                     public void onConfirm() {
                         int pos = pagerCover.getCurrentItem();
                         adapterCover.remove(pos);
-//
-//                        adapterCover = new GalleryPagerAdapter(this, pagerCover, curUser.getCoverImg());
-//                        pagerCover.setAdapter(adapterCover);
                     }
                 });
                 return true;

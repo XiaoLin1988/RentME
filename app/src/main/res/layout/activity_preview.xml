@@ -39,11 +39,10 @@
 
             <com.rd.PageIndicatorView
                 android:id="@+id/ind_service"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="80dp"
                 android:layout_centerHorizontal="true"
-                android:textAlignment="center"
                 app:piv_viewPager="@+id/pager_cover"
                 app:piv_dynamicCount="true"
                 app:piv_radius="6dp"
