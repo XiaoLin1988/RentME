@@ -1,18 +1,22 @@
 package com.android.jianchen.rentme.activity.me;
 
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -95,8 +99,6 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
     ScaleRatingBar rateScore;
     @Bind(R.id.pager_service)
     ViewPager pagerService;
-    @Bind(R.id.btn_service_buy)
-    Button buyService;
 
     @BindString(R.string.error_load)
     String errLoad;
@@ -172,11 +174,6 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
 
         rytReadAll.setOnClickListener(this);
         rateScore.setRating((float)service.getReview_score());
-
-        if (service.getTalent_id() == Utils.retrieveUserInfo(this).getId()) {
-            buyService.setText("Delete");
-        }
-        buyService.setOnClickListener(this);
 
         getServiceReviews();
     }
@@ -305,10 +302,51 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        if (Utils.retrieveUserInfo(ServiceDetailActivity.this).getId() == service.getTalent_id()) {
+            inflater.inflate(R.menu.menu_delete, menu);
+
+            MenuItem menuDelete = menu.findItem(R.id.action_delete);
+            Drawable editDrawable = menuDelete.getIcon();
+            Drawable editWrap = DrawableCompat.wrap(editDrawable);
+            DrawableCompat.setTint(editWrap, getResources().getColor(R.color.colorBlack));
+            menuDelete.setIcon(editWrap);
+        } else {
+            inflater.inflate(R.menu.menu_buy, menu);
+
+            MenuItem menuBuy = menu.findItem(R.id.action_buy);
+            Drawable createDrawable = menuBuy.getIcon();
+            Drawable createWrap = DrawableCompat.wrap(createDrawable);
+            DrawableCompat.setTint(createWrap, getResources().getColor(R.color.colorBlack));
+            menuBuy.setIcon(createWrap);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.action_buy:
+                DialogUtil.showConfirmDialog(this, "Buy Service?", new OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        doPayment();
+                    }
+                });
+
+                return true;
+            case R.id.action_delete:
+                DialogUtil.showConfirmDialog(this, "Delete Service?", new OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        deleteService();
+                    }
+                });
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -321,23 +359,6 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
             case R.id.ryt_read_reviews:
                 ReviewDialog dialog = new ReviewDialog(ServiceDetailActivity.this, service.getId(), reviews);
                 dialog.show();
-                break;
-            case R.id.btn_service_buy:
-                if (service.getTalent_id() == Utils.retrieveUserInfo(ServiceDetailActivity.this).getId()) {
-                    DialogUtil.showConfirmDialog(this, "Delete Service?", new OnConfirmListener() {
-                        @Override
-                        public void onConfirm() {
-                            deleteService();
-                        }
-                    });
-                } else {
-                    DialogUtil.showConfirmDialog(this, "Buy Service?", new OnConfirmListener() {
-                        @Override
-                        public void onConfirm() {
-                            doPayment();
-                        }
-                    });
-                }
                 break;
         }
     }

@@ -83,6 +83,7 @@ public class Constants {
     public static final String API_PROJECT_CREATE = "project/createProject";
     public static final String API_PROJECT_CREATE2 = "project/createProject2";
     public static final String API_PROJECT_COMPLETED = "project/getMyCompletedProjects";
+    public static final String API_PROJECT_REVIEW = "project/getProjectReview";
     public static final String API_PROJECT_INPROGRESS = "project/getMyProgressProjects";
     public static final String API_PROJECT_CHATTING = "project/getChattingProject";
     public static final String API_PROJECT_FINISH = "project/completeProject";
@@ -90,7 +91,7 @@ public class Constants {
     public static final String API_RATE_CREATE = "rate/createRate";
     public static final String API_REVIEW_REVIEW = "review/getReviewReviews";
     public static final String API_SKILL_GET = "skill/getCategories";
-    public static final String API_COMMON_UPLOAD_VIDEO = "common/uploadVideos?XDEBUG_SESSION_START=19305";
+    public static final String API_COMMON_UPLOAD_VIDEO = "common/uploadVideos";
     public static final String API_COMMON_UPLOAD_WEB = "common/uploadWebs";
     public static final String API_COMMON_UPLOAD_IMAGE = "common/imageMultiUpload";
 

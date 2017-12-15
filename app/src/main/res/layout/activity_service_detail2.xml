@@ -5,37 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:contentScrim="@color/colorWhite"
-                android:paddingRight="5dp"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-        </FrameLayout>
-    </android.support.design.widget.AppBarLayout>
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:background="@color/colorWhite">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="?attr/actionBarSize"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -94,6 +71,14 @@
                         app:piv_dynamicCount="true"
                         app:piv_radius="6dp"
                         app:piv_animationType="worm"/>
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:contentScrim="@android:color/transparent"
+                        android:paddingRight="5dp"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
                 </RelativeLayout>
 
@@ -344,28 +329,5 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorWhite"
-        android:elevation="40dp"
-        android:padding="10dp"
-        android:layout_gravity="bottom">
-
-        <Button
-            android:id="@+id/btn_service_buy"
-            android:layout_below="@+id/btn_login_signin"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/colorWhite"
-            android:text="Buy Service"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:background="@drawable/button_blue_round" />
-
-    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

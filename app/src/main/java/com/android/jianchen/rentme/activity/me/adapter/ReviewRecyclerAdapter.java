@@ -235,10 +235,14 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
         }
 
         public void refreshVideos(ArrayList<String> vl) {
+            if (vl == null || vl.size() == 0)
+                return;
             adapterVideos.refreshData(vl);
         }
 
         public void refreshWebLinks(ArrayList<WebLinkModel> wl) {
+            if (wl == null || wl.size() == 0)
+                return;
             adapterWebLinks.refreshData(wl);
         }
     }

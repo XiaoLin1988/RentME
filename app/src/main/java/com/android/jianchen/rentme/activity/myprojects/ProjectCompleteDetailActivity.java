@@ -2,6 +2,7 @@ package com.android.jianchen.rentme.activity.myprojects;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,11 @@ import android.widget.Toast;
 
 import com.android.jianchen.rentme.activity.me.adapter.ReviewRecyclerAdapter;
 import com.android.jianchen.rentme.activity.root.MainActivity;
+import com.android.jianchen.rentme.helper.network.retrofit.ProjectClient;
+import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
 import com.android.jianchen.rentme.helper.utils.Utils;
+import com.android.jianchen.rentme.model.rentme.ArrayModel;
+import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.helper.Constants;
@@ -26,6 +31,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * Created by emerald on 6/5/2017.
@@ -97,9 +105,33 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
             recyclerReviews = (RecyclerView)findViewById(R.id.recycler_reviews);
             adapterReviews = new ReviewRecyclerAdapter(recyclerReviews, reviews);
             recyclerReviews.setAdapter(adapterReviews);
-            //recyclerReviews.setLayoutManager(new LinearLayoutManager());
-        }
+            recyclerReviews.setLayoutManager(new LinearLayoutManager(ProjectCompleteDetailActivity.this));
 
+            getProjectReviews();
+        }
+    }
+
+    private void getProjectReviews() {
+        RestClient<ProjectClient> restClient = new RestClient<>();
+        ProjectClient projectClient = restClient.getAppClient(ProjectClient.class);
+
+        Call<ArrayModel<ReviewModel>> call = projectClient.getProjectReview(project.getPr_id());
+        call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
+            @Override
+            public void onResponse(Call<ArrayModel<ReviewModel>> call, retrofit2.Response<ArrayModel<ReviewModel>> response) {
+                if (response.isSuccessful() && response.body().getStatus()) {
+                    if (response.body().getData().size() > 0)
+                        adapterReviews.addReviews(response.body().getData());
+                } else {
+                    Toast.makeText(ProjectCompleteDetailActivity.this, getResources().getString(R.string.error_load), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayModel<ReviewModel>> call, Throwable t) {
+                Toast.makeText(ProjectCompleteDetailActivity.this, getResources().getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

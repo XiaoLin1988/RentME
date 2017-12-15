@@ -330,7 +330,12 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 selectImage();
                 return true;
             case R.id.action_done:
-                editProfile();
+                DialogUtil.showConfirmDialog(PreviewActivity.this, "Update information?", new OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        editProfile();
+                    }
+                });
                 return true;
         }
         return super.onOptionsItemSelected(item);

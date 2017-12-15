@@ -4,6 +4,7 @@ import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.helper.Constants;
+import com.android.jianchen.rentme.model.rentme.ReviewModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -26,8 +27,11 @@ public interface ProjectClient {
     @FormUrlEncoded
     Call<ArrayModel<ProjectModel>> getMyProgressProjects(@Field("userid") int user_id);
 
-
     @POST(Constants.API_PROJECT_COMPLETED)
     @FormUrlEncoded
     Call<ArrayModel<ProjectModel>> getMyCompletedProjects(@Field("userid") int user_id);
+
+    @POST(Constants.API_PROJECT_REVIEW)
+    @FormUrlEncoded
+    Call<ArrayModel<ReviewModel>> getProjectReview(@Field("id") int id);
 }

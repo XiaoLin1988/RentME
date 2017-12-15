@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.activity.me.PreviewActivity;
@@ -21,6 +22,7 @@ import com.android.jianchen.rentme.activity.myprojects.fragment.ProjectInProgres
 import com.android.jianchen.rentme.helper.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
