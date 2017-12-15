@@ -223,6 +223,8 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
         adapterVideo = new VideoLinkRecyclerAdapter(videoLinks);
         recyclerVideo.setLayoutManager(new LinearLayoutManager(this));
         recyclerVideo.setAdapter(adapterVideo);
+
+        photoPathArray = new ArrayList<>();
     }
 
     private boolean validate() {

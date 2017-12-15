@@ -6,9 +6,12 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
+import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.model.rentme.IntroModel;
 import com.android.jianchen.rentme.R;
 import com.bumptech.glide.Glide;
@@ -32,7 +35,7 @@ public class IntroAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return /*introModelList.size();*/ 5;
+        return introModelList.size();
     }
 
     @Override
@@ -50,18 +53,6 @@ public class IntroAdapter extends PagerAdapter {
         final AVLoadingIndicatorView loading = (AVLoadingIndicatorView)itemView.findViewById(R.id.loading_content);
         loading.show();
 
-        Glide.with(context).load(R.drawable.cover1 + position).asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                loading.hide();
-                loading.setVisibility(View.GONE);
-
-                imgIntro.setVisibility(View.VISIBLE);
-                imgIntro.setImageBitmap(resource);
-            }
-        });
-
-        /*
         IntroModel intro = introModelList.get(position);
         if (intro.getType() == 0) { // Image
             Glide.with(context).load(intro.getLink()).asBitmap().into(new SimpleTarget<Bitmap>(400, 400) {
@@ -74,21 +65,21 @@ public class IntroAdapter extends PagerAdapter {
                     imgIntro.setImageBitmap(resource);
                 }
             });
-        } else {
+        } else if (intro.getType() == 2){
             String data = "";
-            String link = intro.getLink();
-            if (link.startsWith("http://player.vimeo.com/video/")) {
-                data = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"%link%?autoplay=1&loop=1\" width=\"100%\" height=\"100%\" frameborder=\"0\"  style=\"outline:none;border:none;padding:0px;\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
-            } else if (link.startsWith("https://www.youtube.com/watch?v=")) {
-                data = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe width=\"100%\" height=\"100%\" style=\"outline:none;border:none;padding:0px;\" src=\"%link%?&playsinline=1\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+            String link = (String)intro.getLink();
+            if (link.startsWith("https://player.vimeo.com/")) {
+                data = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe width=\"100%\" height=\"100%\" src=\"%link%\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe></body></html>";
+            } else if (link.startsWith("https://www.youtube.com")) {
+                data = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"%link%\" width=\"100%\" height=\"100%\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
             }
             data = data.replace("%link%", link);
+            data = data.replace("%width%", "100%");
+            data = data.replace("%height%", "100%");
 
             webIntro.clearHistory();
+            webIntro.setVisibility(View.VISIBLE);
             webIntro.getSettings().setJavaScriptEnabled(true);
-            webIntro.getSettings().setAppCacheEnabled(true);
-            webIntro.getSettings().setDomStorageEnabled(true);
-            webIntro.getSettings().setPluginState(WebSettings.PluginState.ON);
             webIntro.setWebViewClient(new WebViewClient(){
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
                     return false;
@@ -104,7 +95,6 @@ public class IntroAdapter extends PagerAdapter {
             });
             webIntro.loadData(data, "text/html", "utf-8");
         }
-        */
 
         return itemView;
     }

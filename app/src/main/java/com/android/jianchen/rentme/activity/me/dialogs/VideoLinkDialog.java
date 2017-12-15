@@ -46,7 +46,7 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener, Rad
     WebView webVideo;
 
     private boolean validate = false;
-    private int videoType = 0;
+    private int videoType = 1;
 
     private String webData = "";
     private String videoLink = "";

@@ -1,11 +1,12 @@
 package com.android.jianchen.rentme.model.rentme;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by emerald on 6/23/2017.
  */
-public class SkillServiceModel {
+public class SkillServiceModel implements Serializable {
     private String skill;
     private ArrayList<ServiceModel> services;
 

@@ -94,7 +94,7 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
 
         recyclerReview = (RecyclerView)findViewById(R.id.recycler_reviews);
         recyclerReview.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapterReview = new ReviewRecyclerAdapter(recyclerReview, reviews);
+        adapterReview = new ReviewRecyclerAdapter(recyclerReview, reviews, type);
         adapterReview.setOnLoadMoreListener(this);
         recyclerReview.setAdapter(adapterReview);
         recyclerReview.setNestedScrollingEnabled(true);

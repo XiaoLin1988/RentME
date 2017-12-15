@@ -1,9 +1,11 @@
 package com.android.jianchen.rentme.model.rentme;
 
+import java.io.Serializable;
+
 /**
  * Created by emerald on 12/8/2017.
  */
-public class WebLinkModel {
+public class WebLinkModel implements Serializable {
     private String title;
     private String content;
     private String thumbnail;

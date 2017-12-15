@@ -6,7 +6,7 @@ android {
         debug {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
-            storeFile file('/Users/macmini/.android/debug.keystore')
+            storeFile file('F:/TASK_JOBS/RentME/AppData/keystore/debug.keystore')
             storePassword 'android'
         }
     }

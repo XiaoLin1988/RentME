@@ -103,7 +103,7 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
 
             reviews = new ArrayList<>();
             recyclerReviews = (RecyclerView)findViewById(R.id.recycler_reviews);
-            adapterReviews = new ReviewRecyclerAdapter(recyclerReviews, reviews);
+            adapterReviews = new ReviewRecyclerAdapter(recyclerReviews, reviews, Constants.VALUE_SERVICE);
             recyclerReviews.setAdapter(adapterReviews);
             recyclerReviews.setLayoutManager(new LinearLayoutManager(ProjectCompleteDetailActivity.this));
 
@@ -142,7 +142,6 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
                 intent.putExtra(Constants.EXTRA_REVIEW_TYPE, Constants.VALUE_SERVICE);
                 intent.putExtra(Constants.KEY_REVIEW_ID, project.getSv_id());
                 startActivity(intent);
-                break;
             case R.id.btn_project_complete_detail_back:
                 finish();
                 break;

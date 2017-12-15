@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.jianchen.rentme.activity.me.dialogs.ReviewDialog;
+import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.delegator.OnLoadMoreListener;
 import com.android.jianchen.rentme.helper.listener.SingleClickListener;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
@@ -48,7 +49,10 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
     private boolean loading = false;
     private OnLoadMoreListener onLoadMoreListener;
 
-    public ReviewRecyclerAdapter(RecyclerView recycler, ArrayList<ReviewModel> rl) {
+    private int type;
+
+    public ReviewRecyclerAdapter(RecyclerView recycler, ArrayList<ReviewModel> rl, int t) {
+        type = t;
         reviews = rl;
 
         if (recycler.getLayoutManager() instanceof LinearLayoutManager) {
@@ -187,6 +191,10 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             adapterVideos = new VideoLinkRecyclerAdapter(new ArrayList<String>());
             recyclerVideos.setAdapter(adapterVideos);
             recyclerVideos.setLayoutManager(new LinearLayoutManager(context));
+
+            if (type == Constants.VALUE_REVIEW) {
+                itemView.findViewById(R.id.ryt_detail_container).setVisibility(View.GONE);
+            }
         }
 
         public void bindReviewDetail(final ReviewModel review) {

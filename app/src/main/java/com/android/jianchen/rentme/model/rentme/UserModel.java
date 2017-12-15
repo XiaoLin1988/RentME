@@ -1,6 +1,7 @@
 package com.android.jianchen.rentme.model.rentme;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by emerald on 5/30/2017.
@@ -35,7 +36,8 @@ public class UserModel implements Serializable {
     private int earning;
     private double distance;
 
-
+    private ArrayList<WebLinkModel> web_links;
+    private ArrayList<String> video;
 
     private String loginMode; // fb, gg, email
 
@@ -300,4 +302,19 @@ public class UserModel implements Serializable {
         this.loginMode = loginMode;
     }
 
+    public ArrayList<String> getVideo() {
+        return video;
+    }
+
+    public void setVideo(ArrayList<String> video) {
+        this.video = video;
+    }
+
+    public ArrayList<WebLinkModel> getWeb_links() {
+        return web_links;
+    }
+
+    public void setWeb_links(ArrayList<WebLinkModel> web_links) {
+        this.web_links = web_links;
+    }
 }

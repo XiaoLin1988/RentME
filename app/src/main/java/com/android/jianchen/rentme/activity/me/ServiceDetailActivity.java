@@ -163,11 +163,28 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
 
     private void initViews() {
         ArrayList<IntroModel> intros = new ArrayList<>();
-        for (int i = 0; i < service.getWeb_links().size(); i++) {
-            IntroModel intro = new IntroModel();
-            intro.setType(3);
+
+        if (service.getWeb_links() != null && service.getWeb_links().size() > 0) {
+            for (int i = 0; i < service.getWeb_links().size(); i++) {
+                IntroModel intro = new IntroModel();
+                intro.setType(3);
+                intro.setLink(service.getWeb_links().get(i));
+
+                intros.add(intro);
+            }
         }
-        IntroAdapter introAdapter = new IntroAdapter(this, new ArrayList<IntroModel>());
+
+        if (service.getVideos() != null && service.getVideos().size() > 0) {
+            for (int i = 0; i < service.getVideos().size(); i++) {
+                IntroModel intro = new IntroModel();
+                intro.setType(2);
+                intro.setLink(service.getVideos().get(i));
+
+                intros.add(intro);
+            }
+        }
+
+        IntroAdapter introAdapter = new IntroAdapter(this, intros);
         pagerService.setAdapter(introAdapter);
 
         txtSkill.setText(service.getSkill_title());
