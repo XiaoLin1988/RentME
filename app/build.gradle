@@ -6,22 +6,10 @@ android {
         debug {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
-            storeFile file('F:/TASK_JOBS/RentME/AppData/keystore/debug.keystore')
-            storePassword 'android'
-        }
-    }
-
-    /*
-    signingConfigs {
-        debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
             storeFile file('/Users/macmini/.android/debug.keystore')
             storePassword 'android'
         }
     }
-    */
-
 
     compileSdkVersion 25
     buildToolsVersion '25.0.0'

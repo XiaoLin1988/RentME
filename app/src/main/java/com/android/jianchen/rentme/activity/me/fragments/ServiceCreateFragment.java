@@ -111,7 +111,6 @@ public class ServiceCreateFragment extends Fragment implements OnPostVideoListen
                         @Override
                         public void onDialogSelect(int position) {
                             if (position == 0) {
-
                                 // add photo
                                 selectImage();
 

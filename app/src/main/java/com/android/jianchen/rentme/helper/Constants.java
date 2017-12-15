@@ -62,8 +62,8 @@ public class Constants {
     public static final int SEARCH_RADIUS = 5000;
 
     //public static final String SITE_URL = "http://34.203.243.197/";
-    public static final String SITE_URL = "http://192.168.0.208/";
-    public static final String API_ROOT_URL = "http://192.168.0.208/rentme/index.php/";
+    public static final String SITE_URL = "http://192.168.0.206/";
+    public static final String API_ROOT_URL = "http://192.168.0.206/rentme/index.php/";
 
     //public static final String API_ROOT_URL = "http://34.203.243.197/index.php/api/";
     public static final String API_IMAGE_UPLOAD = "common/uploadImage";
