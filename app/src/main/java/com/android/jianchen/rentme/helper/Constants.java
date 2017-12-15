@@ -55,6 +55,7 @@ public class Constants {
     public static final String EXTRA_TALENT = "TALENT";
     public static final String EXTRA_PROJECT = "PROJECT";
     public static final String EXTRA_REVIEW_TYPE = "REVIEW_TYPE";
+    public static final String EXTRA_ACTION_TYPE = "ACTION_TYPE";
 
     public static final int MAX_SKILLS = 5;
     public static final int SEARCH_RADIUS = 5000;
@@ -125,6 +126,9 @@ public class Constants {
     public static final int ACTION_DOODLE = 1025;
     public static final int ACTION_FRAME = 1026;
 
+    public static final int ACTION_CREATE_PROJECT = 1027;
+    public static final int ACTION_CREATE_SERVICE = 1028;
+
     public static final int VALUE_SERVICE = 0;
     public static final int VALUE_REVIEW = 1;
 
@@ -141,10 +145,9 @@ public class Constants {
     public static final String KEY_WEB = "key_web";
     public static final String KEY_REVIEW_ID = "key_review_id";
     public static final String KEY_SERVICE = "key_service";
+    public static final String KEY_SKILL = "key_skill";
 
     public static final String KEY_TRANSITION = "key_transition";
-
-
 
     public static final String LOGINMODE_FACEBOOK = "FACEBOOK";
     public static final String LOGINMODE_GOOGLE = "GOOGLE";

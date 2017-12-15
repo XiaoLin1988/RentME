@@ -16,7 +16,7 @@ import com.android.jianchen.rentme.activity.myprojects.adapter.MapMarkerAdapter;
 import com.android.jianchen.rentme.activity.root.MainActivity;
 import com.android.jianchen.rentme.model.rentme.SkillModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
-import com.android.jianchen.rentme.activity.me.ProfileActivity;
+import com.android.jianchen.rentme.activity.search.TalentDetailActivity;
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
 import com.android.jianchen.rentme.helper.network.retrofit.UserClient;
@@ -275,7 +275,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             marker.hideInfoWindow();
             return;
         }
-        Intent intent = new Intent(context, ProfileActivity.class);
+        Intent intent = new Intent(context, TalentDetailActivity.class);
         intent.putExtra(Constants.KEY_USER, u);
 
         startActivityForResult(intent, Constants.REQUEST_PROJECT_CREATE);

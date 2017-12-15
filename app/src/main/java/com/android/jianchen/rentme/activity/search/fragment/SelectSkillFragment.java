@@ -73,6 +73,7 @@ public class SelectSkillFragment extends Fragment implements Response.Listener<J
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new SkillGalleryAdapter(getContext(), skills);
         recyclerView.setAdapter(adapter);
+        /*
         recyclerView.addOnItemTouchListener(new SkillGalleryAdapter.RecyclerTouchListener(getContext(), recyclerView, new SkillGalleryAdapter.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -85,7 +86,7 @@ public class SelectSkillFragment extends Fragment implements Response.Listener<J
 
             }
         }));
-
+        */
         prepareData();
     }
 

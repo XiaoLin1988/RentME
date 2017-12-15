@@ -15,7 +15,6 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:typeface">serif</item>
-        <item name="android:textColorSecondary">@color/colorBlack</item>
     </style>
 
     <style name="AppTheme.MyTheme" parent="AppTheme.NoActionBar">

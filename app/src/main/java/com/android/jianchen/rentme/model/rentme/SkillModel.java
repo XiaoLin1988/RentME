@@ -1,9 +1,11 @@
 package com.android.jianchen.rentme.model.rentme;
 
+import java.io.Serializable;
+
 /**
  * Created by emerald on 6/10/2017.
  */
-public class SkillModel {
+public class SkillModel implements Serializable {
     private int id;
     private String path;
     private String title;

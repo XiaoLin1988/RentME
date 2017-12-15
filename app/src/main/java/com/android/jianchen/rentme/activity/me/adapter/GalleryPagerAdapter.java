@@ -87,6 +87,7 @@ public class GalleryPagerAdapter  extends PagerAdapter {
         }
 
         imageList.remove(image);
+
         notifyDataSetChanged();
     }
 }

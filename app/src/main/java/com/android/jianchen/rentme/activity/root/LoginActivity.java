@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (curUser != null) {
             curUser.setLoginMode(Constants.LOGINMODE_EMAIL);
             Utils.saveUserInfo(LoginActivity.this, curUser);
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
             startActivity(intent);
             finish();
         } else {
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 UserModel curUser = response.body().getData();
                                 curUser.setLoginMode(Constants.LOGINMODE_EMAIL);
                                 Utils.saveUserInfo(LoginActivity.this, curUser);
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(LoginActivity.this, errLoad, Toast.LENGTH_SHORT).show();
@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     curUser.setLoginMode(Constants.LOGINMODE_EMAIL);
 
                     Utils.saveUserInfo(getApplicationContext(), curUser);
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                     startActivity(intent);
 
                     finish();

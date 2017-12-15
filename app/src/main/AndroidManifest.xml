@@ -86,8 +86,13 @@
             android:name=".activity.me.ServiceCreateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.me.ProfileActivity"
+            android:name=".activity.search.TalentDetailActivity"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".activity.myprojects.MyProjectActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.root.ProfileActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".activity.me.PreviewActivity"
             android:screenOrientation="portrait" />
@@ -102,10 +107,13 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.search.SelectSkillActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.search.MapActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".helper.service.FirebaseTracker"

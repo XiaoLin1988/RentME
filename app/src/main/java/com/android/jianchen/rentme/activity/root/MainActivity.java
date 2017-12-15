@@ -19,7 +19,7 @@ import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent
 import com.android.jianchen.rentme.activity.myprojects.fragment.ProjectFragment;
 import com.android.jianchen.rentme.activity.search.fragment.ProjectCreateFragment;
 import com.android.jianchen.rentme.model.rentme.UserModel;
-import com.android.jianchen.rentme.activity.me.ProfileActivity;
+import com.android.jianchen.rentme.activity.search.TalentDetailActivity;
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.helper.service.FirebaseTracker;
 import com.android.jianchen.rentme.helper.service.GPSTracker;
@@ -113,23 +113,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Glide.with(MainActivity.this).load(curUser.getGgProfileUrl()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
             txtUsername.setText(curUser.getGgName());
 
-        }
-        else if (curUser.getLoginMode().equals(Constants.LOGINMODE_FACEBOOK)) {
+        } else if (curUser.getLoginMode().equals(Constants.LOGINMODE_FACEBOOK)) {
 
             Glide.with(MainActivity.this).load(curUser.getFbProfileUrl()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
             txtUsername.setText(curUser.getFbName());
 
-        }
-        else if (curUser.getLoginMode().equals(Constants.LOGINMODE_EMAIL)) {
+        } else if (curUser.getLoginMode().equals(Constants.LOGINMODE_EMAIL)) {
 
             if (curUser.getAvatar() != null && !curUser.getAvatar().equals("") && !curUser.getAvatar().equals("null")) {
                 Glide.with(MainActivity.this).load(curUser.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
             }
             txtUsername.setText(curUser.getName());
         }
-
-
-
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -211,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openCreateProject();
                 break;
             case R.id.nav_edit:
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                Intent intent = new Intent(MainActivity.this, TalentDetailActivity.class);
                 intent.putExtra(Constants.KEY_USER, curUser);
 
                 startActivity(intent);

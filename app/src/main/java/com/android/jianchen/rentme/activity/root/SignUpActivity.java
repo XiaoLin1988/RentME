@@ -87,7 +87,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                 user.setPassword(editPassword.getText().toString());
                                 user.setLoginMode(Constants.LOGINMODE_EMAIL);
                                 Utils.saveUserInfo(SignUpActivity.this, user);
-                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                Intent intent = new Intent(SignUpActivity.this, ProfileActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {

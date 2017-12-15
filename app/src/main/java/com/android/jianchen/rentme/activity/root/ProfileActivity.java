@@ -1,17 +1,22 @@
-package com.android.jianchen.rentme.activity.me;
+package com.android.jianchen.rentme.activity.root;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,23 +25,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.jianchen.rentme.R;
+import com.android.jianchen.rentme.activity.me.PreviewActivity;
+import com.android.jianchen.rentme.activity.me.ServiceCreateActivity;
+import com.android.jianchen.rentme.activity.me.ServiceDetailActivity;
+import com.android.jianchen.rentme.activity.myprojects.MyProjectActivity;
 import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
-import com.android.jianchen.rentme.activity.root.RegisterActivity;
+import com.android.jianchen.rentme.activity.root.customview.DrawerArrowDrawable;
+import com.android.jianchen.rentme.activity.search.SelectSkillActivity;
 import com.android.jianchen.rentme.activity.search.adapter.SkillServiceRecyclerAdapter;
+import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.delegator.OnProjectCreateListener;
 import com.android.jianchen.rentme.helper.delegator.OnServiceClickListener;
 import com.android.jianchen.rentme.helper.listener.AppBarStateListener;
+import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
+import com.android.jianchen.rentme.helper.network.retrofit.UserClient;
+import com.android.jianchen.rentme.helper.utils.Utils;
 import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.model.rentme.ServiceModel;
 import com.android.jianchen.rentme.model.rentme.SkillServiceModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
-import com.android.jianchen.rentme.R;
-import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
-import com.android.jianchen.rentme.helper.network.retrofit.UserClient;
-import com.android.jianchen.rentme.helper.Constants;
-import com.android.jianchen.rentme.helper.utils.Utils;
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,7 +64,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileActivity extends AppCompatActivity implements OnServiceClickListener, OnProjectCreateListener {
+public class ProfileActivity extends AppCompatActivity implements OnServiceClickListener, OnProjectCreateListener, NavigationView.OnNavigationItemSelectedListener {
     private UserModel userModel;
 
     @Bind(R.id.img_profile_cover)
@@ -106,16 +118,22 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     private Toolbar toolbar;
     private AVLoadingIndicatorView loadingContent;
 
+    private DrawerArrowDrawable drawerArrowDrawable;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private CircularImageView imgAvatar;
+    private TextView txtUsername;
+
     protected void onCreate(Bundle saveBundle) {
         super.onCreate(saveBundle);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile2);
 
         ButterKnife.bind(this);
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         prepareActionBar();
 
-        userModel = (UserModel)getIntent().getSerializableExtra(Constants.KEY_USER);
+        userModel = Utils.retrieveUserInfo(this);
 
         initViews();
     }
@@ -131,14 +149,18 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         bar.setHomeButtonEnabled(true);
         bar.setTitle(null);
 
+        Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
         AppBarLayout appBar = (AppBarLayout)findViewById(R.id.appBar);
         appBar.addOnOffsetChangedListener(new AppBarStateListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 if (state == State.COLLAPSED) {
-                    Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-                    upArrow.setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_ATOP);
-                    getSupportActionBar().setHomeAsUpIndicator(upArrow);
+                    drawerArrowDrawable = new DrawerArrowDrawable(getResources());
+                    drawerArrowDrawable.setStrokeColor(getResources().getColor(R.color.colorBlack));
+                    getSupportActionBar().setHomeAsUpIndicator(drawerArrowDrawable);
 
                     if (menu != null) {
                         MenuItem menuEdit = menu.findItem(R.id.action_edit);
@@ -154,9 +176,10 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                         menuCreate.setIcon(createWrap);
                     }
                 } else if (state == State.EXPANDED){
-                    Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-                    upArrow.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-                    getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+                    drawerArrowDrawable = new DrawerArrowDrawable(getResources());
+                    drawerArrowDrawable.setStrokeColor(getResources().getColor(R.color.colorWhite));
+                    getSupportActionBar().setHomeAsUpIndicator(drawerArrowDrawable);
 
                     if (menu != null) {
                         MenuItem menuEdit = menu.findItem(R.id.action_edit);
@@ -216,18 +239,20 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
 
         txtName.setText(userModel.getName());
         txtMood.setText(userModel.getDescription());
-        if (userModel.getAddress().equals(""))
-            txtLocation.setText("Address is not set yet.");
+        if (userModel.getAddress() == null || userModel.getAddress().equals(""))
+            txtLocation.setText("Address is not set.");
         else
             txtLocation.setText(userModel.getAddress());
 
         if (userModel.getEarning() == 0) {
-            txtEarning.setText("No earning yet");
+            txtEarning.setText("No earning");
         } else {
             txtEarning.setText(Utils.getUserEarning(userModel.getEarning()));
         }
-        Date date = Utils.stringToDate(userModel.getCtime());
-        txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));
+        if (userModel.getCtime() != null) {
+            Date date = Utils.stringToDate(userModel.getCtime());
+            txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));
+        }
 
         if (userModel.getCoverImg() == null || userModel.getCoverImg().equals("")) {
             int pos = new Random().nextInt(5) % 5;
@@ -253,11 +278,41 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         }
         Glide.with(this).load(userModel.getAvatar()).asBitmap().fitCenter().placeholder(R.drawable.profile_empty).into(imgMain);
 
-
         adapterSkillService = new SkillServiceRecyclerAdapter(this, new ArrayList<SkillServiceModel>(), this);
         recyclerServices.setAdapter(adapterSkillService);
         recyclerServices.setLayoutManager(new LinearLayoutManager(this));
         recyclerServices.setNestedScrollingEnabled(false);
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        navigationView = (NavigationView)findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
+
+        View headerViewView =  navigationView.getHeaderView(0);
+        imgAvatar = (CircularImageView) headerViewView.findViewById(R.id.img_nav_avatar);
+        txtUsername = (TextView)headerViewView.findViewById(R.id.txt_nav_username);
+
+        if (userModel.getLoginMode().equals(Constants.LOGINMODE_GOOGLE)) {
+
+            Glide.with(this).load(userModel.getGgProfileUrl()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
+            txtUsername.setText(userModel.getGgName());
+
+        }
+        else if (userModel.getLoginMode().equals(Constants.LOGINMODE_FACEBOOK)) {
+
+            Glide.with(this).load(userModel.getFbProfileUrl()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
+            txtUsername.setText(userModel.getFbName());
+
+        }
+        else if (userModel.getLoginMode().equals(Constants.LOGINMODE_EMAIL)) {
+
+            if (userModel.getAvatar() != null && !userModel.getAvatar().equals("") && !userModel.getAvatar().equals("null")) {
+                Glide.with(this).load(userModel.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imgAvatar);
+            }
+            txtUsername.setText(userModel.getName());
+        }
+
+        navigationView.setNavigationItemSelectedListener(this);
 
         getUserServices();
     }
@@ -296,19 +351,14 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                drawer.openDrawer(Gravity.LEFT);
                 return true;
             case R.id.action_create:
-                Intent intent = new Intent(ProfileActivity.this, ServiceCreateActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, SelectSkillActivity.class);
+                intent.putExtra(Constants.EXTRA_ACTION_TYPE, Constants.ACTION_CREATE_SERVICE);
                 startActivityForResult(intent, Constants.REQUEST_SERVICE_CREATE);
                 return true;
             case R.id.action_edit:
-                /*
-                Intent intent2 = new Intent(ProfileActivity.this, RegisterActivity.class);
-                intent2.putExtra(Constants.EXTRA_USERTYPE, 0);
-
-                startActivity(intent2);
-                */
                 Intent intent1 = new Intent(ProfileActivity.this, PreviewActivity.class);
 
                 startActivity(intent1);
@@ -349,5 +399,34 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     public void onProjectCreate(ProjectModel project) {
         EventBus.getDefault().post(new ProjectCreateEvent(project));
         finish();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_post:
+                Intent intent = new Intent(this, SelectSkillActivity.class);
+                intent.putExtra(Constants.EXTRA_ACTION_TYPE, Constants.ACTION_CREATE_PROJECT);
+                startActivity(intent);
+                break;
+            case R.id.nav_edit:
+
+                break;
+            case R.id.nav_projects:
+                startActivity(new Intent(this, MyProjectActivity.class));
+                break;
+            case R.id.nav_signout:
+                Utils.saveUserInfo(this, null);
+                startActivity(new Intent(this, SocialLoginActivity.class));
+
+                // facebook log out
+                LoginManager.getInstance().logOut();
+
+                finish();
+                break;
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

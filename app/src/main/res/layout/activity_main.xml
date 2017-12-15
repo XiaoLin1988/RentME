@@ -12,13 +12,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--
-        <include
-            layout="@layout/app_toolbar"
-            android:id="@+id/include_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        -->
 
         <RelativeLayout
             android:id="@+id/lyt_tool"

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.jianchen.rentme.activity.search.TalentDetailActivity;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
 import com.android.jianchen.rentme.R;
@@ -93,7 +94,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
 
         UserModel curUser = Utils.retrieveUserInfo(getApplicationContext());
         if (curUser != null) {
-            Intent intent = new Intent(SocialLoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(SocialLoginActivity.this, ProfileActivity.class);
             startActivity(intent);
             finish();
         } else {
@@ -165,7 +166,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
                         curUser.setLoginMode(Constants.LOGINMODE_GOOGLE);
 
                         Utils.saveUserInfo(SocialLoginActivity.this, curUser);
-                        Intent intent = new Intent(SocialLoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(SocialLoginActivity.this, ProfileActivity.class);
                         startActivity(intent);
 
 
@@ -326,7 +327,7 @@ public class SocialLoginActivity extends AppCompatActivity implements View.OnCli
                         curUser.setDescription(user.getString("description"));
 
                         Utils.saveUserInfo(getApplicationContext(), curUser);
-                        Intent intent = new Intent(SocialLoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(SocialLoginActivity.this, ProfileActivity.class);
                         startActivity(intent);
 
                         finish();
