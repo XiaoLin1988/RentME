@@ -22,7 +22,7 @@ import retrofit2.http.Part;
 public interface CommonClient {
     @Multipart
     @POST(Constants.API_COMMON_UPLOAD_IMAGE)
-    Call<ObjectModel<String>> uploadImages(@Part("type") RequestBody type, @Part("foreign_id") RequestBody foreign_id, @Part ArrayList<MultipartBody.Part> upload_file);
+    Call<ObjectModel<String>> uploadPhotos(@Part("type") RequestBody type, @Part("foreign_id") RequestBody foreign_id, @Part ArrayList<MultipartBody.Part> upload_file);
 
     @POST(Constants.API_COMMON_UPLOAD_WEB)
     @FormUrlEncoded

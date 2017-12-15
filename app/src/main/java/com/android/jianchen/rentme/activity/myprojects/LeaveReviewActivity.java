@@ -1,26 +1,37 @@
 package com.android.jianchen.rentme.activity.myprojects;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.jianchen.rentme.activity.me.adapter.PhotoRecyclerAdapter;
 import com.android.jianchen.rentme.activity.me.adapter.VideoLinkRecyclerAdapter;
 import com.android.jianchen.rentme.activity.me.adapter.WebLinkRecyclerAdapter;
 import com.android.jianchen.rentme.activity.me.dialogs.PhotoDialog;
 import com.android.jianchen.rentme.activity.me.dialogs.VideoLinkDialog;
 import com.android.jianchen.rentme.activity.me.dialogs.WebLinkDialog;
+import com.android.jianchen.rentme.activity.root.ImageCropActivity;
+import com.android.jianchen.rentme.activity.root.RegisterActivity;
 import com.android.jianchen.rentme.helper.delegator.OnDialogSelectListener;
 import com.android.jianchen.rentme.helper.delegator.OnPostVideoListener;
 import com.android.jianchen.rentme.helper.delegator.OnPostWebListener;
 import com.android.jianchen.rentme.helper.listener.LoadCompleteListener;
+import com.android.jianchen.rentme.helper.utils.BitmapUtil;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.WebLinkModel;
 import com.android.jianchen.rentme.R;
@@ -30,15 +41,20 @@ import com.android.jianchen.rentme.helper.network.retrofit.ReviewClient;
 import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.utils.DialogUtil;
 import com.android.jianchen.rentme.helper.utils.Utils;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import org.json.JSONException;
 import org.json.JSONStringer;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,6 +76,8 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
 
     @Bind(R.id.recycler_photos)
     RecyclerView recyclerPhoto;
+    PhotoRecyclerAdapter adapterPhoto;
+    ArrayList<String> photoPathArray;
 
     @Bind(R.id.recycler_web_links)
     RecyclerView recyclerWeb;
@@ -77,6 +95,8 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
     private ReviewModel review;
     */
     private int reviewId;
+    private String imagPath;
+
 
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -110,6 +130,12 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
         adapterVideo = new VideoLinkRecyclerAdapter(videoLinks);
         recyclerVideo.setLayoutManager(new LinearLayoutManager(this));
         recyclerVideo.setAdapter(adapterVideo);
+
+        photoPathArray = new ArrayList<>();
+        adapterPhoto = new PhotoRecyclerAdapter(photoPathArray);
+        recyclerPhoto.setLayoutManager(new LinearLayoutManager(this));
+        recyclerPhoto.setAdapter(adapterPhoto);
+
     }
 
     @Override
@@ -121,8 +147,9 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onDialogSelect(int position) {
                         if (position == 0) {
-                            PhotoDialog dialog = new PhotoDialog(LeaveReviewActivity.this);
-                            dialog.show();
+                            // add photo
+                            selectImage();
+
                         } else if (position == 1) {
                             VideoLinkDialog dialog = new VideoLinkDialog(LeaveReviewActivity.this);
                             dialog.setVideoListener(LeaveReviewActivity.this);
@@ -146,6 +173,62 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    public void selectImage() {
+        String title = getResources().getString(R.string.choose_picture);
+        final CharSequence[] options = {getResources().getString(R.string.choose_camera), getResources().getString(R.string.choose_gallery)};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(LeaveReviewActivity.this);
+        builder.setTitle(title);
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (options[which].equals(getResources().getString(R.string.choose_camera))) {
+                    if (!Utils.checkPermission(LeaveReviewActivity.this, "android.permission.CAMERA") || !Utils.checkPermission(LeaveReviewActivity.this, "android.permission.WRITE_EXTERNAL_STORAGE")) {
+                        ActivityCompat.requestPermissions(LeaveReviewActivity.this, new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
+                    } else {
+                        takePhoto();
+                    }
+                } else if (options[which].equals(getResources().getString(R.string.choose_gallery))) {
+                    if (!Utils.checkPermission(LeaveReviewActivity.this, "android.permission.WRITE_EXTERNAL_STORAGE")) {
+                        ActivityCompat.requestPermissions(LeaveReviewActivity.this, new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
+                    } else {
+                        choosePhoto();
+                    }
+                }
+            }
+        });
+        builder.show();
+    }
+
+    public void takePhoto() {
+        Intent intent = new Intent(this, ImageCropActivity.class);
+        intent.putExtra("ACTION", Constants.REQUEST_CAMERA);
+        startActivityForResult(intent, Constants.REQUEST_CODE_UPDATE_PIC);
+    }
+
+    public void choosePhoto() {
+        Intent intent = new Intent(this, ImageCropActivity.class);
+        intent.putExtra("ACTION", Constants.REQUEST_GALLERY);
+        startActivityForResult(intent, Constants.REQUEST_CODE_UPDATE_PIC);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE_UPDATE_PIC) {
+            if (resultCode == RESULT_OK) {
+                imagPath = data.getStringExtra(Constants.IMAGE_PATH);
+                Log.v("imagPath", imagPath);
+                // add new photo path to array
+                adapterPhoto.addItem(imagPath);
+
+            } else if (resultCode == RESULT_CANCELED) {
+                //Toast.makeText(this, "canceled", Toast.LENGTH_LONG).show();
+            } else {
+                String errorMsg = data.getStringExtra(Constants.ERROR_MSG);
+                Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     private boolean validate() {
         if (editContent.getText().toString().equals("")) {
             Toast.makeText(this, "Please input your review", Toast.LENGTH_SHORT).show();
@@ -159,20 +242,6 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
 
     private void createReview() {
         final ProgressDialog dialog = DialogUtil.showProgressDialog(this, "Please wait while creating review");
-
-        /*
-        ReviewModel r = new ReviewModel();
-        r.setRv_content(editContent.getText().toString());
-        r.setRv_score((int)rating.getRating());
-        if (reviewType == Constants.VALUE_SERVICE) {
-            r.setRv_type(Constants.VALUE_SERVICE);
-            r.setRv_fid(reviewId);
-        } else if (reviewType == Constants.VALUE_REVIEW) {
-            r.setRv_type(Constants.VALUE_REVIEW);
-            r.setRv_fid(reviewId);
-        }
-        r.setRv_usr_id(Utils.retrieveUserInfo(this).getId());
-        */
 
         RestClient<ReviewClient> restClient = new RestClient<>();
         ReviewClient reviewClient = restClient.getAppClient(ReviewClient.class);
@@ -191,6 +260,10 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
                         loadCount ++;
                     if (videoLinks.size() > 0)
                         loadCount ++;
+                    if (photoPathArray.size() > 0)
+                        loadCount ++;
+
+
                     if (loadCount > 0) {
                         final LoadCompleteListener loadListener = new LoadCompleteListener(loadCount) {
                             @Override
@@ -255,6 +328,41 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
                                 }
                             });
                         }
+                        if (photoPathArray.size() > 0) {
+
+                            ArrayList<MultipartBody.Part> images = new ArrayList<MultipartBody.Part>();
+
+                            for (int i = 0; i < photoPathArray.size(); i++) {
+                                File file = new File(photoPathArray.get(i));
+
+                                RequestBody reqImage = RequestBody.create(MediaType.parse("image/*"), file);
+                                MultipartBody.Part body = MultipartBody.Part.createFormData("images[]", file.getName(), reqImage);
+                                images.add(body);
+                            }
+
+                            RequestBody reqType = RequestBody.create(MultipartBody.FORM, Integer.toString(Constants.VALUE_REVIEW_PHOTO));
+                            RequestBody reqForeign_id = RequestBody.create(MultipartBody.FORM, Integer.toString(reviewId));
+
+                            Call<ObjectModel<String>> call1 = commonClient.uploadPhotos(reqType, reqForeign_id, images);
+                            call1.enqueue(new Callback<ObjectModel<String>>() {
+                                @Override
+                                public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
+                                    loadListener.setLoaded();
+                                    if (response.isSuccessful() && response.body().getStatus()) {
+
+                                    } else {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ObjectModel<String>> call, Throwable t) {
+                                    loadListener.setLoaded();
+                                }
+                            });
+
+                        }
+
                     } else {
                         dialog.dismiss();
                     }
@@ -281,4 +389,8 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
     public void onPostWeb(WebLinkModel webLinkModel) {
         adapterWebLink.addItem(webLinkModel);
     }
+
+
+
+
 }

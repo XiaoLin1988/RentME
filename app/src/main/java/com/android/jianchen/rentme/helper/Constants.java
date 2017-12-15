@@ -90,7 +90,7 @@ public class Constants {
     public static final String API_SKILL_GET = "skill/getCategories";
     public static final String API_COMMON_UPLOAD_VIDEO = "common/uploadVideos";
     public static final String API_COMMON_UPLOAD_WEB = "common/uploadWebs";
-    public static final String API_COMMON_UPLOAD_IMAGE = "common/uploadImages";
+    public static final String API_COMMON_UPLOAD_IMAGE = "common/imageMultiUpload";
 
     // Social Login
     public static final String API_USER_GOOGLE_CHECK = "user/checkGoogleUser";
@@ -131,6 +131,11 @@ public class Constants {
 
     public static final int VALUE_SERVICE = 0;
     public static final int VALUE_REVIEW = 1;
+
+    public static final int VALUE_REVIEW_PHOTO = 4;
+    public static final int VALUE_PROFILEMAIN_PHOTO = 1;
+    public static final int VALUE_PROFILESUB_PHOTO = 2;
+    public static final int VALUE_SERVICE_PHOTO = 3;
 
     public static final int VALUE_LINK_YOUTUBE = 0;
     public static final int VALUE_LINK_VIMEO = 1;

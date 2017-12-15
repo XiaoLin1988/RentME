@@ -232,9 +232,9 @@ public class ImageCropActivity extends Activity {
     private void createTempFile() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
-            mFileTemp = new File(Environment.getExternalStorageDirectory(), Constants.TEMP_PHOTO_FILE_NAME);
+            mFileTemp = new File(Environment.getExternalStorageDirectory(), Utils.getTempImagePath());
         } else {
-            mFileTemp = new File(getFilesDir(), Constants.TEMP_PHOTO_FILE_NAME);
+            mFileTemp = new File(getFilesDir(), Utils.getTempImagePath());
         }
     }
 
