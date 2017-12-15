@@ -64,6 +64,12 @@ public class EditProfileDialog extends Dialog implements View.OnClickListener {
 
     public void setTag(int t) {
         tag = t;
+
+        if (tag == 99) { // review dialogue about review
+            txtTitle.setText("Please input review");
+            btnUpdate.setText("Leave Review");
+        }
+
     }
 
     public void setDefault(String def) {

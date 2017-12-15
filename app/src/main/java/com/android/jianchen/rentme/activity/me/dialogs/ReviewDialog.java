@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.android.jianchen.rentme.activity.me.PreviewActivity;
 import com.android.jianchen.rentme.activity.me.adapter.ReviewRecyclerAdapter;
 import com.android.jianchen.rentme.activity.myprojects.LeaveReviewActivity;
 import com.android.jianchen.rentme.helper.delegator.OnLoadMoreListener;
@@ -33,7 +34,7 @@ import retrofit2.Response;
 /**
  * Created by emerald on 12/8/2017.
  */
-public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoadMoreListener {
+public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoadMoreListener, EditProfileDialog.OnUpdateListener {
     RecyclerView recyclerReview;
     ReviewRecyclerAdapter adapterReview;
 
@@ -137,6 +138,27 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
         });
     }
 
+    private void createReview(String review) {
+        RestClient<ReviewClient> restClient = new RestClient<>();
+        ReviewClient reviewClient = restClient.getAppClient(ReviewClient.class);
+
+        Call<ObjectModel<Integer>> call = reviewClient.createReview(Constants.VALUE_REVIEW, this.review.getId(), review, 1, Utils.retrieveUserInfo(getContext()).getId());
+
+        call.enqueue(new Callback<ObjectModel<Integer>>() {
+            @Override
+            public void onResponse(Call<ObjectModel<Integer>> call, Response<ObjectModel<Integer>> response) {
+                if (response.isSuccessful() && response.body().getStatus()) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObjectModel<Integer>> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void getServiceReviews(int curpage) {
         RestClient<ServiceClient> restClient = new RestClient<>();
         ServiceClient serviceClient = restClient.getAppClient(ServiceClient.class);
@@ -201,14 +223,15 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
                 createRate();
                 break;
             case R.id.lyt_review_review:
-                Intent intent = new Intent(getContext(), LeaveReviewActivity.class);
-                intent.putExtra(Constants.EXTRA_REVIEW_TYPE, Constants.VALUE_REVIEW);
-                if (type == Constants.VALUE_SERVICE)
-                    intent.putExtra(Constants.KEY_REVIEW_ID, serviceId);
-                else
-                    intent.putExtra(Constants.KEY_REVIEW_ID, review.getId());
-                getContext().startActivity(intent);
+
+                EditProfileDialog dialog = new EditProfileDialog(this.getOwnerActivity());
+                dialog.setTitle("Please input your name");
+                dialog.setUpdateListener(this);
+                dialog.setTag(99); // 99 means review dialogue
+                dialog.show();
+
                 break;
+
         }
     }
 
@@ -222,4 +245,12 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
         }
         */
     }
+
+    @Override
+    public void onUpdate(String review, int tag) {
+
+        createReview(review);
+
+    }
+
 }

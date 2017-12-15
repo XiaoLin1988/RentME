@@ -3,29 +3,36 @@ package com.android.jianchen.rentme.activity.me;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.jianchen.rentme.activity.me.adapter.PhotoRecyclerAdapter;
 import com.android.jianchen.rentme.activity.me.adapter.VideoLinkRecyclerAdapter;
 import com.android.jianchen.rentme.activity.me.adapter.WebLinkRecyclerAdapter;
 import com.android.jianchen.rentme.activity.me.dialogs.PhotoDialog;
 import com.android.jianchen.rentme.activity.me.dialogs.VideoLinkDialog;
 import com.android.jianchen.rentme.activity.me.dialogs.WebLinkDialog;
+import com.android.jianchen.rentme.activity.myprojects.LeaveReviewActivity;
+import com.android.jianchen.rentme.activity.root.ImageCropActivity;
 import com.android.jianchen.rentme.activity.search.fragment.SelectSkillFragment;
 import com.android.jianchen.rentme.activity.me.fragments.ServiceCreateFragment;
 import com.android.jianchen.rentme.helper.delegator.OnDialogSelectListener;
@@ -49,10 +56,14 @@ import com.android.jianchen.rentme.model.rentme.WebLinkModel;
 import org.json.JSONException;
 import org.json.JSONStringer;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,6 +89,8 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
 
     @Bind(R.id.recycler_photos)
     RecyclerView recyclerPhotos;
+    PhotoRecyclerAdapter adapterPhoto;
+    ArrayList<String> photoPathArray;
 
     @Bind(R.id.recycler_web_links)
     RecyclerView recyclerWebLink;
@@ -101,8 +114,8 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                         @Override
                         public void onDialogSelect(int position) {
                             if (position == 0) {
-                                PhotoDialog dialog = new PhotoDialog(ServiceCreateActivity.this);
-                                dialog.show();
+                                // add photo
+                                selectImage();
                             } else if (position == 1) {
                                 VideoLinkDialog dialog = new VideoLinkDialog(ServiceCreateActivity.this);
                                 dialog.setVideoListener(ServiceCreateActivity.this);
@@ -126,6 +139,65 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
             }
         }
     };
+
+    public void selectImage() {
+        String title = getResources().getString(R.string.choose_picture);
+        final CharSequence[] options = {getResources().getString(R.string.choose_camera), getResources().getString(R.string.choose_gallery)};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ServiceCreateActivity.this);
+        builder.setTitle(title);
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (options[which].equals(getResources().getString(R.string.choose_camera))) {
+                    if (!Utils.checkPermission(ServiceCreateActivity.this, "android.permission.CAMERA") || !Utils.checkPermission(ServiceCreateActivity.this, "android.permission.WRITE_EXTERNAL_STORAGE")) {
+                        ActivityCompat.requestPermissions(ServiceCreateActivity.this, new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
+                    } else {
+                        takePhoto();
+                    }
+                } else if (options[which].equals(getResources().getString(R.string.choose_gallery))) {
+                    if (!Utils.checkPermission(ServiceCreateActivity.this, "android.permission.WRITE_EXTERNAL_STORAGE")) {
+                        ActivityCompat.requestPermissions(ServiceCreateActivity.this, new String[]{"android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
+                    } else {
+                        choosePhoto();
+                    }
+                }
+            }
+        });
+        builder.show();
+    }
+
+    public void takePhoto() {
+        Intent intent = new Intent(this, ImageCropActivity.class);
+        intent.putExtra("ACTION", Constants.REQUEST_CAMERA);
+        startActivityForResult(intent, Constants.REQUEST_CODE_UPDATE_PIC);
+    }
+
+    public void choosePhoto() {
+        Intent intent = new Intent(this, ImageCropActivity.class);
+        intent.putExtra("ACTION", Constants.REQUEST_GALLERY);
+        startActivityForResult(intent, Constants.REQUEST_CODE_UPDATE_PIC);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE_UPDATE_PIC) {
+            if (resultCode == RESULT_OK) {
+                String imagPath = data.getStringExtra(Constants.IMAGE_PATH);
+                Log.v("imagPath", imagPath);
+                // add new photo path to array
+                adapterPhoto.addItem(imagPath);
+
+            } else if (resultCode == RESULT_CANCELED) {
+                //Toast.makeText(this, "canceled", Toast.LENGTH_LONG).show();
+            } else {
+                String errorMsg = data.getStringExtra(Constants.ERROR_MSG);
+                Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+
 
     protected void onCreate(Bundle saveBundle) {
         super.onCreate(saveBundle);
@@ -199,6 +271,9 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                         loadCount ++;
                     if (videoLinks.size() > 0)
                         loadCount ++;
+                    if (photoPathArray.size() > 0)
+                        loadCount ++;
+
                     if (loadCount > 0) {
                         final LoadCompleteListener loadListener = new LoadCompleteListener(loadCount) {
                             @Override
@@ -256,6 +331,43 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                                 }
                             });
                         }
+
+                        if (photoPathArray.size() > 0) {
+
+                            ArrayList<MultipartBody.Part> images = new ArrayList<MultipartBody.Part>();
+
+                            for (int i = 0; i < photoPathArray.size(); i++) {
+                                File file = new File(photoPathArray.get(i));
+
+                                RequestBody reqImage = RequestBody.create(MediaType.parse("image/*"), file);
+                                MultipartBody.Part body = MultipartBody.Part.createFormData("images[]", file.getName(), reqImage);
+                                images.add(body);
+                            }
+
+                            RequestBody reqType = RequestBody.create(MultipartBody.FORM, Integer.toString(Constants.VALUE_SERVICE_PHOTO));
+                            RequestBody reqForeign_id = RequestBody.create(MultipartBody.FORM, Integer.toString(serviceId));
+
+                            Call<ObjectModel<String>> call1 = commonClient.uploadPhotos(reqType, reqForeign_id, images);
+                            call1.enqueue(new Callback<ObjectModel<String>>() {
+                                @Override
+                                public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
+                                    loadListener.setLoaded();
+                                    if (response.isSuccessful() && response.body().getStatus()) {
+
+                                    } else {
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ObjectModel<String>> call, Throwable t) {
+                                    loadListener.setLoaded();
+                                }
+                            });
+
+                        }
+
+
                     } else {
                         dialog.dismiss();
                         setResult(Activity.RESULT_OK, getIntent().putExtra(Constants.KEY_SERVICE, service));
