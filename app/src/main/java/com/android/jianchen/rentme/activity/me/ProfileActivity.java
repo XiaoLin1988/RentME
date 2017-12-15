@@ -53,6 +53,7 @@ import com.bumptech.glide.Glide;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.rd.PageIndicatorView;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -78,6 +79,8 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     @Bind(R.id.pager_cover)
     ViewPager pagerSubCover;
     GalleryPagerAdapter adapterCover;
+    @Bind(R.id.ind_profile2)
+    PageIndicatorView indicator;
 
     @Bind(R.id.img_profile_main)
     ImageView imgMain;
@@ -300,16 +303,12 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                     Glide.with(this).load(R.drawable.cover5).asBitmap().fitCenter().into(imgCover);
                     break;
             }
-
-            ArrayList<String> arrayList = new ArrayList<String>();
-            adapterCover = new GalleryPagerAdapter(this, pagerSubCover, arrayList);
-            pagerSubCover.setAdapter(adapterCover);
-
         }
         else {
             // cover image
             adapterCover = new GalleryPagerAdapter(this, pagerSubCover, userModel.getCoverImg());
             pagerSubCover.setAdapter(adapterCover);
+            indicator.setViewPager(pagerSubCover);
         }
 
         // main profile image
