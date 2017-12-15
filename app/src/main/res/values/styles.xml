@@ -18,7 +18,7 @@
     </style>
 
     <style name="AppTheme.MyTheme" parent="AppTheme.NoActionBar">
-        <item name="android:windowContentOverlay">@color/colorBlack</item>
+        <item name="android:windowContentOverlay">@color/colorWhite</item>
         <item name="colorControlNormal">@color/colorWhite</item>
     </style>
 

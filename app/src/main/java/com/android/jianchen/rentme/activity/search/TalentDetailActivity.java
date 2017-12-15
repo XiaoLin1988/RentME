@@ -24,6 +24,7 @@ import com.android.jianchen.rentme.activity.me.PreviewActivity;
 import com.android.jianchen.rentme.activity.me.ServiceCreateActivity;
 import com.android.jianchen.rentme.activity.me.ServiceDetailActivity;
 import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
+import com.android.jianchen.rentme.activity.root.customview.DrawerArrowDrawable;
 import com.android.jianchen.rentme.activity.search.adapter.SkillServiceRecyclerAdapter;
 import com.android.jianchen.rentme.helper.delegator.OnProjectCreateListener;
 import com.android.jianchen.rentme.helper.delegator.OnServiceClickListener;
@@ -90,7 +91,7 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
     @Bind(R.id.img_profile_wechat)
     ImageView imgWechat;
 
-    @Bind(R.id.recycler_projects)
+    @Bind(R.id.recycler_services)
     RecyclerView recyclerServices;
     SkillServiceRecyclerAdapter adapterSkillService;
 
@@ -133,9 +134,21 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
         bar.setHomeButtonEnabled(true);
         bar.setTitle(null);
 
-        Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        upArrow.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        AppBarLayout appBar = (AppBarLayout)findViewById(R.id.appBar);
+        appBar.addOnOffsetChangedListener(new AppBarStateListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                if (state == State.COLLAPSED) {
+                    Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+                    upArrow.setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_ATOP);
+                    getSupportActionBar().setHomeAsUpIndicator(upArrow);
+                } else if (state == State.EXPANDED){
+                    Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
+                    upArrow.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+                    getSupportActionBar().setHomeAsUpIndicator(upArrow);
+                }
+            }
+        });
     }
 
     private void initViews() {
@@ -179,12 +192,12 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
         txtName.setText(userModel.getName());
         txtMood.setText(userModel.getDescription());
         if (userModel.getAddress().equals(""))
-            txtLocation.setText("Address is not set yet.");
+            txtLocation.setText("Address is not set");
         else
             txtLocation.setText(userModel.getAddress());
 
         if (userModel.getEarning() == 0) {
-            txtEarning.setText("No earning yet");
+            txtEarning.setText("No earning");
         } else {
             txtEarning.setText(Utils.getUserEarning(userModel.getEarning()));
         }

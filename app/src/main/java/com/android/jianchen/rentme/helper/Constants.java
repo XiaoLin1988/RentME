@@ -33,7 +33,8 @@ public class Constants {
     public static final int REQUEST_POST_VIDEO = 0x7;
     public static final int REQUEST_POST_WEB = 0x8;
     public static final int REQUEST_PROJECT_CREATE = 0x9;
-    public static final int REQUEST_GOOGLE_SIGNIN = 10;
+    public static final int REQUEST_GOOGLE_SIGNIN = 0xA;
+    public static final int REQUEST_PREVIEW = 0xB;
 
 
     public static final String ERROR_MSG = "error_msg";
@@ -78,6 +79,7 @@ public class Constants {
     public static final String API_USER_SKILL = "user/getUserSkills";
     public static final String API_SERVICE_REVIEW = "service/getServiceReviews";
     public static final String API_SERVICE_CREATE = "service/createService";
+    public static final String API_SERVICE_DELETE = "service/deleteService";
     public static final String API_PROJECT_CREATE = "project/createProject";
     public static final String API_PROJECT_CREATE2 = "project/createProject2";
     public static final String API_PROJECT_COMPLETED = "project/getMyCompletedProjects";
@@ -88,7 +90,7 @@ public class Constants {
     public static final String API_RATE_CREATE = "rate/createRate";
     public static final String API_REVIEW_REVIEW = "review/getReviewReviews";
     public static final String API_SKILL_GET = "skill/getCategories";
-    public static final String API_COMMON_UPLOAD_VIDEO = "common/uploadVideos";
+    public static final String API_COMMON_UPLOAD_VIDEO = "common/uploadVideos?XDEBUG_SESSION_START=19305";
     public static final String API_COMMON_UPLOAD_WEB = "common/uploadWebs";
     public static final String API_COMMON_UPLOAD_IMAGE = "common/imageMultiUpload";
 

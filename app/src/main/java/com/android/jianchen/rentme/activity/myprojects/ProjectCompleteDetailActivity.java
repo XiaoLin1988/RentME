@@ -3,22 +3,29 @@ package com.android.jianchen.rentme.activity.myprojects;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.jianchen.rentme.activity.me.adapter.ReviewRecyclerAdapter;
 import com.android.jianchen.rentme.activity.root.MainActivity;
+import com.android.jianchen.rentme.helper.utils.Utils;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.helper.Constants;
+import com.android.jianchen.rentme.model.rentme.ReviewModel;
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by emerald on 6/5/2017.
@@ -37,6 +44,10 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
     private TextView txtBalance;
 
     private Button btnLeave;
+
+    private RecyclerView recyclerReviews;
+    private ArrayList<ReviewModel> reviews;
+    private ReviewRecyclerAdapter adapterReviews;
 
     protected void onCreate(Bundle savedBundle) {
         super.onCreate(savedBundle);
@@ -74,6 +85,21 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
 
         btnLeave = (Button)findViewById(R.id.btn_project_complete_detail_leave);
         btnLeave.setOnClickListener(this);
+
+        if (project.getTalent_id() == Utils.retrieveUserInfo(ProjectCompleteDetailActivity.this).getId()) {
+            btnLeave.setVisibility(View.GONE);
+        }
+
+        if (project.getPr_stts() == 2) {
+            btnLeave.setVisibility(View.GONE);
+
+            reviews = new ArrayList<>();
+            recyclerReviews = (RecyclerView)findViewById(R.id.recycler_reviews);
+            adapterReviews = new ReviewRecyclerAdapter(recyclerReviews, reviews);
+            recyclerReviews.setAdapter(adapterReviews);
+            //recyclerReviews.setLayoutManager(new LinearLayoutManager());
+        }
+
     }
 
     @Override

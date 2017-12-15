@@ -234,12 +234,6 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                                 @Override
                                 public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
                                     loadListener.setLoaded();
-                                    if (response.isSuccessful() && response.body().getStatus()) {
-                                        int a = 0;
-                                        a += 5;
-                                    } else {
-
-                                    }
                                 }
 
                                 @Override
@@ -254,12 +248,6 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                                 @Override
                                 public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
                                     loadListener.setLoaded();
-                                    if (response.isSuccessful() && response.body().getStatus()) {
-                                        int a = 0;
-                                        a += 5;
-                                    } else {
-
-                                    }
                                 }
 
                                 @Override

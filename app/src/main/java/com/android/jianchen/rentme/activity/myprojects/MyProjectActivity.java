@@ -68,7 +68,7 @@ public class MyProjectActivity extends AppCompatActivity implements ViewPager.On
         bar.setDisplayShowHomeEnabled(true);
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeButtonEnabled(true);
-        bar.setTitle(null);
+        bar.setTitle("My Projects");
     }
 
     private void initViews() {

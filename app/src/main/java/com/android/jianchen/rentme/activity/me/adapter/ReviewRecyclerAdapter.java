@@ -134,9 +134,9 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     public void addReviews(ArrayList<ReviewModel> rl) {
-        reviews.remove(reviews.size() - 1);
+        //reviews.remove(reviews.size() - 1);
         reviews.addAll(rl);
-        reviews.add(new ReviewModel());
+        //reviews.add(new ReviewModel());
         notifyDataSetChanged();
     }
 

@@ -91,7 +91,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/main"
+                android:src="@drawable/profile_empty"
                 android:scaleType="centerCrop"
                 app:siSquare="true"
                 app:siRadius="4dp"

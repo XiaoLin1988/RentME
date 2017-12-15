@@ -67,6 +67,20 @@ public class SkillServiceRecyclerAdapter extends RecyclerView.Adapter<SkillServi
         notifyDataSetChanged();
     }
 
+    public void remove(ServiceModel service) {
+        for (int i = 0; i < skills.size(); i ++) {
+            if (skills.get(i).getSkill().equals(service.getSkill_title())) {
+                for (int j = 0; j < skills.get(i).getServices().size(); j++) {
+                    if (service.getId() == skills.get(i).getServices().get(j).getId()) {
+                        skills.get(i).getServices().remove(j);
+                        break;
+                    }
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 
     public class SkillServiceViewHolder extends RecyclerView.ViewHolder {
         public TextView txtSkill;

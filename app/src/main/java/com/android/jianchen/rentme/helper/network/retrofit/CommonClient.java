@@ -30,5 +30,5 @@ public interface CommonClient {
 
     @POST(Constants.API_COMMON_UPLOAD_VIDEO)
     @FormUrlEncoded
-    Call<ObjectModel<String>> uploadVideos(@Field("type") int type, @Field("foreign_id") int foreign_id, @Field("video") ArrayList<String> videos);
+    Call<ObjectModel<String>> uploadVideos(@Field("type") int type, @Field("foreign_id") int foreign_id, @Field("video[]") ArrayList<String> videos);
 }

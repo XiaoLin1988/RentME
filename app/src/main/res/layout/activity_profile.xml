@@ -88,7 +88,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
-                        android:src="@drawable/main"
+                        android:src="@drawable/profile_empty"
                         android:scaleType="centerCrop"
                         app:siSquare="true"
                         app:siRadius="4dp"
@@ -241,7 +241,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_projects"
+            android:id="@+id/recycler_services"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

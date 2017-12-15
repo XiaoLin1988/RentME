@@ -29,6 +29,7 @@ import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.activity.me.PreviewActivity;
 import com.android.jianchen.rentme.activity.me.ServiceCreateActivity;
 import com.android.jianchen.rentme.activity.me.ServiceDetailActivity;
+import com.android.jianchen.rentme.activity.me.events.ServiceDeleteEvent;
 import com.android.jianchen.rentme.activity.myprojects.MyProjectActivity;
 import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
 import com.android.jianchen.rentme.activity.root.customview.DrawerArrowDrawable;
@@ -52,6 +53,7 @@ import com.github.siyamed.shapeimageview.CircularImageView;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -100,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     @Bind(R.id.img_profile_wechat)
     ImageView imgWechat;
 
-    @Bind(R.id.recycler_projects)
+    @Bind(R.id.recycler_services)
     RecyclerView recyclerServices;
     SkillServiceRecyclerAdapter adapterSkillService;
 
@@ -136,6 +138,23 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         userModel = Utils.retrieveUserInfo(this);
 
         initViews();
+    }
+
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(ServiceDeleteEvent event) {
+        ServiceModel service = event.getResult();
+
+        adapterSkillService.remove(service);
     }
 
     private void prepareActionBar() {
@@ -360,8 +379,8 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                 return true;
             case R.id.action_edit:
                 Intent intent1 = new Intent(ProfileActivity.this, PreviewActivity.class);
-
-                startActivity(intent1);
+                startActivityForResult(intent1, Constants.REQUEST_PREVIEW);
+                //startActivity(intent1);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -392,6 +411,15 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         if (reqCode == Constants.REQUEST_SERVICE_CREATE && resCode == RESULT_OK) {
             ServiceModel service = (ServiceModel)data.getSerializableExtra(Constants.KEY_SERVICE);
             adapterSkillService.addService(service);
+        } else if (reqCode == Constants.REQUEST_PREVIEW && resCode == RESULT_OK) {
+            userModel = Utils.retrieveUserInfo(this);
+            Glide.with(ProfileActivity.this).load(userModel.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgAvatar);
+            Glide.with(ProfileActivity.this).load(userModel.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgMain);
+
+            txtName.setText(userModel.getName());
+            txtUsername.setText(userModel.getName());
+            txtMood.setText(userModel.getDescription());
+            txtLocation.setText(userModel.getAddress());
         }
     }
 

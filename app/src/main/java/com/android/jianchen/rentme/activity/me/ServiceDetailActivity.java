@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.android.jianchen.rentme.activity.me.adapter.IntroAdapter;
 import com.android.jianchen.rentme.activity.me.dialogs.ReviewDialog;
+import com.android.jianchen.rentme.activity.me.events.ServiceDeleteEvent;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
 import com.android.jianchen.rentme.helper.delegator.OnConfirmListener;
 import com.android.jianchen.rentme.helper.delegator.OnProjectCreateListener;
 import com.android.jianchen.rentme.model.rentme.ArrayModel;
@@ -48,6 +50,7 @@ import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.willy.ratingbar.ScaleRatingBar;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
@@ -59,6 +62,7 @@ import butterknife.BindString;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by emerald on 12/4/2017.
@@ -94,12 +98,12 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
     @Bind(R.id.btn_service_buy)
     Button buyService;
 
-    private IntroAdapter adapter;
-
     @BindString(R.string.error_load)
     String errLoad;
     @BindString(R.string.error_network)
     String errNetwork;
+    @BindString(R.string.error_delete_service)
+    String errDeleteService;
 
     private Toolbar toolbar;
 
@@ -196,10 +200,10 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                         Date date = Utils.stringToDate(reviews.get(0).getRv_ctime());
                         txtReviewDate.setText(Utils.beautifyDate(date, false));
                         txtReviewContent.setText(reviews.get(0).getRv_content());
-                        Glide.with(ServiceDetailActivity.this).load(reviews.get(0).getUser_avatar()).asBitmap().centerCrop().placeholder(R.drawable.main).into(imgReviewAvatar);
+                        Glide.with(ServiceDetailActivity.this).load(reviews.get(0).getUser_avatar()).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgReviewAvatar);
                         lytReview.setVisibility(View.VISIBLE);
                     }
-                    reviews.add(new ReviewModel());
+                    //reviews.add(new ReviewModel());
                 } else {
                     Toast.makeText(ServiceDetailActivity.this, errLoad, Toast.LENGTH_SHORT).show();
                 }
@@ -214,8 +218,31 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
     }
 
     private void deleteService() {
+        final ProgressDialog dialog = DialogUtil.showProgressDialog(ServiceDetailActivity.this, "Please wait while deleting service");
 
-        finish();
+        RestClient<ServiceClient> restClient = new RestClient<>();
+        ServiceClient serviceClient = restClient.getAppClient(ServiceClient.class);
+
+        Call<ObjectModel<Boolean>> call = serviceClient.deleteService(service.getId());
+        call.enqueue(new Callback<ObjectModel<Boolean>>() {
+
+            @Override
+            public void onResponse(Call<ObjectModel<Boolean>> call, Response<ObjectModel<Boolean>> response) {
+                dialog.dismiss();
+                if (response.isSuccessful() && response.body().getStatus()) {
+                    EventBus.getDefault().post(new ServiceDeleteEvent(service));
+                    finish();
+                } else {
+                    Toast.makeText(ServiceDetailActivity.this, errDeleteService, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObjectModel<Boolean>> call, Throwable t) {
+                dialog.dismiss();
+                Toast.makeText(ServiceDetailActivity.this, errNetwork, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void doPayment() {
@@ -296,29 +323,21 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                 dialog.show();
                 break;
             case R.id.btn_service_buy:
-                /*
-                if (service.getId() == Utils.retrieveUserInfo(ServiceDetailActivity.this).getId()) {
-                    DialogUtil.showConfirmDialog(this, "Do you really want to delete this service", new OnConfirmListener() {
+                if (service.getTalent_id() == Utils.retrieveUserInfo(ServiceDetailActivity.this).getId()) {
+                    DialogUtil.showConfirmDialog(this, "Delete Service?", new OnConfirmListener() {
                         @Override
                         public void onConfirm() {
                             deleteService();
                         }
                     });
                 } else {
-                    DialogUtil.showConfirmDialog(this, "Do you really want to buy this service", new OnConfirmListener() {
+                    DialogUtil.showConfirmDialog(this, "Buy Service?", new OnConfirmListener() {
                         @Override
                         public void onConfirm() {
                             doPayment();
                         }
                     });
                 }
-                */
-                DialogUtil.showConfirmDialog(this, "Do you really want to buy this service", new OnConfirmListener() {
-                    @Override
-                    public void onConfirm() {
-                        doPayment();
-                    }
-                });
                 break;
         }
     }
@@ -352,12 +371,10 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                     }
                 }
             } else if (resultCode == RESULT_CANCELED) {
-                //createProject();
-                Toast.makeText(this, "Payment cancelled by user", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Payment cancelled ", Toast.LENGTH_SHORT).show();
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                 DialogUtil.showAlertDialog(this, "An invalid Payment or PayPalConfiguration was submitted");
-                Toast.makeText(this, "Payment cancelled by user", Toast.LENGTH_SHORT).show();
-                Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+                Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
             }
         }
     }

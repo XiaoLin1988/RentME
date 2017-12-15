@@ -1,8 +1,11 @@
 package com.android.jianchen.rentme.activity.me;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,10 +28,14 @@ import com.android.jianchen.rentme.activity.me.dialogs.EditProfileDialog;
 import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.delegator.OnConfirmListener;
 import com.android.jianchen.rentme.helper.delegator.OnDialogSelectListener;
+import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
+import com.android.jianchen.rentme.helper.network.retrofit.UserClient;
 import com.android.jianchen.rentme.helper.utils.DialogUtil;
 import com.android.jianchen.rentme.helper.utils.InternalStorageContentProvider;
 import com.android.jianchen.rentme.helper.utils.Utils;
+import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
+import com.bumptech.glide.Glide;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
@@ -43,6 +50,12 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PreviewActivity extends AppCompatActivity implements View.OnClickListener, EditProfileDialog.OnUpdateListener {
     @Bind(R.id.txt_profile_name)
@@ -69,6 +82,10 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 
     @BindString(R.string.joined)
     String joined;
+    @BindString(R.string.error_edit_user)
+    String errEditUser;
+    @BindString(R.string.error_network)
+    String errNetwork;
 
     private Toolbar toolbar;
 
@@ -79,6 +96,11 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     private UserModel curUser;
 
     private File mFileTemp;
+    private Uri mainImage;
+
+    private int TAG_MAIN = 0;
+    private int TAG_SUB = 1;
+    private int TAG = -1;  // 0 : mainImage , 1 : subImage
 
     protected void onCreate(Bundle saveBundle) {
         super.onCreate(saveBundle);
@@ -102,7 +124,6 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         bar.setDisplayShowHomeEnabled(true);
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeButtonEnabled(true);
-        bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.transparent)));
         bar.setTitle(null);
     }
 
@@ -111,15 +132,22 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         txtName.setText(curUser.getName() + " {fa-pencil}");
 
         txtStatus.setOnClickListener(this);
-        txtStatus.setText(curUser.getDescription() + " {fa-pencil}");
+        if (curUser.getDescription() == null || curUser.getDescription().equals(""))
+            txtStatus.setText("fa-pencil");
+        else
+            txtStatus.setText(curUser.getDescription() + " {fa-pencil}");
 
-        if (curUser.getAddress().equals(""))
-            txtLocation.setText("Address is not set yet. {fa-pencil}");
+        if (curUser.getAddress() == null || curUser.getAddress().equals(""))
+            txtLocation.setText("Address is not set. {fa-pencil}");
         else
             txtLocation.setText(curUser.getAddress() + " {fa-pencil}");
         txtLocation.setOnClickListener(this);
 
-        txtEarned.setText(Utils.getUserEarning(curUser.getEarning()));
+        if (curUser.getEarning() == 0) {
+            txtEarned.setText("No earning");
+        } else {
+            txtEarned.setText(Utils.getUserEarning(curUser.getEarning()));
+        }
 
         Date date = Utils.stringToDate(curUser.getCtime());
         txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));
@@ -131,14 +159,43 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         imageList.add("http://192.168.0.208/rentme/uploads/cover4.jpg");
         imageList.add("http://192.168.0.208/rentme/uploads/cover5.jpg");
 
-        adapterCover = new GalleryPagerAdapter(this, imageList);
+        adapterCover = new GalleryPagerAdapter(this, pagerCover, imageList);
         pagerCover.setAdapter(adapterCover);
 
+        Glide.with(this).load(curUser.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgMain);
         imgMain.setOnClickListener(this);
     }
 
     private void editProfile() {
+        final ProgressDialog dialog = DialogUtil.showProgressDialog(this, "Please wait while updating personal information");
+        RestClient<UserClient> restClient = new RestClient<>();
+        UserClient userClient = restClient.getAppClient(UserClient.class);
 
+        Call<ObjectModel<Boolean>> call = userClient.editUser(curUser.getId(), curUser.getName(), curUser.getDescription(), curUser.getAddress());
+        call.enqueue(new Callback<ObjectModel<Boolean>>() {
+            @Override
+            public void onResponse(Call<ObjectModel<Boolean>> call, Response<ObjectModel<Boolean>> response) {
+                dialog.dismiss();
+                if (response.isSuccessful() && response.body().getStatus()) {
+                    if (mainImage != null) {
+
+                    } else {
+
+                    }
+                    Utils.saveUserInfo(PreviewActivity.this, curUser);
+                    setResult(RESULT_OK);
+                    finish();
+                } else {
+                    Toast.makeText(PreviewActivity.this, errEditUser, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObjectModel<Boolean>> call, Throwable t) {
+                dialog.dismiss();
+                Toast.makeText(PreviewActivity.this, errNetwork, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void createTempFile() {
@@ -222,6 +279,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
             dialog.setDefault(curUser.getAddress());
             dialog.show();
         } else if (view.getId() == R.id.img_profile_main) {
+            TAG = TAG_MAIN;
             selectImage();
         }
     }
@@ -231,6 +289,14 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_preview, menu);
 
+        Drawable minus = getResources().getDrawable(R.drawable.ic_decrease);
+        minus.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        menu.findItem(R.id.action_remove).setIcon(minus);
+
+        Drawable plus = getResources().getDrawable(R.drawable.ic_increase);
+        plus.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        menu.findItem(R.id.action_add).setIcon(plus);
+        /*
         menu.findItem(R.id.action_remove).setIcon(
                 new IconDrawable(this, FontAwesomeIcons.fa_minus)
                         .colorRes(R.color.colorWhite)
@@ -240,7 +306,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 new IconDrawable(this, FontAwesomeIcons.fa_plus)
                         .colorRes(R.color.colorWhite)
                         .actionBarSize());
-
+        */
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -251,7 +317,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 return true;
             case R.id.action_remove:
-                DialogUtil.showConfirmDialog(this, "Do you really want to remove this cover?", new OnConfirmListener() {
+                DialogUtil.showConfirmDialog(this, "Remove this cover image?", new OnConfirmListener() {
                     @Override
                     public void onConfirm() {
                         int pos = pagerCover.getCurrentItem();
@@ -260,6 +326,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 });
                 return true;
             case R.id.action_add:
+                TAG = TAG_SUB;
                 selectImage();
                 return true;
             case R.id.action_done:
@@ -271,20 +338,28 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onUpdate(String field, int tag) {
-        field  += " {fa-pencil}";
-        if (tag == TAG_NAME)
-            txtName.setText(field);
-        else if (tag == TAG_STATUS)
-            txtStatus.setText(field);
-        else if (tag == TAG_LOCATION)
-            txtLocation.setText(field);
+        if (tag == TAG_NAME) {
+            txtName.setText(field + " {fa-pencil}");
+            curUser.setName(field);
+        } else if (tag == TAG_STATUS) {
+            txtStatus.setText(field + " {fa-pencil}");
+            curUser.setDescription(field);
+        } else if (tag == TAG_LOCATION) {
+            txtLocation.setText(field + " {fa-pencil}");
+            curUser.setAddress(field);
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CAMERA) {
             if (resultCode == RESULT_OK) {
                 Uri mImageUri = Uri.fromFile(mFileTemp);
-                adapterCover.add(mImageUri);
+                if (TAG == TAG_MAIN) {
+                    mainImage = mImageUri;
+                    Glide.with(PreviewActivity.this).load(mImageUri).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgMain);
+                } else if (TAG == TAG_SUB) {
+                    adapterCover.add(mImageUri);
+                }
             }
         } else if (requestCode == Constants.REQUEST_GALLERY) {
             if (resultCode == RESULT_OK) {
@@ -298,7 +373,12 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                     inputStream.close();
 
                     Uri uri = Uri.fromFile(mFileTemp);
-                    adapterCover.add(uri);
+                    if (TAG == TAG_MAIN) {
+                        mainImage = uri;
+                        Glide.with(PreviewActivity.this).load(uri).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgMain);
+                    } else if (TAG == TAG_SUB) {
+                        adapterCover.add(uri);
+                    }
                 } catch (Exception e) {
                     return;
                 }

@@ -97,9 +97,9 @@ public class VideoLinkRecyclerAdapter extends RecyclerView.Adapter<VideoLinkRecy
             webView.getSettings().setJavaScriptEnabled(true);
 
             if (viewType == Constants.VALUE_LINK_YOUTUBE) {
-                webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><div class=\"video-shortcode\"><iframe title=\"YouTube video player\" width=\"%width%\" height=\"%height%\" src=\"%link%\" frameborder=\"0\" allowfullscreen></iframe></div></body></html>";
+                webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe width=\"100%\" height=\"100%\" src=\"%link%\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe></body></html>";
             } else if (viewType == Constants.VALUE_LINK_VIMEO) {
-                webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"%link%?autoplay=1&loop=1\" width=\"%width%\" height=\"%height%\" frameborder=\"0\"  style=\"outline:none;border:none;padding:0px;\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
+                webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"%link%\" width=\"100%\" height=\"100%\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
             }
         }
 
@@ -115,7 +115,7 @@ public class VideoLinkRecyclerAdapter extends RecyclerView.Adapter<VideoLinkRecy
             imgRemove.setOnClickListener(new SingleClickListener() {
                 @Override
                 public void onSingleClick(View v) {
-                    DialogUtil.showConfirmDialog(context, "Do you really want to remove this video?", new OnConfirmListener() {
+                    DialogUtil.showConfirmDialog(context, "Remove this video?", new OnConfirmListener() {
                         @Override
                         public void onConfirm() {
                             videoLinks.remove(position);

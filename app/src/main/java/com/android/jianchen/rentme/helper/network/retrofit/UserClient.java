@@ -42,9 +42,7 @@ public interface UserClient {
     @FormUrlEncoded
     Call<ObjectModel<UserModel>> checkFacebookUser(@Field("email") String email, @Field("name") String name, @Field("avatar") String avatar);
 
-    /*
     @POST(Constants.API_USER_EDIT)
     @FormUrlEncoded
-    Call<ObjectModel<UserModel>> loginUser(@Field("name") String name, @Field("password") String password);
-    */
+    Call<ObjectModel<Boolean>> editUser(@Field("id") int id, @Field("name") String name, @Field("status") String status, @Field("address") String address);
 }

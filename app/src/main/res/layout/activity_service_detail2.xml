@@ -20,7 +20,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorWhite"
+                app:contentScrim="@color/colorWhite"
                 android:paddingRight="5dp"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </FrameLayout>
@@ -149,28 +149,6 @@
                             <ImageView
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
-                                android:src="@drawable/clock"
-                                android:tint="@color/colorBlack"/>
-
-                            <TextView
-                                android:id="@+id/txt_service_date"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="Member since December, 2017"
-                                android:textSize="@dimen/font_large"
-                                android:textColor="@color/colorBlack"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
                                 android:src="@drawable/money"
                                 android:tint="@color/colorBlack"/>
 
@@ -260,7 +238,7 @@
                                 android:id="@+id/img_review_avatar"
                                 android:layout_width="50dp"
                                 android:layout_height="56dp"
-                                android:src="@drawable/main"
+                                android:src="@drawable/profile_empty"
                                 android:scaleType="centerCrop"
                                 app:siBorderColor="@color/colorWhite"
                                 app:siSquare="false"/>

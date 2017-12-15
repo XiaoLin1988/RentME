@@ -177,7 +177,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Marker marker = googleMap.addMarker(new MarkerOptions().position(home).snippet("ME").icon(BitmapDescriptorFactory.fromBitmap(BitmapUtil.createDrawableFromView(this, mark))).anchor(0.5f, 0.5f));
         marker.setTag(curUser);
 
-        if (!loaded && nearbies != null)
+        if (!loaded && nearbies.size() > 0)
             putMarkers();
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(home).zoom(12).build();

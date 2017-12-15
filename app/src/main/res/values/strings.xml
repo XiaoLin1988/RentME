@@ -26,6 +26,8 @@
     <string name="side_menu_close">Drawer Close</string>
     <string name="title_activity_maps">Map</string>
 
+    <string name="error_edit_user">Updating user failed</string>
+    <string name="error_delete_service">Deleting service failed</string>
     <string name="error_load">Loading Failed</string>
     <string name="error_signup">Register new account failed</string>
     <string name="error_loginSignup">Account Validation Failed</string>

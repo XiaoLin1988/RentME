@@ -75,7 +75,7 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
         review = rv;
 
         reviews = new ArrayList<>();
-        reviews.add(new ReviewModel());
+        //reviews.add(new ReviewModel());
 
         this.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -214,10 +214,12 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
 
     @Override
     public void onLoadMore(int curpage) {
+        /*
         if (type == Constants.VALUE_SERVICE) {
             getServiceReviews(curpage);
         } else if (type == Constants.VALUE_REVIEW) {
             getReviewReviews(curpage);
         }
+        */
     }
 }

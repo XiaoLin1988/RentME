@@ -22,4 +22,8 @@ public interface ServiceClient {
     @POST(Constants.API_SERVICE_REVIEW)
     @FormUrlEncoded
     Call<ArrayModel<ReviewModel>> getServiceReview(@Field("service_id") int service_id, @Field("user_id") int user_id, @Field("curpage") int curpage);
+
+    @POST(Constants.API_SERVICE_DELETE)
+    @FormUrlEncoded
+    Call<ObjectModel<Boolean>> deleteService(@Field("service_id") int service_id);
 }

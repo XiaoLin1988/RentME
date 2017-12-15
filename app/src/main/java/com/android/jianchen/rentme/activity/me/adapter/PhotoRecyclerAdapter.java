@@ -84,7 +84,7 @@ public class PhotoRecyclerAdapter extends RecyclerView.Adapter<PhotoRecyclerAdap
             removeBtn.setOnClickListener(new SingleClickListener() {
                 @Override
                 public void onSingleClick(View v) {
-                    DialogUtil.showConfirmDialog(context, "Do you really want to remove photo?", new OnConfirmListener() {
+                    DialogUtil.showConfirmDialog(context, "Remove this photo?", new OnConfirmListener() {
                         @Override
                         public void onConfirm() {
                             paths.remove(position);

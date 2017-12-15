@@ -68,7 +68,7 @@ public class Utils {
 
     public static String getUserEarning(int earning) {
         if (earning == 0) {
-            return "No earning yet";
+            return "No earning";
         } else {
             if (earning < 100) {
                 return String.valueOf(earning) + " earning";

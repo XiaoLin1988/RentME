@@ -3,6 +3,7 @@ package com.android.jianchen.rentme.activity.me.dialogs;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -13,14 +14,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.jianchen.rentme.helper.delegator.OnPostVideoListener;
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.helper.utils.DialogUtil;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,9 +28,17 @@ import butterknife.ButterKnife;
 /**
  * Created by emerald on 12/8/2017.
  */
-public class VideoLinkDialog extends Dialog implements View.OnClickListener {
+public class VideoLinkDialog extends Dialog implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     @Bind(R.id.edit_videolink)
     EditText editLink;
+    @Bind(R.id.txt_video_place)
+    TextView txtVideoPlace;
+    @Bind(R.id.radio_youtube)
+    AppCompatRadioButton radioYoutube;
+    @Bind(R.id.radio_vimeo)
+    AppCompatRadioButton radioVimeo;
+    @Bind(R.id.radioGroup)
+    RadioGroup radioGroup;
 
     @Bind(R.id.btn_post)
     Button btnPost;
@@ -38,11 +46,11 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener {
     WebView webVideo;
 
     private boolean validate = false;
+    private int videoType = 0;
 
     private String webData = "";
     private String videoLink = "";
     private OnPostVideoListener videoListener;
-    private ProgressDialog dialog;
 
     public VideoLinkDialog(Context context) {
         super(context);
@@ -61,6 +69,10 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener {
     private void initDialog() {
         findViewById(R.id.img_close).setOnClickListener(this);
         btnPost.setOnClickListener(this);
+
+        radioGroup.setOnCheckedChangeListener(this);
+
+        txtVideoPlace.setOnClickListener(this);
 
         editLink.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,10 +93,6 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener {
         });
 
         webVideo = (WebView)findViewById(R.id.web_video);
-        webVideo.getSettings().setJavaScriptEnabled(true);
-        webVideo.getSettings().setAppCacheEnabled(true);
-        webVideo.getSettings().setDomStorageEnabled(true);
-        webVideo.getSettings().setPluginState(WebSettings.PluginState.ON);
         webVideo.setWebViewClient(new WebViewClient(){
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return false;
@@ -92,10 +100,10 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                dialog.dismiss();
                 super.onPageFinished(view, url);
             }
         });
+        webVideo.getSettings().setJavaScriptEnabled(true);
     }
 
     public void setVideoListener(OnPostVideoListener listener) {
@@ -108,7 +116,12 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener {
             case R.id.img_close:
                 dismiss();
                 break;
+            case R.id.txt_video_place:
+                editLink.setFocusableInTouchMode(true);
+                editLink.requestFocus();
+                break;
             case R.id.btn_post:
+                /*
                 String URL_REGEX = "^((https?|ftp)://|(youtube|vimeo)|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
                 Pattern p = Pattern.compile(URL_REGEX);
                 Matcher m = p.matcher(editLink.getText().toString());
@@ -116,14 +129,17 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener {
                     Toast.makeText(getContext(), "Please input validate video url", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                */
                 if (!validate) {
-                    if (validateLink()) {
-                        loadVideo();
-                    }
+                    loadVideo();
                 } else {
-                    if (videoListener != null)
+                    if (videoListener != null) {
+                        if (videoType == 1)
+                            videoLink = "https://www.youtube.com/embed/" + videoLink;
+                        else if (videoType == 2)
+                            videoLink = "https://player.vimeo.com/video/" + videoLink;
                         videoListener.onPostVideo(videoLink);
+                    }
                     dismiss();
                 }
                 break;
@@ -131,18 +147,18 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener {
     }
 
     private void loadVideo() {
-        dialog = DialogUtil.showProgressDialog(getContext(), "Please wait while loading video");
+        //ProgressDialog dialog = DialogUtil.showProgressDialog(getContext(), "Please wait while loading video");
 
         videoLink = editLink.getText().toString();
-
-        if (videoLink.startsWith("http://player.vimeo.com/video/")) {
-            webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"%link%?autoplay=1&loop=1\" width=\"%width%\" height=\"%height%\" frameborder=\"0\"  style=\"outline:none;border:none;padding:0px;\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
-        } else if (videoLink.startsWith("https://www.youtube.com/watch?v=")) {
-            webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe width=\"%width%\" height=\"%height%\" style=\"outline:none;border:none;padding:0px;\" src=\"%link%?&playsinline=1\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+        if (videoType == 1) {  // Youtube
+            webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/%link%\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe></body></html>";
+        } else if (videoType == 2) {
+            webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"https://player.vimeo.com/video/%link%\" width=\"100%\" height=\"100%\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
         }
         webData = webData.replace("%link%", videoLink);
-        webData = webData.replace("%width%", String.valueOf(100));
-        webData = webData.replace("%height%", String.valueOf(100));
+        webData = webData.replace("%width%", "100%");
+        webData = webData.replace("%height%", "100%");
+
         webVideo.loadData(webData, "text/html", "UTF-8");
 
         validate = true;
@@ -166,5 +182,19 @@ public class VideoLinkDialog extends Dialog implements View.OnClickListener {
             Toast.makeText(getContext(), "Please input Youtube or Vimeo link", Toast.LENGTH_SHORT).show();
         }
         return false;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int id) {
+        switch (id) {
+            case R.id.radio_youtube:
+                videoType = 1;
+                txtVideoPlace.setText("https://www.youtube.com/watch?v=");
+                break;
+            case R.id.radio_vimeo:
+                videoType = 2;
+                txtVideoPlace.setText("https://vimeo.com/");
+                break;
+        }
     }
 }

@@ -96,7 +96,7 @@ public class WebLinkRecyclerAdapter extends RecyclerView.Adapter<WebLinkRecycler
             imgRemove.setOnClickListener(new SingleClickListener() {
                 @Override
                 public void onSingleClick(View v) {
-                    DialogUtil.showConfirmDialog(context, "Do you really want to remove this link?", new OnConfirmListener() {
+                    DialogUtil.showConfirmDialog(context, "Remove this web link?", new OnConfirmListener() {
                         @Override
                         public void onConfirm() {
                             webLinkModels.remove(position);

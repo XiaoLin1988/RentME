@@ -3,6 +3,7 @@ package com.android.jianchen.rentme.activity.me.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,18 @@ import java.util.ArrayList;
 public class GalleryPagerAdapter  extends PagerAdapter {
     private Context context;
     private ArrayList<String> imageList;
+    private ArrayList<ImageView> viewList;
 
     private ArrayList<String> removeList;
     private ArrayList<Uri> addList;
+    private ViewPager viewPager;
 
-    public GalleryPagerAdapter(Context ctx, ArrayList<String> il) {
+    public GalleryPagerAdapter(Context ctx, ViewPager pager, ArrayList<String> il) {
         context = ctx;
         imageList = il;
+        viewList = new ArrayList<>();
+
+        viewPager = pager;
 
         removeList = new ArrayList<>();
         addList = new ArrayList<>();
@@ -48,6 +54,7 @@ public class GalleryPagerAdapter  extends PagerAdapter {
         Glide.with(context).load(imageList.get(position)).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into((ImageView)itemView);
 
         container.addView(itemView);
+        viewList.add((ImageView) itemView);
 
         return itemView;
     }
@@ -79,6 +86,7 @@ public class GalleryPagerAdapter  extends PagerAdapter {
             for (int i = 0; i < addList.size(); i++) {
                 if (addList.get(i).getPath().equals(image)) {
                     addList.remove(i);
+
                     break;
                 }
             }
@@ -86,8 +94,14 @@ public class GalleryPagerAdapter  extends PagerAdapter {
             removeList.add(image);
         }
 
-        imageList.remove(image);
-
-        notifyDataSetChanged();
+        for (int i = 0; i < imageList.size(); i ++) {
+            if (imageList.get(i).equals(image)) {
+                viewPager.setAdapter(null);
+                imageList.remove(i);
+                viewList.remove(i);
+                viewPager.setAdapter(this);
+                break;
+            }
+        }
     }
 }
