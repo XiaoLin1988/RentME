@@ -94,6 +94,7 @@ public class Constants {
     public static final String API_COMMON_UPLOAD_VIDEO = "common/uploadVideos";
     public static final String API_COMMON_UPLOAD_WEB = "common/uploadWebs";
     public static final String API_COMMON_UPLOAD_IMAGE = "common/imageMultiUpload";
+    public static final String API_USER_PROFILEIMAGE = "user/getProfileImagesById";
 
     // Social Login
     public static final String API_USER_GOOGLE_CHECK = "user/checkGoogleUser";

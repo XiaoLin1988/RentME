@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.jianchen.rentme.activity.me.ProfileActivity;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
 import com.android.jianchen.rentme.R;

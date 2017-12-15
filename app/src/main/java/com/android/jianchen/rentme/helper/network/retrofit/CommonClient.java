@@ -1,5 +1,6 @@
 package com.android.jianchen.rentme.helper.network.retrofit;
 
+import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.helper.Constants;
 
@@ -22,7 +23,7 @@ import retrofit2.http.Part;
 public interface CommonClient {
     @Multipart
     @POST(Constants.API_COMMON_UPLOAD_IMAGE)
-    Call<ObjectModel<String>> uploadPhotos(@Part("type") RequestBody type, @Part("foreign_id") RequestBody foreign_id, @Part ArrayList<MultipartBody.Part> upload_file);
+    Call<ArrayModel<String>> uploadPhotos(@Part("type") RequestBody type, @Part("foreign_id") RequestBody foreign_id, @Part ArrayList<MultipartBody.Part> upload_file);
 
     @POST(Constants.API_COMMON_UPLOAD_WEB)
     @FormUrlEncoded

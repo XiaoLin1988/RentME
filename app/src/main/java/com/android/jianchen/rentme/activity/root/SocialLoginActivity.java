@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.jianchen.rentme.activity.search.TalentDetailActivity;
+import com.android.jianchen.rentme.activity.me.ProfileActivity;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
 import com.android.jianchen.rentme.R;

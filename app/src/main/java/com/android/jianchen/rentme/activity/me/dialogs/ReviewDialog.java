@@ -224,8 +224,7 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
                 break;
             case R.id.lyt_review_review:
 
-                EditProfileDialog dialog = new EditProfileDialog(this.getOwnerActivity());
-                dialog.setTitle("Please input your name");
+                EditProfileDialog dialog = new EditProfileDialog(getContext());
                 dialog.setUpdateListener(this);
                 dialog.setTag(99); // 99 means review dialogue
                 dialog.show();

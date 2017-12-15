@@ -46,6 +46,7 @@ import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
 import com.android.jianchen.rentme.helper.network.retrofit.ServiceClient;
 import com.android.jianchen.rentme.helper.utils.DialogUtil;
 import com.android.jianchen.rentme.helper.utils.Utils;
+import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.ServiceModel;
 import com.android.jianchen.rentme.model.rentme.SkillModel;
@@ -196,9 +197,6 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
         }
     }
 
-
-
-
     protected void onCreate(Bundle saveBundle) {
         super.onCreate(saveBundle);
         setContentView(R.layout.fragment_service_create2);
@@ -225,6 +223,9 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
         recyclerVideo.setAdapter(adapterVideo);
 
         photoPathArray = new ArrayList<>();
+        adapterPhoto = new PhotoRecyclerAdapter(photoPathArray);
+        recyclerPhotos.setLayoutManager(new LinearLayoutManager(this));
+        recyclerPhotos.setAdapter(adapterPhoto);
     }
 
     private boolean validate() {
@@ -349,10 +350,10 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                             RequestBody reqType = RequestBody.create(MultipartBody.FORM, Integer.toString(Constants.VALUE_SERVICE_PHOTO));
                             RequestBody reqForeign_id = RequestBody.create(MultipartBody.FORM, Integer.toString(serviceId));
 
-                            Call<ObjectModel<String>> call1 = commonClient.uploadPhotos(reqType, reqForeign_id, images);
-                            call1.enqueue(new Callback<ObjectModel<String>>() {
+                            Call<ArrayModel<String>> call1 = commonClient.uploadPhotos(reqType, reqForeign_id, images);
+                            call1.enqueue(new Callback<ArrayModel<String>>() {
                                 @Override
-                                public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
+                                public void onResponse(Call<ArrayModel<String>> call, Response<ArrayModel<String>> response) {
                                     loadListener.setLoaded();
                                     if (response.isSuccessful() && response.body().getStatus()) {
 
@@ -362,7 +363,7 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                                 }
 
                                 @Override
-                                public void onFailure(Call<ObjectModel<String>> call, Throwable t) {
+                                public void onFailure(Call<ArrayModel<String>> call, Throwable t) {
                                     loadListener.setLoaded();
                                 }
                             });

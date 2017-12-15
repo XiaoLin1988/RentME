@@ -76,9 +76,15 @@ public class GalleryPagerAdapter  extends PagerAdapter {
         notifyDataSetChanged();
     }
 
+    public ArrayList<String> getImageList() {
+        return imageList;
+    }
+
     public void remove(int pos) {
         String image = imageList.get(pos);
         remove(image);
+
+        notifyDataSetChanged();
     }
 
     public void remove(String image) {

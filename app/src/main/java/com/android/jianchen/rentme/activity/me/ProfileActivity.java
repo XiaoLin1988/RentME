@@ -1,4 +1,4 @@
-package com.android.jianchen.rentme.activity.root;
+package com.android.jianchen.rentme.activity.me;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -10,6 +10,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,12 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.jianchen.rentme.R;
-import com.android.jianchen.rentme.activity.me.PreviewActivity;
-import com.android.jianchen.rentme.activity.me.ServiceCreateActivity;
-import com.android.jianchen.rentme.activity.me.ServiceDetailActivity;
+import com.android.jianchen.rentme.activity.me.adapter.GalleryPagerAdapter;
 import com.android.jianchen.rentme.activity.me.events.ServiceDeleteEvent;
 import com.android.jianchen.rentme.activity.myprojects.MyProjectActivity;
 import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
+import com.android.jianchen.rentme.activity.root.SocialLoginActivity;
 import com.android.jianchen.rentme.activity.root.customview.DrawerArrowDrawable;
 import com.android.jianchen.rentme.activity.search.SelectSkillActivity;
 import com.android.jianchen.rentme.activity.search.adapter.SkillServiceRecyclerAdapter;
@@ -43,11 +43,14 @@ import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
 import com.android.jianchen.rentme.helper.network.retrofit.UserClient;
 import com.android.jianchen.rentme.helper.utils.Utils;
 import com.android.jianchen.rentme.model.rentme.ArrayModel;
+import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.model.rentme.ServiceModel;
 import com.android.jianchen.rentme.model.rentme.SkillServiceModel;
+import com.android.jianchen.rentme.model.rentme.UserAvatarModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
 import com.bumptech.glide.Glide;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -71,6 +74,10 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
 
     @Bind(R.id.img_profile_cover)
     ImageView imgCover;
+
+    @Bind(R.id.pager_subcover)
+    ViewPager pagerSubCover;
+    GalleryPagerAdapter adapterCover;
 
     @Bind(R.id.img_profile_main)
     ImageView imgMain;
@@ -273,8 +280,9 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
             txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));
         }
 
-        if (userModel.getCoverImg() == null || userModel.getCoverImg().equals("")) {
+        if (userModel.getCoverImg() == null || userModel.getCoverImg().size() == 0) {
             int pos = new Random().nextInt(5) % 5;
+            pagerSubCover.setVisibility(View.GONE);
             switch (pos) {
                 case 0:
                     Glide.with(this).load(R.drawable.cover1).asBitmap().fitCenter().into(imgCover);
@@ -292,10 +300,21 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                     Glide.with(this).load(R.drawable.cover5).asBitmap().fitCenter().into(imgCover);
                     break;
             }
-        } else {
-            Glide.with(this).load(userModel.getCoverImg()).asBitmap().fitCenter().placeholder(R.drawable.cover).into(imgCover);
         }
-        Glide.with(this).load(userModel.getAvatar()).asBitmap().fitCenter().placeholder(R.drawable.profile_empty).into(imgMain);
+        else {
+            // cover image
+            adapterCover = new GalleryPagerAdapter(this, pagerSubCover, userModel.getCoverImg());
+            pagerSubCover.setAdapter(adapterCover);
+        }
+
+        // main profile image
+        if (userModel.getAvatar() == null || userModel.getAvatar() == "") { // empty avatar
+
+        }
+        else { // existing avatar
+            Glide.with(this).load(userModel.getAvatar()).asBitmap().fitCenter().placeholder(R.drawable.profile_empty).into(imgMain);
+        }
+
 
         adapterSkillService = new SkillServiceRecyclerAdapter(this, new ArrayList<SkillServiceModel>(), this);
         recyclerServices.setAdapter(adapterSkillService);
@@ -334,6 +353,44 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         navigationView.setNavigationItemSelectedListener(this);
 
         getUserServices();
+        getProfileImages();
+    }
+
+    private void getProfileImages() {
+        RestClient<UserClient> restClient = new RestClient<>();
+        UserClient userClient = restClient.getAppClient(UserClient.class);
+
+        Call<ObjectModel<UserAvatarModel>> call = userClient.getProfileImages(userModel.getId());
+        call.enqueue(new Callback<ObjectModel<UserAvatarModel>>() {
+            @Override
+            public void onResponse(Call<ObjectModel<UserAvatarModel>> call, Response<ObjectModel<UserAvatarModel>> response) {
+                if (response.isSuccessful()) {
+                    UserAvatarModel avatars = response.body().getData();
+
+                    if (avatars.getMainProfile().size() > 0) {
+                        userModel.setAvatar(avatars.getMainProfile().get(0));
+                        Utils.saveUserInfo(ProfileActivity.this, userModel);
+                        Glide.with(ProfileActivity.this).load(userModel.getAvatar()).asBitmap().fitCenter().placeholder(R.drawable.profile_empty).into(imgMain);
+                    }
+
+                    if (avatars.getSubProfile().size() > 0) {
+                        userModel.setCoverImg(avatars.getSubProfile());
+                        Utils.saveUserInfo(ProfileActivity.this, userModel);
+                        adapterCover = new GalleryPagerAdapter(ProfileActivity.this, pagerSubCover, userModel.getCoverImg());
+                        pagerSubCover.setAdapter(adapterCover);
+                        imgCover.setVisibility(View.GONE);
+                    }
+
+                } else {
+                    Toast.makeText(ProfileActivity.this, errLoad, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObjectModel<UserAvatarModel>> call, Throwable t) {
+                Toast.makeText(ProfileActivity.this, errNetwork, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getUserServices() {

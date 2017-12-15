@@ -31,7 +31,16 @@ public class UserModel implements Serializable {
     private String ctime;
     private String utime;
     private int usr_df;
-    private String coverImg;
+
+    public ArrayList<String> getCoverImg() {
+        return coverImg;
+    }
+
+    public void setCoverImg(ArrayList<String> coverImg) {
+        this.coverImg = coverImg;
+    }
+
+    private ArrayList<String> coverImg;
     private String mainImg;
     private int earning;
     private double distance;
@@ -270,13 +279,7 @@ public class UserModel implements Serializable {
         this.latitude = latitude;
     }
 
-    public String getCoverImg() {
-        return coverImg;
-    }
 
-    public void setCoverImg(String coverImg) {
-        this.coverImg = coverImg;
-    }
 
     public String getMainImg() {
         return mainImg;

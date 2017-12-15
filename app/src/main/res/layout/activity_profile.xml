@@ -37,11 +37,28 @@
                     android:layout_height="match_parent"
                     android:layout_above="@+id/ryt_profile_content">
 
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/pager_subcover"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <com.rd.PageIndicatorView
+                        android:id="@+id/ind_subcover"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="70dp"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
+                        app:piv_viewPager="@+id/pager_subcover"
+                        app:piv_dynamicCount="true"
+                        app:piv_radius="6dp"
+                        app:piv_animationType="worm"/>
+
                     <ImageView
                         android:id="@+id/img_profile_cover"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/cover"
+                        android:src="@drawable/cover1"
                         android:scaleType="centerCrop"/>
 
                     <LinearLayout

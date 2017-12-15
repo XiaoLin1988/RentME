@@ -28,11 +28,14 @@ import com.android.jianchen.rentme.activity.me.dialogs.EditProfileDialog;
 import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.delegator.OnConfirmListener;
 import com.android.jianchen.rentme.helper.delegator.OnDialogSelectListener;
+import com.android.jianchen.rentme.helper.listener.LoadCompleteListener;
+import com.android.jianchen.rentme.helper.network.retrofit.CommonClient;
 import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
 import com.android.jianchen.rentme.helper.network.retrofit.UserClient;
 import com.android.jianchen.rentme.helper.utils.DialogUtil;
 import com.android.jianchen.rentme.helper.utils.InternalStorageContentProvider;
 import com.android.jianchen.rentme.helper.utils.Utils;
+import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
 import com.bumptech.glide.Glide;
@@ -102,6 +105,9 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     private int TAG_SUB = 1;
     private int TAG = -1;  // 0 : mainImage , 1 : subImage
 
+    private boolean mainImageChanged = false;
+    private boolean subImageChanged = false;
+
     protected void onCreate(Bundle saveBundle) {
         super.onCreate(saveBundle);
         setContentView(R.layout.activity_preview);
@@ -152,48 +158,147 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         Date date = Utils.stringToDate(curUser.getCtime());
         txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));
 
-        ArrayList<String> imageList = new ArrayList<>();
-        imageList.add("http://192.168.0.208/rentme/uploads/cover1.jpg");
-        imageList.add("http://192.168.0.208/rentme/uploads/cover2.jpg");
-        imageList.add("http://192.168.0.208/rentme/uploads/cover3.jpg");
-        imageList.add("http://192.168.0.208/rentme/uploads/cover4.jpg");
-        imageList.add("http://192.168.0.208/rentme/uploads/cover5.jpg");
+        if (curUser.getCoverImg() == null || curUser.getCoverImg().size() == 0) {
+            ArrayList<String> arrayList = new ArrayList<String>();
+            adapterCover = new GalleryPagerAdapter(this, pagerCover, arrayList);
+            pagerCover.setAdapter(adapterCover);
+        }
+        else {
+            adapterCover = new GalleryPagerAdapter(this, pagerCover, curUser.getCoverImg());
+            pagerCover.setAdapter(adapterCover);
+        }
 
-        adapterCover = new GalleryPagerAdapter(this, pagerCover, imageList);
-        pagerCover.setAdapter(adapterCover);
 
         Glide.with(this).load(curUser.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgMain);
         imgMain.setOnClickListener(this);
     }
 
-    private void editProfile() {
-        final ProgressDialog dialog = DialogUtil.showProgressDialog(this, "Please wait while updating personal information");
+    private void completeProfile() {
+
         RestClient<UserClient> restClient = new RestClient<>();
+        final ProgressDialog dialog = DialogUtil.showProgressDialog(this, "Please wait while updating personal information");
+
+        int loadCount = 1;
+
+        if (this.mainImageChanged) {
+            loadCount = loadCount + 1;
+        }
+
+        if (this.subImageChanged) {
+            loadCount = loadCount + 1;
+        }
+
+        final LoadCompleteListener loadListener = new LoadCompleteListener(loadCount) {
+            @Override
+            public void onLoaded() {
+                Utils.saveUserInfo(PreviewActivity.this, curUser);
+                setResult(RESULT_OK);
+                dialog.dismiss();
+                finish();
+            }
+        };
+
+        if (this.mainImageChanged) { // if main profile image changed, upload new image
+
+            RestClient<CommonClient> restClient1 = new RestClient<>();
+            CommonClient commonClient = restClient1.getAppClient(CommonClient.class);
+
+            ArrayList<MultipartBody.Part> images = new ArrayList<MultipartBody.Part>();
+
+            File file = new File(this.mainImage.getPath());
+
+            RequestBody reqImage = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("images[]", file.getName(), reqImage);
+            images.add(body);
+
+            RequestBody reqType = RequestBody.create(MultipartBody.FORM, Integer.toString(Constants.VALUE_PROFILEMAIN_PHOTO));
+            RequestBody reqForeign_id = RequestBody.create(MultipartBody.FORM, Integer.toString(curUser.getId()));
+
+            Call<ArrayModel<String>> call1 = commonClient.uploadPhotos(reqType, reqForeign_id, images);
+            call1.enqueue(new Callback<ArrayModel<String>>() {
+                @Override
+                public void onResponse(Call<ArrayModel<String>> call, Response<ArrayModel<String>> response) {
+
+                    if (response.isSuccessful() && response.body().getStatus()) {
+                        loadListener.setLoaded();
+                    } else {
+                        Toast.makeText(PreviewActivity.this, "Uploading Profile Image failed", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayModel<String>> call, Throwable t) {
+                    Toast.makeText(PreviewActivity.this, "Uploading Profile Image failed", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+
+        }
+
+
+        if (this.subImageChanged) { // if sub profile image changed, upload new image
+
+            RestClient<CommonClient> restClient1 = new RestClient<>();
+            CommonClient commonClient = restClient1.getAppClient(CommonClient.class);
+
+            ArrayList<MultipartBody.Part> images = new ArrayList<MultipartBody.Part>();
+
+            for (int i = 0; i < adapterCover.getImageList().size(); i++) {
+                File file = new File(adapterCover.getImageList().get(i));
+
+                RequestBody reqImage = RequestBody.create(MediaType.parse("image/*"), file);
+                MultipartBody.Part body = MultipartBody.Part.createFormData("images[]", file.getName(), reqImage);
+                images.add(body);
+            }
+
+            RequestBody reqType = RequestBody.create(MultipartBody.FORM, Integer.toString(Constants.VALUE_PROFILESUB_PHOTO));
+            RequestBody reqForeign_id = RequestBody.create(MultipartBody.FORM, Integer.toString(curUser.getId()));
+
+            Call<ArrayModel<String>> call1 = commonClient.uploadPhotos(reqType, reqForeign_id, images);
+            call1.enqueue(new Callback<ArrayModel<String>>() {
+                @Override
+                public void onResponse(Call<ArrayModel<String>> call, Response<ArrayModel<String>> response) {
+
+                    if (response.isSuccessful() && response.body().getStatus()) {
+                        loadListener.setLoaded();
+                        curUser.setCoverImg(response.body().getData());
+                        Utils.saveUserInfo(PreviewActivity.this, curUser);
+                    } else {
+                        Toast.makeText(PreviewActivity.this, "Uploading Profile SubImages failed", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayModel<String>> call, Throwable t) {
+                    Toast.makeText(PreviewActivity.this, "Uploading Profile SubImages failed", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+
+        }
+
         UserClient userClient = restClient.getAppClient(UserClient.class);
 
         Call<ObjectModel<Boolean>> call = userClient.editUser(curUser.getId(), curUser.getName(), curUser.getDescription(), curUser.getAddress());
         call.enqueue(new Callback<ObjectModel<Boolean>>() {
             @Override
             public void onResponse(Call<ObjectModel<Boolean>> call, Response<ObjectModel<Boolean>> response) {
-                dialog.dismiss();
+
                 if (response.isSuccessful() && response.body().getStatus()) {
-                    if (mainImage != null) {
-
-                    } else {
-
-                    }
-                    Utils.saveUserInfo(PreviewActivity.this, curUser);
-                    setResult(RESULT_OK);
-                    finish();
+                    loadListener.setLoaded();
                 } else {
                     Toast.makeText(PreviewActivity.this, errEditUser, Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<ObjectModel<Boolean>> call, Throwable t) {
-                dialog.dismiss();
                 Toast.makeText(PreviewActivity.this, errNetwork, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }
@@ -322,6 +427,9 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                     public void onConfirm() {
                         int pos = pagerCover.getCurrentItem();
                         adapterCover.remove(pos);
+//
+//                        adapterCover = new GalleryPagerAdapter(this, pagerCover, curUser.getCoverImg());
+//                        pagerCover.setAdapter(adapterCover);
                     }
                 });
                 return true;
@@ -330,10 +438,10 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 selectImage();
                 return true;
             case R.id.action_done:
-                DialogUtil.showConfirmDialog(PreviewActivity.this, "Update information?", new OnConfirmListener() {
+                DialogUtil.showConfirmDialog(this, "Complete Profile Edit?", new OnConfirmListener() {
                     @Override
                     public void onConfirm() {
-                        editProfile();
+                        completeProfile();
                     }
                 });
                 return true;
@@ -360,10 +468,12 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
             if (resultCode == RESULT_OK) {
                 Uri mImageUri = Uri.fromFile(mFileTemp);
                 if (TAG == TAG_MAIN) {
+                    mainImageChanged = true;
                     mainImage = mImageUri;
                     Glide.with(PreviewActivity.this).load(mImageUri).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgMain);
                 } else if (TAG == TAG_SUB) {
                     adapterCover.add(mImageUri);
+                    subImageChanged = true;
                 }
             }
         } else if (requestCode == Constants.REQUEST_GALLERY) {
@@ -379,10 +489,12 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 
                     Uri uri = Uri.fromFile(mFileTemp);
                     if (TAG == TAG_MAIN) {
+                        mainImageChanged = true;
                         mainImage = uri;
                         Glide.with(PreviewActivity.this).load(uri).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgMain);
                     } else if (TAG == TAG_SUB) {
                         adapterCover.add(uri);
+                        subImageChanged = true;
                     }
                 } catch (Exception e) {
                     return;

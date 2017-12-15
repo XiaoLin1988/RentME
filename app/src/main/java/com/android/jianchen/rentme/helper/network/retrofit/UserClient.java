@@ -3,6 +3,7 @@ package com.android.jianchen.rentme.helper.network.retrofit;
 import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.ServiceModel;
+import com.android.jianchen.rentme.model.rentme.UserAvatarModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
 import com.android.jianchen.rentme.helper.Constants;
 
@@ -45,4 +46,8 @@ public interface UserClient {
     @POST(Constants.API_USER_EDIT)
     @FormUrlEncoded
     Call<ObjectModel<Boolean>> editUser(@Field("id") int id, @Field("name") String name, @Field("status") String status, @Field("address") String address);
+
+    @POST(Constants.API_USER_PROFILEIMAGE)
+    @FormUrlEncoded
+    Call<ObjectModel<UserAvatarModel>> getProfileImages(@Field("userId") int userId);
 }

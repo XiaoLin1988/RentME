@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.jianchen.rentme.R;
+import com.android.jianchen.rentme.activity.me.ProfileActivity;
 import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
 import com.android.jianchen.rentme.helper.network.retrofit.UserClient;

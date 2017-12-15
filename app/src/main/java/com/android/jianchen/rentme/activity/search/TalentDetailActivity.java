@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.android.jianchen.rentme.activity.me.PreviewActivity;
 import com.android.jianchen.rentme.activity.me.ServiceCreateActivity;
 import com.android.jianchen.rentme.activity.me.ServiceDetailActivity;
+import com.android.jianchen.rentme.activity.me.adapter.GalleryPagerAdapter;
 import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
 import com.android.jianchen.rentme.activity.root.customview.DrawerArrowDrawable;
 import com.android.jianchen.rentme.activity.search.adapter.SkillServiceRecyclerAdapter;
@@ -60,6 +62,10 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
 
     @Bind(R.id.img_profile_cover)
     ImageView imgCover;
+
+    @Bind(R.id.pager_subcover)
+    ViewPager pagerSubCover;
+    GalleryPagerAdapter adapterCover;
 
     @Bind(R.id.img_profile_main)
     ImageView imgMain;
@@ -204,8 +210,9 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
         Date date = Utils.stringToDate(userModel.getCtime());
         txtJoined.setText(joined + " " + Utils.beautifyDate(date, false));
 
-        if (userModel.getCoverImg() == null || userModel.getCoverImg().equals("")) {
+        if (userModel.getCoverImg() == null || userModel.getCoverImg().size() == 0) {
             int pos = new Random().nextInt(5) % 5;
+            pagerSubCover.setVisibility(View.GONE);
             switch (pos) {
                 case 0:
                     Glide.with(this).load(R.drawable.cover1).asBitmap().fitCenter().into(imgCover);
@@ -223,10 +230,20 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
                     Glide.with(this).load(R.drawable.cover5).asBitmap().fitCenter().into(imgCover);
                     break;
             }
-        } else {
-            Glide.with(this).load(userModel.getCoverImg()).asBitmap().fitCenter().placeholder(R.drawable.cover).into(imgCover);
         }
-        Glide.with(this).load(userModel.getAvatar()).asBitmap().fitCenter().placeholder(R.drawable.profile_empty).into(imgMain);
+        else {
+            // cover image
+            adapterCover = new GalleryPagerAdapter(this, pagerSubCover, userModel.getCoverImg());
+            pagerSubCover.setAdapter(adapterCover);
+        }
+
+        // main profile image
+        if (userModel.getAvatar() == null || userModel.getAvatar() == "") { // empty avatar
+
+        }
+        else { // existing avatar
+            Glide.with(this).load(userModel.getAvatar()).asBitmap().fitCenter().placeholder(R.drawable.profile_empty).into(imgMain);
+        }
 
 
         adapterSkillService = new SkillServiceRecyclerAdapter(this, new ArrayList<SkillServiceModel>(), this);

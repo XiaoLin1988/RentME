@@ -35,6 +35,7 @@ import com.android.jianchen.rentme.helper.delegator.OnPostVideoListener;
 import com.android.jianchen.rentme.helper.delegator.OnPostWebListener;
 import com.android.jianchen.rentme.helper.listener.LoadCompleteListener;
 import com.android.jianchen.rentme.helper.listener.SingleClickListener;
+import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.ServiceModel;
 import com.android.jianchen.rentme.model.rentme.SkillModel;
@@ -369,10 +370,10 @@ public class ServiceCreateFragment extends Fragment implements OnPostVideoListen
                             RequestBody reqType = RequestBody.create(MultipartBody.FORM, Integer.toString(Constants.VALUE_SERVICE_PHOTO));
                             RequestBody reqForeign_id = RequestBody.create(MultipartBody.FORM, Integer.toString(serviceId));
 
-                            Call<ObjectModel<String>> call1 = commonClient.uploadPhotos(reqType, reqForeign_id, images);
-                            call1.enqueue(new Callback<ObjectModel<String>>() {
+                            Call<ArrayModel<String>> call1 = commonClient.uploadPhotos(reqType, reqForeign_id, images);
+                            call1.enqueue(new Callback<ArrayModel<String>>() {
                                 @Override
-                                public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
+                                public void onResponse(Call<ArrayModel<String>> call, Response<ArrayModel<String>> response) {
                                     loadListener.setLoaded();
                                     if (response.isSuccessful() && response.body().getStatus()) {
 
@@ -382,7 +383,7 @@ public class ServiceCreateFragment extends Fragment implements OnPostVideoListen
                                 }
 
                                 @Override
-                                public void onFailure(Call<ObjectModel<String>> call, Throwable t) {
+                                public void onFailure(Call<ArrayModel<String>> call, Throwable t) {
                                     loadListener.setLoaded();
                                 }
                             });
