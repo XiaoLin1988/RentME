@@ -175,10 +175,6 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         bar.setHomeButtonEnabled(true);
         bar.setTitle(null);
 
-        Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_material);
-        upArrow.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         AppBarLayout appBar = (AppBarLayout)findViewById(R.id.appBar);
         appBar.addOnOffsetChangedListener(new AppBarStateListener() {
             @Override
@@ -489,12 +485,14 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                 Intent intent = new Intent(this, SelectSkillActivity.class);
                 intent.putExtra(Constants.EXTRA_ACTION_TYPE, Constants.ACTION_CREATE_PROJECT);
                 startActivity(intent);
+
                 break;
             case R.id.nav_edit:
 
                 break;
             case R.id.nav_projects:
                 startActivity(new Intent(this, MyProjectActivity.class));
+                finish();
                 break;
             case R.id.nav_signout:
                 Utils.saveUserInfo(this, null);

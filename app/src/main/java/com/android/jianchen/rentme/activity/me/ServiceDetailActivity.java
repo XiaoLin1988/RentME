@@ -311,7 +311,6 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
 
                     EventBus.getDefault().post(new ProjectChangeEvent(project, 1));
 
-
                     finish();
                 } else {
                     Toast.makeText(ServiceDetailActivity.this, errLoad, Toast.LENGTH_SHORT).show();
