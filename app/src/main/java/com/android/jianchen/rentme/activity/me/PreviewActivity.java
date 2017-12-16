@@ -258,6 +258,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 public void onResponse(Call<ArrayModel<String>> call, Response<ArrayModel<String>> response) {
 
                     if (response.isSuccessful() && response.body().getStatus()) {
+                        curUser.setAvatar(response.body().getData().get(0));
                         loadListener.setLoaded();
                     } else {
                         Toast.makeText(PreviewActivity.this, "Uploading Profile Image failed", Toast.LENGTH_SHORT).show();

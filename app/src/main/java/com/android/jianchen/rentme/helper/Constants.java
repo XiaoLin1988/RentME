@@ -158,6 +158,8 @@ public class Constants {
     public static final String KEY_REVIEW_ID = "key_review_id";
     public static final String KEY_SERVICE = "key_service";
     public static final String KEY_SKILL = "key_skill";
+    public static final String KEY_SUB_IMAGE = "key_sub_image";
+    public static final String KEY_SUB_POSITION = "key_sub_position";
 
     public static final String KEY_TRANSITION = "key_transition";
 

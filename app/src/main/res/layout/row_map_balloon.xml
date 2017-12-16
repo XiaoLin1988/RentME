@@ -19,5 +19,7 @@
         android:id="@+id/img_marker"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/profile_empty"/>
+        android:src="@drawable/profile_empty"
+        app:siBorderWidth="2dp"
+        app:siBorderColor="@color/colorPrimary"/>
 </LinearLayout>

@@ -118,10 +118,10 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
 
     private void getProjectReviews() {
         final ProgressDialog dialog = DialogUtil.showProgressDialog(this, "Please wait while loading");
-        RestClient<ServiceClient> restClient = new RestClient<>();
-        ServiceClient serviceClient = restClient.getAppClient(ServiceClient.class);
+        RestClient<ProjectClient> restClient = new RestClient<>();
+        ProjectClient projectClient = restClient.getAppClient(ProjectClient.class);
 
-        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(project.getSv_id(), Utils.retrieveUserInfo(ProjectCompleteDetailActivity.this).getId());
+        Call<ArrayModel<ReviewModel>> call = projectClient.getProjectReview(project.getSv_id(), Utils.retrieveUserInfo(ProjectCompleteDetailActivity.this).getId());
         call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
             @Override
             public void onResponse(Call<ArrayModel<ReviewModel>> call, retrofit2.Response<ArrayModel<ReviewModel>> response) {

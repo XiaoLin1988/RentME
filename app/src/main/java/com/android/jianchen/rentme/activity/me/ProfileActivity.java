@@ -110,6 +110,9 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     @Bind(R.id.img_profile_wechat)
     ImageView imgWechat;
 
+    @Bind(R.id.txt_no_data)
+    TextView txtNoData;
+
     @Bind(R.id.recycler_services)
     RecyclerView recyclerServices;
     SkillServiceRecyclerAdapter adapterSkillService;
@@ -403,8 +406,15 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
             public void onResponse(Call<ArrayModel<ServiceModel>> call, Response<ArrayModel<ServiceModel>> response) {
                 if (response.isSuccessful()) {
                     ArrayList<ServiceModel> services = response.body().getData();
-                    for (int i = 0; i < services.size(); i++) {
-                        adapterSkillService.addService(services.get(i));
+                    if (services.size() > 0) {
+                        txtNoData.setVisibility(View.GONE);
+                        recyclerServices.setVisibility(View.VISIBLE);
+                        for (int i = 0; i < services.size(); i++) {
+                            adapterSkillService.addService(services.get(i));
+                        }
+                    } else {
+                        txtNoData.setVisibility(View.VISIBLE);
+                        recyclerServices.setVisibility(View.GONE);
                     }
                 } else {
                     Toast.makeText(ProfileActivity.this, errLoad, Toast.LENGTH_SHORT).show();

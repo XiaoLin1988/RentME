@@ -23,8 +23,12 @@ import com.android.jianchen.rentme.helper.network.retrofit.UserClient;
 import com.android.jianchen.rentme.helper.utils.BitmapUtil;
 import com.android.jianchen.rentme.helper.utils.DialogUtil;
 import com.android.jianchen.rentme.helper.utils.Utils;
+import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.SkillModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,6 +45,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -70,6 +75,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ArrayList<UserModel> nearbies;
     ArrayMap<Integer, Bitmap> avatars;
     private boolean loaded = false;
+    private boolean avt_loaded = false;
 
     protected void onCreate(Bundle saveBundle) {
         super.onCreate(saveBundle);
@@ -141,8 +147,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     nearbies = response.body();
+                    for (int i = 0; i < nearbies.size(); i++) {
+                        final int id = nearbies.get(i).getId();
+                        Glide.with(MapActivity.this).load(nearbies.get(i).getAvatar()).asBitmap().into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                avatars.put(id, resource);
+                                if (avatars.size() == nearbies.size())
+                                    avt_loaded = true;
 
-                    if (!loaded && googleMap != null) {
+                                if (!loaded && googleMap != null && avt_loaded) {
+                                    putMarkers();
+                                }
+                            }
+                        });
+                    }
+
+                    if (!loaded && googleMap != null && avt_loaded) {
                         putMarkers();
                     }
                 } else {
@@ -177,18 +198,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         googleMap.setInfoWindowAdapter(new MapMarkerAdapter(this));
         googleMap.setOnInfoWindowClickListener(this);
 
-        LatLng home = new LatLng(curUser.getLatitude(), curUser.getLongitude());
+        final LatLng home = new LatLng(curUser.getLatitude(), curUser.getLongitude());
 
-        View mark = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.row_map_balloon, null);
-        CircularImageView img = (CircularImageView) mark.findViewById(R.id.img_marker);
+        Glide.with(MapActivity.this).load(curUser.getAvatar()).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                View mark = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.row_map_balloon, null);
+                CircularImageView img = (CircularImageView) mark.findViewById(R.id.img_marker);
+                img.setImageBitmap(resource);
 
-        if (avatars.containsKey(curUser.getId()))
-            img.setImageBitmap(avatars.get(curUser.getId()));
+                Marker marker = googleMap.addMarker(new MarkerOptions().position(home).snippet("ME").icon(BitmapDescriptorFactory.fromBitmap(BitmapUtil.createDrawableFromView(MapActivity.this, mark))).anchor(0.5f, 0.5f));
+                marker.setTag(curUser);
+            }
+        });
 
-        Marker marker = googleMap.addMarker(new MarkerOptions().position(home).snippet("ME").icon(BitmapDescriptorFactory.fromBitmap(BitmapUtil.createDrawableFromView(this, mark))).anchor(0.5f, 0.5f));
-        marker.setTag(curUser);
-
-        if (!loaded && nearbies.size() > 0)
+        if (!loaded && nearbies.size() > 0 && avt_loaded)
             putMarkers();
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(home).zoom(12).build();
@@ -202,9 +226,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             LatLng home = new LatLng(nearbies.get(i).getLatitude(), nearbies.get(i).getLongitude());
             View mark = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.row_map_balloon, null);
             CircularImageView img = (CircularImageView) mark.findViewById(R.id.img_marker);
-
-            if (avatars.containsKey(nearbies.get(i).getId()))
-                img.setImageBitmap(avatars.get(nearbies.get(i).getId()));
+            img.setImageBitmap(avatars.get(nearbies.get(i).getId()));
 
             Marker marker = googleMap.addMarker(new MarkerOptions().position(home).icon(BitmapDescriptorFactory.fromBitmap(BitmapUtil.createDrawableFromView(this, mark))).anchor(0.5f, 0.5f));
             marker.setTag(nearbies.get(i));

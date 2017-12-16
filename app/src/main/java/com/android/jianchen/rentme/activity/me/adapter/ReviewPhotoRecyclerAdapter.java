@@ -1,6 +1,7 @@
 package com.android.jianchen.rentme.activity.me.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.activity.me.ServiceDetailActivity;
+import com.android.jianchen.rentme.activity.myprojects.ImageDetailActivity;
+import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.delegator.OnConfirmListener;
 import com.android.jianchen.rentme.helper.listener.SingleClickListener;
 import com.android.jianchen.rentme.helper.utils.DialogUtil;
@@ -42,7 +45,7 @@ public class ReviewPhotoRecyclerAdapter extends RecyclerView.Adapter<ReviewPhoto
     public void onBindViewHolder(PhotoViewHolder holder, int position) {
         String path = paths.get(position);
         holder.bindLoadPhoto(path);
-        holder.bindPostCancel(position);
+        holder.bindDetail(position);
     }
 
     @Override
@@ -75,17 +78,15 @@ public class ReviewPhotoRecyclerAdapter extends RecyclerView.Adapter<ReviewPhoto
             Glide.with(context).load(path).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(imageView);
         }
 
-        public void bindPostCancel(final int position) {
+        public void bindDetail(final int position) {
             imageView.setOnClickListener(new SingleClickListener() {
                 @Override
                 public void onSingleClick(View v) {
-                    DialogUtil.showConfirmDialog(context, "Remove this photo?", new OnConfirmListener() {
-                        @Override
-                        public void onConfirm() {
-                            paths.remove(position);
-                            notifyItemRemoved(position);
-                        }
-                    });
+                    Intent intent = new Intent(context, ImageDetailActivity.class);
+                    intent.putExtra(Constants.KEY_SUB_IMAGE, paths);
+                    intent.putExtra(Constants.KEY_SUB_POSITION, position);
+
+                    context.startActivity(intent);
                 }
             });
         }

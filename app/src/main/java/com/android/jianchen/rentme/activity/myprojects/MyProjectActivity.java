@@ -26,6 +26,7 @@ import com.android.jianchen.rentme.activity.me.PreviewActivity;
 import com.android.jianchen.rentme.activity.me.ProfileActivity;
 import com.android.jianchen.rentme.activity.me.ServiceCreateActivity;
 import com.android.jianchen.rentme.activity.myprojects.adapter.ProjectPagerAdapter;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectChangeEvent;
 import com.android.jianchen.rentme.activity.myprojects.fragment.ProjectCompleteFragement;
 import com.android.jianchen.rentme.activity.myprojects.fragment.ProjectInProgressFragment;
 import com.android.jianchen.rentme.activity.root.SocialLoginActivity;
@@ -37,6 +38,9 @@ import com.android.jianchen.rentme.model.rentme.UserModel;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.github.siyamed.shapeimageview.CircularImageView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,12 +84,25 @@ public class MyProjectActivity extends AppCompatActivity implements ViewPager.On
         super.onCreate(saveBundle);
         setContentView(R.layout.activity_myproject);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         curUser = Utils.retrieveUserInfo(this);
 
         prepareActionBar();
         initViews();
         initDrawer();
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(ProjectChangeEvent event) {
+        if (event.getType() == 2) {
+
+        }
     }
 
     private void prepareActionBar() {
