@@ -63,8 +63,8 @@ public class Constants {
     public static final int SEARCH_RADIUS = 5000;
 
     //public static final String SITE_URL = "http://34.203.243.197/";
-    public static final String SITE_URL = "http://192.168.0.208/";
-    public static final String API_ROOT_URL = "http://192.168.0.208/rentme/index.php/";
+    public static final String SITE_URL = "http://192.168.0.204/";
+    public static final String API_ROOT_URL = "http://192.168.0.204/rentme/index.php/";
 
     //public static final String API_ROOT_URL = "http://34.203.243.197/index.php/api/";
     public static final String API_IMAGE_UPLOAD = "common/uploadImage";
@@ -97,6 +97,7 @@ public class Constants {
     public static final String API_COMMON_UPLOAD_WEB = "common/uploadWebs";
     public static final String API_COMMON_UPLOAD_IMAGE = "common/imageMultiUpload";
     public static final String API_USER_PROFILEIMAGE = "user/getProfileImagesById";
+    public static final String API_COMMON_UPDATE_SUBIMAGE = "common/updateSubProfileImages";
 
     // Social Login
     public static final String API_USER_GOOGLE_CHECK = "user/checkGoogleUser";
