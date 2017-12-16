@@ -375,6 +375,8 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
                         Utils.saveUserInfo(ProfileActivity.this, userModel);
                         adapterCover = new GalleryPagerAdapter(ProfileActivity.this, pagerSubCover, userModel.getCoverImg());
                         pagerSubCover.setAdapter(adapterCover);
+                        indicator.setViewPager(pagerSubCover);
+
                         imgCover.setVisibility(View.GONE);
                         pagerSubCover.setVisibility(View.VISIBLE);
                     }

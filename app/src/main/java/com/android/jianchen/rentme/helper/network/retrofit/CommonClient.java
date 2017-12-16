@@ -25,6 +25,10 @@ public interface CommonClient {
     @POST(Constants.API_COMMON_UPLOAD_IMAGE)
     Call<ArrayModel<String>> uploadPhotos(@Part("type") RequestBody type, @Part("foreign_id") RequestBody foreign_id, @Part ArrayList<MultipartBody.Part> upload_file);
 
+    @Multipart
+    @POST(Constants.API_COMMON_UPDATE_SUBIMAGE)
+    Call<ArrayModel<String>> updateSubPhotos(@Part("existingImages") RequestBody existingImages, @Part("userId") RequestBody userId, @Part ArrayList<MultipartBody.Part> upload_file);
+
     @POST(Constants.API_COMMON_UPLOAD_WEB)
     @FormUrlEncoded
     Call<ObjectModel<String>> uploadWebs(@Field("type") int type, @Field("foreign_id") int foreign_id, @Field("web") JSONStringer webs);

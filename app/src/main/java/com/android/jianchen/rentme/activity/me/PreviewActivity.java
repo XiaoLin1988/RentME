@@ -50,6 +50,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.BindString;
@@ -280,8 +282,22 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 
             ArrayList<MultipartBody.Part> images = new ArrayList<MultipartBody.Part>();
 
+            String weblinkList = "";
+            ArrayList<String> filePathList = new ArrayList<String>();
+
             for (int i = 0; i < adapterCover.getImageList().size(); i++) {
-                File file = new File(adapterCover.getImageList().get(i));
+
+                if (adapterCover.getImageList().get(i).contains("http")) { // weblink
+                    weblinkList = weblinkList + adapterCover.getImageList().get(i) + " ";
+                }
+                else { // filepath
+                    filePathList.add(adapterCover.getImageList().get(i));
+                }
+            }
+
+            for (int i = 0; i < filePathList.size(); i++) {
+
+                File file = new File(filePathList.get(i));
 
                 RequestBody reqImage = RequestBody.create(MediaType.parse("image/*"), file);
                 MultipartBody.Part body = MultipartBody.Part.createFormData("images[]", file.getName(), reqImage);
@@ -290,8 +306,9 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
 
             RequestBody reqType = RequestBody.create(MultipartBody.FORM, Integer.toString(Constants.VALUE_PROFILESUB_PHOTO));
             RequestBody reqForeign_id = RequestBody.create(MultipartBody.FORM, Integer.toString(curUser.getId()));
+            RequestBody reqLinks = RequestBody.create(MultipartBody.FORM, weblinkList);
 
-            Call<ArrayModel<String>> call1 = commonClient.uploadPhotos(reqType, reqForeign_id, images);
+            Call<ArrayModel<String>> call1 = commonClient.updateSubPhotos(reqLinks, reqForeign_id, images);
             call1.enqueue(new Callback<ArrayModel<String>>() {
                 @Override
                 public void onResponse(Call<ArrayModel<String>> call, Response<ArrayModel<String>> response) {
@@ -337,6 +354,18 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 dialog.dismiss();
             }
         });
+    }
+
+    private Map<String,RequestBody> createPartFromArray(String[] skills)
+    {
+        Map<String, RequestBody> skill = new HashMap<String, RequestBody>();
+        RequestBody requestFile ;
+        for(int i=0 ;i<skills.length;i++) {
+            requestFile = RequestBody.create(MultipartBody.FORM,skills[i]);
+            skill.put("skill["+i+"]", requestFile);
+        }
+        return skill;
+
     }
 
     private void createTempFile() {
@@ -463,6 +492,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                     public void onConfirm() {
                         int pos = pagerCover.getCurrentItem();
                         adapterCover.remove(pos);
+                        subImageChanged = true;
                     }
                 });
                 return true;
