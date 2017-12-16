@@ -28,9 +28,8 @@ import android.widget.Toast;
 
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.activity.me.adapter.GalleryPagerAdapter;
-import com.android.jianchen.rentme.activity.me.events.ServiceDeleteEvent;
+import com.android.jianchen.rentme.activity.me.events.ServiceChangeEvent;
 import com.android.jianchen.rentme.activity.myprojects.MyProjectActivity;
-import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
 import com.android.jianchen.rentme.activity.root.SocialLoginActivity;
 import com.android.jianchen.rentme.activity.root.customview.DrawerArrowDrawable;
 import com.android.jianchen.rentme.activity.search.SelectSkillActivity;
@@ -50,7 +49,6 @@ import com.android.jianchen.rentme.model.rentme.SkillServiceModel;
 import com.android.jianchen.rentme.model.rentme.UserAvatarModel;
 import com.android.jianchen.rentme.model.rentme.UserModel;
 import com.bumptech.glide.Glide;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.rd.PageIndicatorView;
@@ -70,7 +68,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileActivity extends AppCompatActivity implements OnServiceClickListener, OnProjectCreateListener, NavigationView.OnNavigationItemSelectedListener {
+public class ProfileActivity extends AppCompatActivity implements OnServiceClickListener, NavigationView.OnNavigationItemSelectedListener, OnProjectCreateListener {
     private UserModel userModel;
 
     @Bind(R.id.img_profile_cover)
@@ -142,6 +140,8 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
 
         ButterKnife.bind(this);
 
+        EventBus.getDefault().register(this);
+
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         prepareActionBar();
 
@@ -150,21 +150,18 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         initViews();
     }
 
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    public void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
 
     @Subscribe
-    public void onEvent(ServiceDeleteEvent event) {
-        ServiceModel service = event.getResult();
-
-        adapterSkillService.remove(service);
+    public void onEvent(ServiceChangeEvent event) {
+        if (event.getType() == 0) {
+            adapterSkillService.remove(event.getResult());
+        } else if (event.getType() == 1) {
+            adapterSkillService.addService(event.getResult());
+        }
     }
 
     private void prepareActionBar() {
@@ -486,12 +483,6 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
     }
 
     @Override
-    public void onProjectCreate(ProjectModel project) {
-        EventBus.getDefault().post(new ProjectCreateEvent(project));
-        finish();
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_post:
@@ -518,5 +509,9 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onProjectCreate(ProjectModel project) {
     }
 }

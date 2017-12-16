@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,19 +13,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.jianchen.rentme.activity.me.PreviewActivity;
-import com.android.jianchen.rentme.activity.me.ServiceCreateActivity;
 import com.android.jianchen.rentme.activity.me.ServiceDetailActivity;
 import com.android.jianchen.rentme.activity.me.adapter.GalleryPagerAdapter;
-import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
-import com.android.jianchen.rentme.activity.root.customview.DrawerArrowDrawable;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectChangeEvent;
 import com.android.jianchen.rentme.activity.search.adapter.SkillServiceRecyclerAdapter;
 import com.android.jianchen.rentme.helper.delegator.OnProjectCreateListener;
 import com.android.jianchen.rentme.helper.delegator.OnServiceClickListener;
@@ -45,6 +40,7 @@ import com.bumptech.glide.Glide;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -123,6 +119,7 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
         setContentView(R.layout.activity_profile);
 
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         prepareActionBar();
@@ -130,6 +127,19 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
         userModel = (UserModel)getIntent().getSerializableExtra(Constants.KEY_USER);
 
         initViews();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(ProjectChangeEvent event) {
+        if (event.getType() == 1) {
+            finish();
+        }
     }
 
     private void prepareActionBar() {
@@ -312,7 +322,6 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
 
     @Override
     public void onProjectCreate(ProjectModel project) {
-        EventBus.getDefault().post(new ProjectCreateEvent(project));
         finish();
     }
 }

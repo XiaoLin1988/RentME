@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.jianchen.rentme.activity.myprojects.events.ProjectCreateEvent;
 import com.android.jianchen.rentme.activity.myprojects.fragment.ProjectFragment;
 import com.android.jianchen.rentme.activity.search.fragment.ProjectCreateFragment;
 import com.android.jianchen.rentme.model.rentme.UserModel;
@@ -29,9 +28,6 @@ import com.android.jianchen.rentme.helper.utils.Utils;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.github.siyamed.shapeimageview.CircularImageView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -247,19 +243,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
     */
-
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe
-    public void onEvent(ProjectCreateEvent event) {
-        openMyProjects();
-    }
 }

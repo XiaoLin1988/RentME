@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.jianchen.rentme.activity.myprojects.events.ProjectCompleteEvent;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectChangeEvent;
 import com.android.jianchen.rentme.helper.listener.SingleClickListener;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.activity.myprojects.ProjectCompleteDetailActivity;
@@ -37,8 +37,6 @@ public class CompleteRecyclerAdapter extends RecyclerView.Adapter<CompleteRecycl
     public CompleteRecyclerAdapter(Context context, ArrayList<ProjectModel> services) {
         this.context = context;
         this.services = services;
-
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -77,9 +75,11 @@ public class CompleteRecyclerAdapter extends RecyclerView.Adapter<CompleteRecycl
     }
 
     @Subscribe
-    public void onEvent(ProjectCompleteEvent event) {
-        services.add(event.getResult());
-        notifyItemInserted(services.size() - 1);
+    public void onEvent(ProjectChangeEvent event) {
+        if (event.getType() == 2) {
+            services.add(event.getResult());
+            notifyItemInserted(services.size() - 1);
+        }
     }
 
     private void setAnimation(View viewToAnimate, int position) {

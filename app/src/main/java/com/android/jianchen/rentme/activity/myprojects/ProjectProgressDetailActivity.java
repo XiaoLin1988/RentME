@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.jianchen.rentme.activity.myprojects.events.ProjectCompleteEvent;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.R;
@@ -20,8 +19,6 @@ import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.utils.DialogUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
-import org.greenrobot.eventbus.EventBus;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -105,7 +102,6 @@ public class ProjectProgressDetailActivity extends AppCompatActivity implements 
                     public void onResponse(Call<ObjectModel<Boolean>> call, Response<ObjectModel<Boolean>> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body().getStatus()) {
-                            EventBus.getDefault().post(new ProjectCompleteEvent(project));
                             finish();
                         } else {
                             Toast.makeText(ProjectProgressDetailActivity.this, getResources().getString(R.string.error_load), Toast.LENGTH_SHORT).show();

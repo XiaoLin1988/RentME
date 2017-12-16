@@ -4,8 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.ActionBar;
@@ -18,6 +16,7 @@ import android.widget.Toast;
 
 import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.activity.myprojects.adapter.MapMarkerAdapter;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectChangeEvent;
 import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
 import com.android.jianchen.rentme.helper.network.retrofit.UserClient;
@@ -37,6 +36,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -73,6 +75,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(saveBundle);
         setContentView(R.layout.activity_map);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         skill = (SkillModel)getIntent().getSerializableExtra(Constants.KEY_SKILL);
 
@@ -107,12 +110,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    @Subscribe
+    public void onEvent(ProjectChangeEvent event) {
+        if (event.getType() == 1) {
+            finish();
+        }
     }
 
     private void prepareData() {

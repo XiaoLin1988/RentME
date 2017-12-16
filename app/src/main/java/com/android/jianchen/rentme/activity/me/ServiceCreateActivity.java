@@ -1,18 +1,11 @@
 package com.android.jianchen.rentme.activity.me;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,17 +21,13 @@ import android.widget.Toast;
 import com.android.jianchen.rentme.activity.me.adapter.PhotoRecyclerAdapter;
 import com.android.jianchen.rentme.activity.me.adapter.VideoLinkRecyclerAdapter;
 import com.android.jianchen.rentme.activity.me.adapter.WebLinkRecyclerAdapter;
-import com.android.jianchen.rentme.activity.me.dialogs.PhotoDialog;
 import com.android.jianchen.rentme.activity.me.dialogs.VideoLinkDialog;
 import com.android.jianchen.rentme.activity.me.dialogs.WebLinkDialog;
-import com.android.jianchen.rentme.activity.myprojects.LeaveReviewActivity;
+import com.android.jianchen.rentme.activity.me.events.ServiceChangeEvent;
 import com.android.jianchen.rentme.activity.root.ImageCropActivity;
-import com.android.jianchen.rentme.activity.search.fragment.SelectSkillFragment;
-import com.android.jianchen.rentme.activity.me.fragments.ServiceCreateFragment;
 import com.android.jianchen.rentme.helper.delegator.OnDialogSelectListener;
 import com.android.jianchen.rentme.helper.delegator.OnPostVideoListener;
 import com.android.jianchen.rentme.helper.delegator.OnPostWebListener;
-import com.android.jianchen.rentme.helper.delegator.OnSkillSelectListener;
 import com.android.jianchen.rentme.helper.listener.LoadCompleteListener;
 import com.android.jianchen.rentme.helper.listener.SingleClickListener;
 import com.android.jianchen.rentme.helper.network.retrofit.CommonClient;
@@ -54,6 +43,7 @@ import com.android.jianchen.rentme.R;
 import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.model.rentme.WebLinkModel;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONStringer;
 
@@ -282,10 +272,10 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                             @Override
                             public void onLoaded() {
                                 dialog.dismiss();
-                                setResult(Activity.RESULT_OK, getIntent().putExtra(Constants.KEY_SERVICE, service));
                                 Intent intent = new Intent(ServiceCreateActivity.this, ServiceDetailActivity.class);
                                 intent.putExtra(Constants.EXTRA_SERVICE_DETAIL, service);
                                 startActivity(intent);
+                                EventBus.getDefault().post(new ServiceChangeEvent(service, 1));
                                 finish();
                             }
                         };
@@ -355,11 +345,6 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                                 @Override
                                 public void onResponse(Call<ArrayModel<String>> call, Response<ArrayModel<String>> response) {
                                     loadListener.setLoaded();
-                                    if (response.isSuccessful() && response.body().getStatus()) {
-
-                                    } else {
-
-                                    }
                                 }
 
                                 @Override
@@ -367,16 +352,13 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
                                     loadListener.setLoaded();
                                 }
                             });
-
                         }
-
-
                     } else {
                         dialog.dismiss();
-                        setResult(Activity.RESULT_OK, getIntent().putExtra(Constants.KEY_SERVICE, service));
                         Intent intent = new Intent(ServiceCreateActivity.this, ServiceDetailActivity.class);
                         intent.putExtra(Constants.EXTRA_SERVICE_DETAIL, service);
                         startActivity(intent);
+                        EventBus.getDefault().post(new ServiceChangeEvent(service, 1));
                         finish();
                     }
                 } else {

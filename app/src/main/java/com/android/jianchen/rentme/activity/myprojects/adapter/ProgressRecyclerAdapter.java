@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.jianchen.rentme.activity.myprojects.events.ProjectCompleteEvent;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectChangeEvent;
 import com.android.jianchen.rentme.helper.listener.SingleClickListener;
 import com.android.jianchen.rentme.model.rentme.ProjectModel;
 import com.android.jianchen.rentme.activity.myprojects.ProjectProgressDetailActivity;
@@ -75,9 +75,11 @@ public class ProgressRecyclerAdapter extends RecyclerView.Adapter<ProgressRecycl
     }
 
     @Subscribe
-    public void onEvent(ProjectCompleteEvent event) {
-        services.remove(selected);
-        notifyItemRemoved(selected);
+    public void onEvent(ProjectChangeEvent event) {
+        if (event.getType() == 2) {
+            services.remove(selected);
+            notifyItemRemoved(selected);
+        }
     }
 
     @Override

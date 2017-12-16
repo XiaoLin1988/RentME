@@ -1,7 +1,6 @@
 package com.android.jianchen.rentme.activity.me;
 
 import android.app.ProgressDialog;
-import android.app.Service;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -26,7 +25,8 @@ import android.widget.Toast;
 
 import com.android.jianchen.rentme.activity.me.adapter.IntroAdapter;
 import com.android.jianchen.rentme.activity.me.dialogs.ReviewDialog;
-import com.android.jianchen.rentme.activity.me.events.ServiceDeleteEvent;
+import com.android.jianchen.rentme.activity.me.events.ServiceChangeEvent;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectChangeEvent;
 import com.android.jianchen.rentme.helper.delegator.OnConfirmListener;
 import com.android.jianchen.rentme.helper.delegator.OnProjectCreateListener;
 import com.android.jianchen.rentme.model.rentme.ArrayModel;
@@ -53,6 +53,7 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
@@ -247,7 +248,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
             public void onResponse(Call<ObjectModel<Boolean>> call, Response<ObjectModel<Boolean>> response) {
                 dialog.dismiss();
                 if (response.isSuccessful() && response.body().getStatus()) {
-                    EventBus.getDefault().post(new ServiceDeleteEvent(service));
+                    EventBus.getDefault().post(new ServiceChangeEvent(service, 0));
                     finish();
                 } else {
                     Toast.makeText(ServiceDetailActivity.this, errDeleteService, Toast.LENGTH_SHORT).show();
@@ -305,7 +306,11 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                     project.setConsumer_id(Utils.retrieveUserInfo(ServiceDetailActivity.this).getId());
                     project.setTalent_id(service.getTalent_id());
                     project.setSv_detail(service.getDetail());
-                    projectListener.onProjectCreate(project);
+                    if (projectListener != null)
+                        projectListener.onProjectCreate(project);
+
+                    EventBus.getDefault().post(new ProjectChangeEvent(project, 1));
+
 
                     finish();
                 } else {

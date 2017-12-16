@@ -1,8 +1,6 @@
 package com.android.jianchen.rentme.activity.search;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,14 +8,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.android.jianchen.rentme.R;
-import com.android.jianchen.rentme.activity.me.PreviewActivity;
 import com.android.jianchen.rentme.activity.me.ServiceCreateActivity;
+import com.android.jianchen.rentme.activity.me.events.ServiceChangeEvent;
+import com.android.jianchen.rentme.activity.myprojects.events.ProjectChangeEvent;
 import com.android.jianchen.rentme.activity.search.adapter.SkillGalleryAdapter;
 import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.delegator.OnSkillSelectListener;
@@ -26,6 +24,9 @@ import com.android.jianchen.rentme.helper.network.retrofit.SkillClient;
 import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.SkillModel;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -64,12 +65,32 @@ public class SelectSkillActivity extends AppCompatActivity implements OnSkillSel
         super.onCreate(saveBundle);
         setContentView(R.layout.activity_skill_select);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         action = getIntent().getIntExtra(Constants.EXTRA_ACTION_TYPE, 0);
 
         prepareActionBar();
         initViews();
         getCategories();
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(ServiceChangeEvent event) {
+        if (event.getType() == 1) {
+            finish();
+        }
+    }
+
+    @Subscribe
+    public void onEvent(ProjectChangeEvent event) {
+        if (event.getType() == 1) {
+            finish();
+        }
     }
 
     private void initViews() {
