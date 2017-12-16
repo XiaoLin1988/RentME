@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.jianchen.rentme.activity.me.PreviewActivity;
 import com.android.jianchen.rentme.activity.me.adapter.ReviewRecyclerAdapter;
@@ -24,8 +25,12 @@ import com.android.jianchen.rentme.helper.network.retrofit.ReviewClient;
 import com.android.jianchen.rentme.helper.network.retrofit.ServiceClient;
 import com.android.jianchen.rentme.helper.Constants;
 import com.android.jianchen.rentme.helper.utils.Utils;
+import com.borjabravo.readmoretextview.ReadMoreTextView;
+import com.bumptech.glide.Glide;
+import com.github.siyamed.shapeimageview.CircularImageView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -108,6 +113,16 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
 
         if (type == Constants.VALUE_REVIEW) {
             findViewById(R.id.ryt_review).setVisibility(View.VISIBLE);
+            findViewById(R.id.lyt_origin_review).setVisibility(View.VISIBLE);
+            CircularImageView imgAvatar = (CircularImageView)findViewById(R.id.img_review_avatar);
+            Glide.with(getContext()).load(review.getUser_avatar()).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgAvatar);
+            TextView txtName = (TextView)findViewById(R.id.txt_review_name);
+            txtName.setText(review.getUser_name());
+            TextView txtDate = (TextView)findViewById(R.id.txt_review_date);
+            Date date = Utils.stringToDate(review.getRv_ctime());
+            txtDate.setText(Utils.beautifyDate(date, false));
+            ReadMoreTextView txtContent = (ReadMoreTextView)findViewById(R.id.txt_review_content);
+            txtContent.setText(review.getRv_content());
             if (review.isRated())
                 imgRate.setImageResource(R.drawable.heart_fill);
         }

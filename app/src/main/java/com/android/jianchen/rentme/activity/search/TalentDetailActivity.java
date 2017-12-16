@@ -97,6 +97,9 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
     @Bind(R.id.img_profile_wechat)
     ImageView imgWechat;
 
+    @Bind(R.id.txt_no_data)
+    TextView txtNoData;
+
     @Bind(R.id.recycler_services)
     RecyclerView recyclerServices;
     SkillServiceRecyclerAdapter adapterSkillService;
@@ -267,14 +270,20 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
                     for (int i = 0; i < services.size(); i++) {
                         adapterSkillService.addService(services.get(i));
                     }
+                    recyclerServices.setVisibility(View.VISIBLE);
+                    txtNoData.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(TalentDetailActivity.this, errLoad, Toast.LENGTH_SHORT).show();
+                    recyclerServices.setVisibility(View.GONE);
+                    txtNoData.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayModel<ServiceModel>> call, Throwable t) {
                 Toast.makeText(TalentDetailActivity.this, errNetwork, Toast.LENGTH_SHORT).show();
+                recyclerServices.setVisibility(View.GONE);
+                txtNoData.setVisibility(View.VISIBLE);
             }
         });
     }

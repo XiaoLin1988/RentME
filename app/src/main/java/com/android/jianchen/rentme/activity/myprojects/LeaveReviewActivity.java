@@ -262,6 +262,7 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
                             @Override
                             public void onLoaded() {
                                 dialog.dismiss();
+                                setResult(RESULT_OK);
                                 finish();
                             }
                         };
@@ -287,12 +288,6 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
                                     loadListener.setLoaded();
-                                    if (response.isSuccessful() && response.body().getStatus()) {
-                                        int a = 0;
-                                        a += 5;
-                                    } else {
-
-                                    }
                                 }
 
                                 @Override
@@ -307,12 +302,6 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 public void onResponse(Call<ObjectModel<String>> call, Response<ObjectModel<String>> response) {
                                     loadListener.setLoaded();
-                                    if (response.isSuccessful() && response.body().getStatus()) {
-                                        int a = 0;
-                                        a += 5;
-                                    } else {
-
-                                    }
                                 }
 
                                 @Override
@@ -341,11 +330,6 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
                                 @Override
                                 public void onResponse(Call<ArrayModel<String>> call, Response<ArrayModel<String>> response) {
                                     loadListener.setLoaded();
-                                    if (response.isSuccessful() && response.body().getStatus()) {
-
-                                    } else {
-
-                                    }
                                 }
 
                                 @Override
@@ -353,11 +337,11 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
                                     loadListener.setLoaded();
                                 }
                             });
-
                         }
-
                     } else {
                         dialog.dismiss();
+                        setResult(RESULT_OK);
+                        finish();
                     }
                 } else {
                     dialog.dismiss();

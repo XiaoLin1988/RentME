@@ -34,4 +34,8 @@ public interface ProjectClient {
     @POST(Constants.API_PROJECT_REVIEW)
     @FormUrlEncoded
     Call<ArrayModel<ReviewModel>> getProjectReview(@Field("id") int id);
+
+    @POST(Constants.API_REVIEW_PROJECT)
+    @FormUrlEncoded
+    Call<ObjectModel<Boolean>> reviewProject(@Field("id") int id);
 }

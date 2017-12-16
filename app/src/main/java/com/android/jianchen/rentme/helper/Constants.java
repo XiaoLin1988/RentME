@@ -35,6 +35,7 @@ public class Constants {
     public static final int REQUEST_PROJECT_CREATE = 0x9;
     public static final int REQUEST_GOOGLE_SIGNIN = 0xA;
     public static final int REQUEST_PREVIEW = 0xB;
+    public static final int REQUEST_REVIEW = 0xC;
 
 
     public static final String ERROR_MSG = "error_msg";
@@ -84,6 +85,7 @@ public class Constants {
     public static final String API_PROJECT_CREATE2 = "project/createProject2";
     public static final String API_PROJECT_COMPLETED = "project/getMyCompletedProjects";
     public static final String API_PROJECT_REVIEW = "project/getProjectReview";
+    public static final String API_REVIEW_PROJECT = "project/reviewProject";
     public static final String API_PROJECT_INPROGRESS = "project/getMyProgressProjects";
     public static final String API_PROJECT_CHATTING = "project/getChattingProject";
     public static final String API_PROJECT_FINISH = "project/completeProject";

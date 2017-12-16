@@ -1,5 +1,6 @@
 package com.android.jianchen.rentme.activity.myprojects;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,6 +17,7 @@ import com.android.jianchen.rentme.activity.me.adapter.ReviewRecyclerAdapter;
 import com.android.jianchen.rentme.activity.root.MainActivity;
 import com.android.jianchen.rentme.helper.network.retrofit.ProjectClient;
 import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
+import com.android.jianchen.rentme.helper.utils.DialogUtil;
 import com.android.jianchen.rentme.helper.utils.Utils;
 import com.android.jianchen.rentme.model.rentme.ArrayModel;
 import com.android.jianchen.rentme.model.rentme.ObjectModel;
@@ -106,12 +108,14 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
             adapterReviews = new ReviewRecyclerAdapter(recyclerReviews, reviews, Constants.VALUE_SERVICE);
             recyclerReviews.setAdapter(adapterReviews);
             recyclerReviews.setLayoutManager(new LinearLayoutManager(ProjectCompleteDetailActivity.this));
+            recyclerReviews.setNestedScrollingEnabled(false);
 
             getProjectReviews();
         }
     }
 
     private void getProjectReviews() {
+        final ProgressDialog dialog = DialogUtil.showProgressDialog(this, "Please wait while loading");
         RestClient<ProjectClient> restClient = new RestClient<>();
         ProjectClient projectClient = restClient.getAppClient(ProjectClient.class);
 
@@ -119,6 +123,7 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
         call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
             @Override
             public void onResponse(Call<ArrayModel<ReviewModel>> call, retrofit2.Response<ArrayModel<ReviewModel>> response) {
+                dialog.dismiss();
                 if (response.isSuccessful() && response.body().getStatus()) {
                     if (response.body().getData().size() > 0)
                         adapterReviews.addReviews(response.body().getData());
@@ -129,6 +134,7 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
 
             @Override
             public void onFailure(Call<ArrayModel<ReviewModel>> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(ProjectCompleteDetailActivity.this, getResources().getString(R.string.error_network), Toast.LENGTH_SHORT).show();
             }
         });
@@ -141,7 +147,9 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
                 Intent intent = new Intent(this, LeaveReviewActivity.class);
                 intent.putExtra(Constants.EXTRA_REVIEW_TYPE, Constants.VALUE_SERVICE);
                 intent.putExtra(Constants.KEY_REVIEW_ID, project.getSv_id());
-                startActivity(intent);
+
+                startActivityForResult(intent, Constants.REQUEST_REVIEW);
+                break;
             case R.id.btn_project_complete_detail_back:
                 finish();
                 break;
@@ -166,5 +174,32 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
 
     public void onBackPressed() {
         finish();
+    }
+
+    public void onActivityResult(int reqCode, int resCode, Intent data) {
+        if (reqCode == Constants.REQUEST_REVIEW && resCode == RESULT_OK) {
+            RestClient<ProjectClient> restClient = new RestClient<>();
+            ProjectClient projectClient = restClient.getAppClient(ProjectClient.class);
+            Call<ObjectModel<Boolean>> call = projectClient.reviewProject(project.getPr_id());
+            call.enqueue(new Callback<ObjectModel<Boolean>>() {
+                @Override
+                public void onResponse(Call<ObjectModel<Boolean>> call, retrofit2.Response<ObjectModel<Boolean>> response) {
+                    btnLeave.setVisibility(View.GONE);
+
+                    reviews = new ArrayList<>();
+                    recyclerReviews = (RecyclerView)findViewById(R.id.recycler_reviews);
+                    adapterReviews = new ReviewRecyclerAdapter(recyclerReviews, reviews, Constants.VALUE_SERVICE);
+                    recyclerReviews.setAdapter(adapterReviews);
+                    recyclerReviews.setLayoutManager(new LinearLayoutManager(ProjectCompleteDetailActivity.this));
+
+                    getProjectReviews();
+                }
+
+                @Override
+                public void onFailure(Call<ObjectModel<Boolean>> call, Throwable t) {
+                    Toast.makeText(ProjectCompleteDetailActivity.this, getResources().getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

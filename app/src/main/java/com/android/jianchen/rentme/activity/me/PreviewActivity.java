@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,6 +83,18 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     @Bind(R.id.pager_cover)
     ViewPager pagerCover;
     GalleryPagerAdapter adapterCover;
+
+    @Bind(R.id.img_profile_email)
+    ImageView imgEmail;
+
+    @Bind(R.id.img_profile_facebook)
+    ImageView imgFacebook;
+
+    @Bind(R.id.img_profile_google)
+    ImageView imgGoogle;
+
+    @Bind(R.id.img_profile_wechat)
+    ImageView imgWechat;
 
     @BindString(R.string.joined)
     String joined;
@@ -168,6 +181,29 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
             pagerCover.setAdapter(adapterCover);
         }
 
+        if (curUser.getEmail() == null || curUser.getEmail().equals("")) {
+            imgEmail.setImageResource(R.drawable.email_u);
+        } else {
+            imgEmail.setImageResource(R.drawable.email_a);
+        }
+
+        if (curUser.getFbId() == null || curUser.getFbId().equals("")) {
+            imgFacebook.setImageResource(R.drawable.facebook_u);
+        } else {
+            imgFacebook.setImageResource(R.drawable.facebook_a);
+        }
+
+        if (curUser.getGgId() == null || curUser.getGgId().equals("")) {
+            imgGoogle.setImageResource(R.drawable.google_u);
+        } else {
+            imgGoogle.setImageResource(R.drawable.google_a);
+        }
+
+        if (curUser.getWxId() == null || curUser.getWxId().equals("")) {
+            imgWechat.setImageResource(R.drawable.wechat_u);
+        } else {
+            imgWechat.setImageResource(R.drawable.wechat_a);
+        }
 
         Glide.with(this).load(curUser.getAvatar()).asBitmap().centerCrop().placeholder(R.drawable.profile_empty).into(imgMain);
         imgMain.setOnClickListener(this);

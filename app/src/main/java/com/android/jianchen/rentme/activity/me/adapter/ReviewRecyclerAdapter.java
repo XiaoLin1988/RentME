@@ -118,7 +118,8 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             ((ReviewViewHolder)holder).txtReviewCount.setText(String.valueOf(review.getReview_count())) ;
             if (review.isRated())
                 ((ReviewViewHolder)holder).imgRate.setImageResource(R.drawable.heart_fill);
-
+            else
+                ((ReviewViewHolder)holder).imgRate.setImageResource(R.drawable.heart_empty);
             ((ReviewViewHolder)holder).refreshWebLinks(review.getWeb_links());
             ((ReviewViewHolder)holder).refreshVideos(review.getVideos());
             ((ReviewViewHolder)holder).bindRate(review);

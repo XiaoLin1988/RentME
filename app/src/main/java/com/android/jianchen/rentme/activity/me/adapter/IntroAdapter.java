@@ -71,7 +71,7 @@ public class IntroAdapter extends PagerAdapter {
             if (link.startsWith("https://player.vimeo.com/")) {
                 data = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe width=\"100%\" height=\"100%\" src=\"%link%\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe></body></html>";
             } else if (link.startsWith("https://www.youtube.com")) {
-                data = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"%link%\" width=\"100%\" height=\"100%\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
+                data = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"%link%?autoplay=1&showinfo=0&rel=0&loop=1\" width=\"100%\" height=\"100%\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
             }
             data = data.replace("%link%", link);
             data = data.replace("%width%", "100%");
