@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -100,7 +101,8 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
         public void onSingleClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_post_add:
-                    CharSequence[] options = {"Add image", "Add Youtube/Vimeo video link", "Add web link"};
+                    //CharSequence[] options = {"Add image", "Add Youtube/Vimeo video link", "Add web link"};
+                    CharSequence[] options = {"Add image", "Add Youtube/Vimeo video link"};
                     DialogUtil.showSelectDialog(ServiceCreateActivity.this, options, new OnDialogSelectListener() {
                         @Override
                         public void onDialogSelect(int position) {
@@ -192,6 +194,9 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
         setContentView(R.layout.fragment_service_create2);
         ButterKnife.bind(this);
 
+        // for preventing auto popup keyboard when activity load
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         skill = (SkillModel) getIntent().getSerializableExtra(Constants.KEY_SKILL);
 
         initViews();
@@ -227,6 +232,9 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
             return false;
         } else if (editDetail.getText().toString().equals("")) {
             Toast.makeText(this, "Please input all fields", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (photoPathArray.size() == 0) {
+            Toast.makeText(this, "To create service, please add one image at least", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;

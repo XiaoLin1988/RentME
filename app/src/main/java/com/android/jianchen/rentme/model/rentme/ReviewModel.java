@@ -22,6 +22,16 @@ public class ReviewModel implements Serializable {
     private ArrayList<WebLinkModel> web_links;
     private ArrayList<String> videos;
 
+    public ArrayList<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(ArrayList<String> photos) {
+        this.photos = photos;
+    }
+
+    private ArrayList<String> photos;
+
     public int getId() {
         return id;
     }

@@ -32,7 +32,7 @@ public interface UserClient {
 
     @POST(Constants.API_USER_SERVICE)
     @FormUrlEncoded
-    Call<ArrayModel<ServiceModel>> getUserSkills(@Field("talentid") int talentid);
+    Call<ArrayModel<ServiceModel>> getUserServices(@Field("talentid") int talentid);
 
     @POST(Constants.API_USER_GOOGLE_CHECK)
     @FormUrlEncoded

@@ -33,7 +33,7 @@
                     android:id="@+id/img_card_service_preview"
                     android:layout_width="150dp"
                     android:layout_height="125dp"
-                    android:src="@drawable/sample_preview"
+                    android:src="@drawable/placeholder"
                     android:scaleType="centerCrop"/>
 
                 <RelativeLayout

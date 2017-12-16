@@ -178,7 +178,7 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
         RestClient<ServiceClient> restClient = new RestClient<>();
         ServiceClient serviceClient = restClient.getAppClient(ServiceClient.class);
 
-        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(serviceId, Utils.retrieveUserInfo(getContext()).getId(), curpage);
+        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(serviceId, Utils.retrieveUserInfo(getContext()).getId());
         call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
             @Override
             public void onResponse(Call<ArrayModel<ReviewModel>> call, Response<ArrayModel<ReviewModel>> response) {

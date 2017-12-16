@@ -52,8 +52,8 @@ public class ServiceRecyclerAdapter extends RecyclerView.Adapter<ServiceRecycler
     @Override
     public void onBindViewHolder(final ServiceViewHolder holder, int position) {
         ServiceModel item = serviceList.get(position);
-        if (item.getPreview() != null)
-            Glide.with(context).load(item.getPreview()).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(holder.imgPreview);
+        if (item.getPhotos().size() > 0)
+            Glide.with(context).load(item.getPhotos().get(0)).asBitmap().centerCrop().placeholder(R.drawable.placeholder).into(holder.imgPreview);
 
         holder.txtBalance.setText("$" + Integer.toString(item.getBalance()));
 

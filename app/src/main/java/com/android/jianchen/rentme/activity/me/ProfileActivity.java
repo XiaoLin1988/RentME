@@ -397,7 +397,7 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
         RestClient<UserClient> restClient = new RestClient<>();
         UserClient userClient = restClient.getAppClient(UserClient.class);
 
-        Call<ArrayModel<ServiceModel>> call = userClient.getUserSkills(userModel.getId());
+        Call<ArrayModel<ServiceModel>> call = userClient.getUserServices(userModel.getId());
         call.enqueue(new Callback<ArrayModel<ServiceModel>>() {
             @Override
             public void onResponse(Call<ArrayModel<ServiceModel>> call, Response<ArrayModel<ServiceModel>> response) {

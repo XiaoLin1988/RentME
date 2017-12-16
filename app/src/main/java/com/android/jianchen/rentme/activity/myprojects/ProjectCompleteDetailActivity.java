@@ -17,6 +17,7 @@ import com.android.jianchen.rentme.activity.me.adapter.ReviewRecyclerAdapter;
 import com.android.jianchen.rentme.activity.root.MainActivity;
 import com.android.jianchen.rentme.helper.network.retrofit.ProjectClient;
 import com.android.jianchen.rentme.helper.network.retrofit.RestClient;
+import com.android.jianchen.rentme.helper.network.retrofit.ServiceClient;
 import com.android.jianchen.rentme.helper.utils.DialogUtil;
 import com.android.jianchen.rentme.helper.utils.Utils;
 import com.android.jianchen.rentme.model.rentme.ArrayModel;
@@ -28,6 +29,7 @@ import com.android.jianchen.rentme.model.rentme.ReviewModel;
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.util.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,10 +118,10 @@ public class ProjectCompleteDetailActivity extends AppCompatActivity implements 
 
     private void getProjectReviews() {
         final ProgressDialog dialog = DialogUtil.showProgressDialog(this, "Please wait while loading");
-        RestClient<ProjectClient> restClient = new RestClient<>();
-        ProjectClient projectClient = restClient.getAppClient(ProjectClient.class);
+        RestClient<ServiceClient> restClient = new RestClient<>();
+        ServiceClient serviceClient = restClient.getAppClient(ServiceClient.class);
 
-        Call<ArrayModel<ReviewModel>> call = projectClient.getProjectReview(project.getPr_id());
+        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(project.getSv_id(), Utils.retrieveUserInfo(ProjectCompleteDetailActivity.this).getId());
         call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
             @Override
             public void onResponse(Call<ArrayModel<ReviewModel>> call, retrofit2.Response<ArrayModel<ReviewModel>> response) {

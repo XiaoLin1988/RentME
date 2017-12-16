@@ -165,11 +165,11 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
     private void initViews() {
         ArrayList<IntroModel> intros = new ArrayList<>();
 
-        if (service.getWeb_links() != null && service.getWeb_links().size() > 0) {
-            for (int i = 0; i < service.getWeb_links().size(); i++) {
+        if (service.getPhotos() != null && service.getPhotos().size() > 0) {
+            for (int i = 0; i < service.getPhotos().size(); i++) {
                 IntroModel intro = new IntroModel();
-                intro.setType(3);
-                intro.setLink(service.getWeb_links().get(i));
+                intro.setType(0);
+                intro.setLink(service.getPhotos().get(i));
 
                 intros.add(intro);
             }
@@ -205,7 +205,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
         RestClient<ServiceClient> restClient = new RestClient<>();
         ServiceClient serviceClient = restClient.getAppClient(ServiceClient.class);
 
-        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(service.getId(), Utils.retrieveUserInfo(ServiceDetailActivity.this).getId(), curpage);
+        Call<ArrayModel<ReviewModel>> call = serviceClient.getServiceReview(service.getId(), Utils.retrieveUserInfo(ServiceDetailActivity.this).getId());
         call.enqueue(new Callback<ArrayModel<ReviewModel>>() {
             @Override
             public void onResponse(Call<ArrayModel<ReviewModel>> call, retrofit2.Response<ArrayModel<ReviewModel>> response) {

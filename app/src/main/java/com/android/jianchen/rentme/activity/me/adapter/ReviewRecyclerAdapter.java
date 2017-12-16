@@ -1,6 +1,7 @@
 package com.android.jianchen.rentme.activity.me.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -120,8 +121,11 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
                 ((ReviewViewHolder)holder).imgRate.setImageResource(R.drawable.heart_fill);
             else
                 ((ReviewViewHolder)holder).imgRate.setImageResource(R.drawable.heart_empty);
+
             ((ReviewViewHolder)holder).refreshWebLinks(review.getWeb_links());
             ((ReviewViewHolder)holder).refreshVideos(review.getVideos());
+            ((ReviewViewHolder)holder).refreshPhotos(review.getPhotos());
+
             ((ReviewViewHolder)holder).bindRate(review);
             ((ReviewViewHolder)holder).bindReviewDetail(review);
         } else {
@@ -159,6 +163,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
         public TextView txtRateCount;
 
         public RecyclerView recyclerPhotos;
+        public ReviewPhotoRecyclerAdapter adapterPhotos;
 
         public RecyclerView recyclerWebLinks;
         public WebLinkRecyclerAdapter adapterWebLinks;
@@ -182,6 +187,9 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             imgRate = (ImageView)itemView.findViewById(R.id.img_review_rate);
 
             recyclerPhotos = (RecyclerView)itemView.findViewById(R.id.recycler_photos);
+            adapterPhotos = new ReviewPhotoRecyclerAdapter(new ArrayList<String>());
+            recyclerPhotos.setAdapter(adapterPhotos);
+            recyclerPhotos.setLayoutManager(new GridLayoutManager(context, 3));
 
             recyclerWebLinks = (RecyclerView)itemView.findViewById(R.id.recycler_web_links);
             adapterWebLinks = new WebLinkRecyclerAdapter(new ArrayList<WebLinkModel>());
@@ -253,6 +261,12 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             if (wl == null || wl.size() == 0)
                 return;
             adapterWebLinks.refreshData(wl);
+        }
+
+        public void refreshPhotos(ArrayList<String> paths) {
+            if (paths == null || paths.size() == 0)
+                return;
+            adapterPhotos.refreshData(paths);
         }
     }
 
