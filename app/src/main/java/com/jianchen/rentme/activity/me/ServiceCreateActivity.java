@@ -208,12 +208,12 @@ public class ServiceCreateActivity extends AppCompatActivity implements OnPostVi
         imgClose.setOnClickListener(clickListener);
 
         webLinkModels = new ArrayList<>();
-        adapterWebLink = new WebLinkRecyclerAdapter(webLinkModels);
+        adapterWebLink = new WebLinkRecyclerAdapter(webLinkModels, Constants.MODE_ADD);
         recyclerWebLink.setLayoutManager(new LinearLayoutManager(this));
         recyclerWebLink.setAdapter(adapterWebLink);
 
         videoLinks = new ArrayList<>();
-        adapterVideo = new VideoLinkRecyclerAdapter(videoLinks);
+        adapterVideo = new VideoLinkRecyclerAdapter(videoLinks, Constants.MODE_ADD);
         recyclerVideo.setLayoutManager(new LinearLayoutManager(this));
         recyclerVideo.setAdapter(adapterVideo);
 

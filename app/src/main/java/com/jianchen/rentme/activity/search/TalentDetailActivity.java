@@ -27,9 +27,11 @@ import com.jianchen.rentme.helper.delegator.OnProjectCreateListener;
 import com.jianchen.rentme.helper.delegator.OnServiceClickListener;
 import com.jianchen.rentme.helper.listener.AppBarStateListener;
 import com.jianchen.rentme.model.rentme.ArrayModel;
+import com.jianchen.rentme.model.rentme.ObjectModel;
 import com.jianchen.rentme.model.rentme.ProjectModel;
 import com.jianchen.rentme.model.rentme.ServiceModel;
 import com.jianchen.rentme.model.rentme.SkillServiceModel;
+import com.jianchen.rentme.model.rentme.UserAvatarModel;
 import com.jianchen.rentme.model.rentme.UserModel;
 import com.jianchen.rentme.R;
 import com.jianchen.rentme.helper.network.retrofit.RestClient;
@@ -37,6 +39,7 @@ import com.jianchen.rentme.helper.network.retrofit.UserClient;
 import com.jianchen.rentme.helper.Constants;
 import com.jianchen.rentme.helper.utils.Utils;
 import com.bumptech.glide.Glide;
+import com.rd.PageIndicatorView;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,6 +65,8 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
     @Bind(R.id.pager_subcover)
     ViewPager pagerSubCover;
     GalleryPagerAdapter adapterCover;
+    @Bind(R.id.ind_subcover)
+    PageIndicatorView indicator;
 
     @Bind(R.id.img_profile_main)
     ImageView imgMain;
@@ -246,8 +251,12 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
         }
         else {
             // cover image
+            imgCover.setVisibility(View.GONE);
+            pagerSubCover.setVisibility(View.VISIBLE);
+
             adapterCover = new GalleryPagerAdapter(this, pagerSubCover, userModel.getCoverImg());
             pagerSubCover.setAdapter(adapterCover);
+            indicator.setViewPager(pagerSubCover);
         }
 
         // main profile image
@@ -265,6 +274,45 @@ public class TalentDetailActivity extends AppCompatActivity implements OnService
         recyclerServices.setNestedScrollingEnabled(false);
 
         getUserServices();
+        getProfileImages();
+    }
+
+    private void getProfileImages() {
+        RestClient<UserClient> restClient = new RestClient<>();
+        UserClient userClient = restClient.getAppClient(UserClient.class);
+
+        Call<ObjectModel<UserAvatarModel>> call = userClient.getProfileImages(userModel.getId());
+        call.enqueue(new Callback<ObjectModel<UserAvatarModel>>() {
+            @Override
+            public void onResponse(Call<ObjectModel<UserAvatarModel>> call, Response<ObjectModel<UserAvatarModel>> response) {
+                if (response.isSuccessful()) {
+                    UserAvatarModel avatars = response.body().getData();
+
+                    if (avatars.getMainProfile().size() > 0) {
+                        userModel.setAvatar(avatars.getMainProfile().get(0));
+                        Glide.with(TalentDetailActivity.this).load(userModel.getAvatar()).asBitmap().fitCenter().placeholder(R.drawable.profile_empty).into(imgMain);
+                    }
+
+                    if (avatars.getSubProfile().size() > 0) {
+                        userModel.setCoverImg(avatars.getSubProfile());
+                        adapterCover = new GalleryPagerAdapter(TalentDetailActivity.this, pagerSubCover, userModel.getCoverImg());
+                        pagerSubCover.setAdapter(adapterCover);
+                        indicator.setViewPager(pagerSubCover);
+
+                        imgCover.setVisibility(View.GONE);
+                        pagerSubCover.setVisibility(View.VISIBLE);
+                    }
+
+                } else {
+                    Toast.makeText(TalentDetailActivity.this, errLoad, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ObjectModel<UserAvatarModel>> call, Throwable t) {
+                Toast.makeText(TalentDetailActivity.this, errNetwork, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getUserServices() {

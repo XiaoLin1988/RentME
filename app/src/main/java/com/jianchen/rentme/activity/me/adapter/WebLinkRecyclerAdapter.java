@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jianchen.rentme.helper.Constants;
 import com.jianchen.rentme.helper.delegator.OnConfirmListener;
 import com.jianchen.rentme.helper.listener.SingleClickListener;
 import com.jianchen.rentme.model.rentme.WebLinkModel;
@@ -25,9 +26,11 @@ import java.util.ArrayList;
 public class WebLinkRecyclerAdapter extends RecyclerView.Adapter<WebLinkRecyclerAdapter.WebLinkViewHolder> {
     private Context context;
     private ArrayList<WebLinkModel> webLinkModels;
+    private int viewMode = 0;
 
-    public WebLinkRecyclerAdapter(ArrayList<WebLinkModel> wl) {
+    public WebLinkRecyclerAdapter(ArrayList<WebLinkModel> wl, int vm) {
         webLinkModels = wl;
+        viewMode = vm;
     }
 
     @Override
@@ -80,6 +83,9 @@ public class WebLinkRecyclerAdapter extends RecyclerView.Adapter<WebLinkRecycler
             txtUrl = (TextView)itemView.findViewById(R.id.txt_link_url);
 
             imgRemove = (ImageView)itemView.findViewById(R.id.row_post_remove);
+
+            if (viewMode == Constants.MODE_SHOW)
+                imgRemove.setVisibility(View.GONE);
         }
 
         public void bindLinkView(final WebLinkModel webLinkModel) {

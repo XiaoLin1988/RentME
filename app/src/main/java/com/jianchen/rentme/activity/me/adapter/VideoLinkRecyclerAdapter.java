@@ -24,9 +24,11 @@ import java.util.ArrayList;
 public class VideoLinkRecyclerAdapter extends RecyclerView.Adapter<VideoLinkRecyclerAdapter.VideoViewHolder> {
     private Context context;
     private ArrayList<String> videoLinks;
+    private int viewMode = 0;
 
-    public VideoLinkRecyclerAdapter(ArrayList<String> vl) {
+    public VideoLinkRecyclerAdapter(ArrayList<String> vl, int vm) {
         videoLinks = vl;
+        viewMode = vm;
     }
 
     @Override
@@ -100,6 +102,10 @@ public class VideoLinkRecyclerAdapter extends RecyclerView.Adapter<VideoLinkRecy
                 webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe width=\"100%\" height=\"100%\" src=\"%link%?autoplay=1&showinfo=0&rel=0&loop=1\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe></body></html>";
             } else if (viewType == Constants.VALUE_LINK_VIMEO) {
                 webData = "<html><head></head><body style=\"padding:0px;margin:0px;\"><iframe src=\"%link%\" width=\"100%\" height=\"100%\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></body></html>";
+            }
+
+            if (viewMode == Constants.MODE_SHOW) {
+                imgRemove.setVisibility(View.GONE);
             }
         }
 

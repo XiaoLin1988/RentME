@@ -110,12 +110,12 @@ public class LeaveReviewActivity extends AppCompatActivity implements View.OnCli
         imgClose.setOnClickListener(this);
 
         webLinkModels = new ArrayList<>();
-        adapterWebLink = new WebLinkRecyclerAdapter(webLinkModels);
+        adapterWebLink = new WebLinkRecyclerAdapter(webLinkModels, Constants.MODE_ADD);
         recyclerWeb.setLayoutManager(new LinearLayoutManager(this));
         recyclerWeb.setAdapter(adapterWebLink);
 
         videoLinks = new ArrayList<>();
-        adapterVideo = new VideoLinkRecyclerAdapter(videoLinks);
+        adapterVideo = new VideoLinkRecyclerAdapter(videoLinks, Constants.MODE_ADD);
         recyclerVideo.setLayoutManager(new LinearLayoutManager(this));
         recyclerVideo.setAdapter(adapterVideo);
 

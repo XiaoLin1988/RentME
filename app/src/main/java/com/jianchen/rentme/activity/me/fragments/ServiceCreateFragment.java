@@ -218,12 +218,12 @@ public class ServiceCreateFragment extends Fragment implements OnPostVideoListen
         imgClose.setOnClickListener(clickListener);
 
         webLinkModels = new ArrayList<>();
-        adapterWebLink = new WebLinkRecyclerAdapter(webLinkModels);
+        adapterWebLink = new WebLinkRecyclerAdapter(webLinkModels, Constants.MODE_ADD);
         recyclerWebLink.setLayoutManager(new LinearLayoutManager(context));
         recyclerWebLink.setAdapter(adapterWebLink);
 
         videoLinks = new ArrayList<>();
-        adapterVideo = new VideoLinkRecyclerAdapter(videoLinks);
+        adapterVideo = new VideoLinkRecyclerAdapter(videoLinks, Constants.MODE_ADD);
         recyclerVideo.setLayoutManager(new LinearLayoutManager(context));
         recyclerVideo.setAdapter(adapterVideo);
 

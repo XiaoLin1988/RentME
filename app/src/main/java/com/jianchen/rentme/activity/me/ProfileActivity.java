@@ -490,6 +490,7 @@ public class ProfileActivity extends AppCompatActivity implements OnServiceClick
             if (userModel.getCoverImg() == null || userModel.getCoverImg().size() == 0) {
                 int pos = new Random().nextInt(5) % 5;
                 pagerSubCover.setVisibility(View.GONE);
+                imgCover.setVisibility(View.VISIBLE);
                 switch (pos) {
                     case 0:
                         Glide.with(this).load(R.drawable.cover1).asBitmap().fitCenter().into(imgCover);

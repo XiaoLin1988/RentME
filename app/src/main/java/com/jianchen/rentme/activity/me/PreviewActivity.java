@@ -293,6 +293,9 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
 
+            weblinkList = weblinkList.trim();
+
+
             for (int i = 0; i < filePathList.size(); i++) {
 
                 File file = new File(filePathList.get(i));
@@ -458,11 +461,11 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         inflater.inflate(R.menu.menu_preview, menu);
 
         Drawable minus = getResources().getDrawable(R.drawable.ic_decrease);
-        minus.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        minus.setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_ATOP);
         menu.findItem(R.id.action_remove).setIcon(minus);
 
         Drawable plus = getResources().getDrawable(R.drawable.ic_increase);
-        plus.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
+        plus.setColorFilter(getResources().getColor(R.color.colorBlack), PorterDuff.Mode.SRC_ATOP);
         menu.findItem(R.id.action_add).setIcon(plus);
         /*
         menu.findItem(R.id.action_remove).setIcon(

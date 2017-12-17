@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
+        android:id="@+id/menugroup_edit"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_edit"
+            android:icon="@drawable/menu_edit"
+            android:title="My Service" />
+    </group>
+    <group
         android:id="@+id/menugroup_projects"
         android:checkableBehavior="none">
         <item
@@ -8,16 +16,6 @@
             android:icon="@drawable/menu_project"
             android:title="My Projects" />
     </group>
-    <!--
-    <group
-        android:id="@+id/menugroup_services"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_services"
-            android:icon="@drawable/menu_project"
-            android:title="My Services" />
-    </group>
-    -->
     <group
         android:id="@+id/menugroup_create"
         android:checkableBehavior="none">
@@ -25,14 +23,6 @@
             android:id="@+id/nav_post"
             android:icon="@drawable/menu_create"
             android:title="Search Talent" />
-    </group>
-    <group
-        android:id="@+id/menugroup_edit"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_edit"
-            android:icon="@drawable/menu_edit"
-            android:title="My Profile" />
     </group>
     <group
         android:id="@+id/menugroup_signout"

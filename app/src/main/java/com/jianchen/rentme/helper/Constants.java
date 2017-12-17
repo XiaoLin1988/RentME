@@ -61,8 +61,6 @@ public class Constants {
 
     public static final int MAX_SKILLS = 5;
     public static final int SEARCH_RADIUS = 5000;
-
-
     /*
     public static final String SITE_URL = "http://192.168.0.204/";
     public static final String API_ROOT_URL = "http://192.168.0.204/rentme/index.php/";
@@ -155,6 +153,9 @@ public class Constants {
     public static final int VALUE_IMG_USER_MAIN = 1;
     public static final int VALUE_IMG_SERVICE = 2;
     public static final int VALUE_IMG_SKILL = 3;
+
+    public static final int MODE_ADD = 0;
+    public static final int MODE_SHOW = 1;
 
     public static final String KEY_USER = "key_user";
     public static final String KEY_VIDEO = "key_video";

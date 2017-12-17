@@ -192,12 +192,12 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter {
             recyclerPhotos.setLayoutManager(new GridLayoutManager(context, 3));
 
             recyclerWebLinks = (RecyclerView)itemView.findViewById(R.id.recycler_web_links);
-            adapterWebLinks = new WebLinkRecyclerAdapter(new ArrayList<WebLinkModel>());
+            adapterWebLinks = new WebLinkRecyclerAdapter(new ArrayList<WebLinkModel>(), Constants.MODE_SHOW);
             recyclerWebLinks.setAdapter(adapterWebLinks);
             recyclerWebLinks.setLayoutManager(new LinearLayoutManager(context));
 
             recyclerVideos = (RecyclerView)itemView.findViewById(R.id.recycler_videos);
-            adapterVideos = new VideoLinkRecyclerAdapter(new ArrayList<String>());
+            adapterVideos = new VideoLinkRecyclerAdapter(new ArrayList<String>(), Constants.MODE_SHOW);
             recyclerVideos.setAdapter(adapterVideos);
             recyclerVideos.setLayoutManager(new LinearLayoutManager(context));
 

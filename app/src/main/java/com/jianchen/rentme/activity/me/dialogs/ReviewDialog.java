@@ -160,7 +160,7 @@ public class ReviewDialog extends Dialog implements View.OnClickListener, OnLoad
             @Override
             public void onResponse(Call<ObjectModel<Integer>> call, Response<ObjectModel<Integer>> response) {
                 if (response.isSuccessful() && response.body().getStatus()) {
-
+                    getOwnerActivity().finish();
                 }
             }
 
