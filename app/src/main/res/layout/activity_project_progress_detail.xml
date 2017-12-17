@@ -24,7 +24,7 @@
             android:src="@drawable/tool_back"
             android:scaleType="centerInside"/>
 
-        <com.android.jianchen.rentme.activity.root.customview.AutoFitTextView
+        <com.jianchen.rentme.activity.root.customview.AutoFitTextView
             android:id="@+id/txt_project_progress_detail_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

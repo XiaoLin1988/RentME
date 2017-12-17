@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.jianchen.rentme" >
+    package="com.jianchen.rentme" >
 
     <permission
-        android:name="com.android.jianchen.rentme.permission.MAPS_RECEIVE"
+        android:name="com.jianchen.rentme.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-feature android:name="android.hardware.camera" />

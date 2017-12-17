@@ -38,7 +38,7 @@
 
     </RelativeLayout>
 
-    <com.android.jianchen.rentme.activity.me.customview.PhotoWorkView
+    <com.jianchen.rentme.activity.me.customview.PhotoWorkView
         android:id="@+id/img_photoedit_panel"
         android:src="@drawable/placeholder"
         android:layout_below="@+id/lyt_tool"

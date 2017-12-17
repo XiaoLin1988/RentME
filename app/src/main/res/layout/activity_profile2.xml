@@ -264,6 +264,12 @@
             android:background="@color/colorWhite"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
             <TextView
                 android:id="@+id/txt_no_data"
                 android:layout_width="wrap_content"
@@ -272,12 +278,6 @@
                 android:text="No services"
                 android:textAllCaps="true"
                 android:textSize="@dimen/font_xxlarge"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_services"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
 
         </RelativeLayout>
         <!--
